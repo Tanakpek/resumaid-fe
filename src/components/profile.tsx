@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import  dotenv  from 'dotenv'
 import { BACKEND_URL } from "../utils/config"
 import { User } from 'lib/types/user'
+
 import {
   Card,
   CardContent,
@@ -12,6 +13,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
+
+import {  Popover } from '@/components/ui/popover'
 
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -105,7 +108,10 @@ export function Profile() {
 
   
   if (loading) {
-      return <div>Loading...</div>;
+      return <div><div>Loading...</div>
+      <Popover></Popover>
+      </div>;
+
   }
   return (
     <div className="flex min-h-screen w-full flex-col">

@@ -56,7 +56,7 @@ export function Dashboard() {
         navigate('/');
     }
   return (
-    <div className="rounded-lg w-full shadow-xl border-gray-300 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] overflow-hidden">
+    <div className="bg-background rounded-lg w-full shadow-xl border-gray-300 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] overflow-hidden">
       <div className="flex items-center justify-center py-12">
         <div className="mx-auto grid w-[350px] gap-6">
           <div className="grid gap-2 text-center">
@@ -88,7 +88,7 @@ export function Dashboard() {
               </div>
               <Input id="password" onChange={(e) => setPass(e.target.value)} type="password" required/>
             </div>
-            <Button type="submit" className="w-full h-9 primary-foreground" onClick={handleLogin}>
+            <Button type="submit" className=" bg-primary hover:bg-secondary w-full h-9" onClick={handleLogin}>
               Login
             </Button>
             

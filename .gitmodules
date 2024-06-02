@@ -1,0 +1,7 @@
+[submodule "src/utils/applicaid-ts-utils"]
+	path = src/utils/applicaid-ts-utils
+	url = https://Applicaid@dev.azure.com/Applicaid/Applicaid/_git/applicaid-ts-utils
+	#url = ../quadra-utils-base-ts
+[submodule "applicaid-ts-utils"]
+	path = applicaid-ts-utils
+	url = https://Applicaid@dev.azure.com/Applicaid/Applicaid/_git/applicaid-ts-utils
