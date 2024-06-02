@@ -1,0 +1,81 @@
+{ 
+  "name": "Kayra Basaran",
+  "title": "",
+  "education": [
+    {
+      "institution": "Architectural Association School of Architecture",
+      "location": "London, United Kingdom",
+      "degree": "RIBA Part I - Undergraduate",
+      "dates": ["2020", "PRESENT"],
+      "thesis": null,
+      "classification": null,
+      "dissertation": null,
+      "gpa":null,
+      "score":null
+    },
+    {
+      "institution": "PRATT",
+      "program": "Pre-College Summer Program",
+      "location": "New York, NY",
+      "dates": ["July 2018", "August 2019"],
+      "thesis": null,
+      "classification": null,
+      "dissertation": null,
+      "gpa":null,
+      "score":null
+    },
+    {
+      "institution": "KOC High School",
+      "location": "Istanbul, Turkey",
+      "degree": "International Baccalaureate Program Diploma",
+      "score": "33/45",
+      "dates": ["2016", "2020"],
+      "thesis": null,
+      "classification": null,
+      "dissertation": null,
+      "gpa":null
+    }
+  ],
+  "achievements_and_awards": [],
+  "projects": {},
+  "volunteer": [],
+  "description": "My passion for architecture drives me to seek new challenges and opportunities for growth constantly. As a third-year student at the Archi- tectural Association School of Architecture in London, I am highly motivated and dedicated to further developing my architectural skills and knowledge. I am eager to learn from experi- enced professionals and seek opportunities to gain hands-on experience in the industry. I am determined to achieve my goals and reach my full potential.",
+  "work": {
+    "EAA- Emre Arolat Architecture": [{
+      "role": "",
+      "takeaways": [
+        {   
+            "id": "asd9j4ads",
+            "description": "Responsible for AutoCad plan drawings and concept diagrams. Photoshop renders images. Working on two different themes for two design competi- tions, attending the design team meetings.",
+            "immutable": true
+        }
+      ],
+      "dates" : ["August 2022","September 2022"]
+    }],
+    "STEP ISTANBUL Contemporary Art": [{
+      "role": "",
+      "takeaways":[
+        {
+            "id": "asdijkcro",
+            "description": "Worked in the INWART Gallery’s stand focusing on the works of street artists and was responsible for the introduction, information, and purchasing of the works",
+            "immutable": true
+        }
+      ],
+      "dates": ["April 2019", "April 2019"]
+  }],
+    "TA TABANLIOGLU Architects": [{
+        "role": "Trainee Intern",
+        "takeaways": [
+            {   
+                "id": "asdsads",
+                "description": "Conducted research for the company’s new project in Miami. Made a presentation about how architecture affects the social media",
+                "immutable": true
+            }
+        ],
+        "dates": ["February 2018","February 2018"]
+    }]
+  },
+  "skills": ["Rhinoceros", "AutoCAD", "V-ray", "TwinMotion", "SketchUp", "Microsoft Office Programs", "Adobe Photoshop", "Adobe Illustrator", "Adobe InDesign", "Maya", "Revit", "Unreal Engine"],
+  "languages":[],
+  "professional_certifications":[]
+}
