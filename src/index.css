@@ -22,16 +22,75 @@
     --radius: 0.5rem;
 
     --background: #f2f4f9;
-    --primary: #569eae;
-    --primary-foreground: 355.7 100% 97.3%;
-    --secondary: #c7a2d2;
-    --secondary-foreground: #ff7849;
-    --accent: #c280b1;
+
+    --primary: #3256a9;
+    --primary-50: #a9b0d9;
+    --primary-100: #939dd0;
+    --primary-200: #7d8ac6;
+    --primary-300: #6778bc;
+    --primary-400: #4e67b3;
+    --primary-500: #3256a9;
+
+    --primary-foreground:  #9fbdfe;
+    --primary-foreground-50: #d6e1ff;
+    --primary-foreground-100: #cbdaff;
+    --primary-foreground-200: #c1d2ff;
+    --primary-foreground-300: #b6cbff;
+    --primary-foreground-400: #abc4fe;
+    --primary-foreground-500: #9fbdfe;
+
+    --secondary: #671af7;
+    --secondary-50: #c89efe;
+    --secondary-100: #b887fd;
+    --secondary-200: #a76ffc;
+    --secondary-300: #9456fb;
+    --secondary-400: #7f3cf9;
+    --secondary-500: #671af7;
+
+    --secondary-foreground: #b3b1fd;
+    --secondary-foreground-50: #dedcff;
+    --secondary-foreground-100: #d6d3fe;
+    --secondary-foreground-200: #cdcafe;
+    --secondary-foreground-300: #c5c2fe;
+    --secondary-foreground-400: #bcb9fd;
+    --secondary-foreground-500: #b3b1fd;
+
+    --accent: #faf1a3;
+    --accent-50: #fef9d6;
+    --accent-100: #fdf7cc;
+    --accent-200: #fdf6c2;
+    --accent-300: #fcf4b8;
+    --accent-400: #fbf3ad;
+    --accent-500: #faf1a3;
+
+    --bad: #ee174d;
+    --bad-50: #fff7f7;
+    --bad-100: #ffd7d9;
+    --bad-200: #ffb6bd;
+    --bad-300: #ff96a4;
+    --bad-400: #ff758e;
+    --bad-500: #f94168;
+    --bad-600: #ee174d;
+    --bad-700: #c90b33;
+    --bad-800: #a40621;
+    --bad-900: #7f0415;
+    --bad-1000: #5a040c;
+    --bad-1100: #340407;
+    --bad-1200: #0f0202;
+
+    --good: #73c697;
+    --good-50: #c2e6d0;
+    --good-100: #b3e0c4;
+    --good-200: #a4d9b9;
+    --good-300: #94d3ad;
+    --good-400: #84cda2;
+    --good-500: #73c697;
+
+
 
   }
  
   .dark {
-    --background: 20 14.3% 4.1%;
     --foreground: 0 0% 95%;
     --card: 24 9.8% 10%;
     --card-foreground: 0 0% 95%;
@@ -47,11 +106,79 @@
     --input: 240 3.7% 15.9%;
     --ring: 142.4 71.8% 29.2%;
 
-    --background: #030707;
-    --primary: #5199a9;
-    --primary-foreground: 144.9 80.4% 10%;
-    --secondary:  #522d5d;
-    --secondary-foreground: 0 0% 98%;
-    --accent: #7f3d6f;
+    --background: #101010;
+
+    --primary: #233e7a;
+    --primary-50: #233e7a;
+    --primary-100: #3f5188;
+    --primary-200: #576497;
+    --primary-300: #6f79a5;
+    --primary-400: #868eb4;
+    --primary-500: #9ea3c3;
+    
+    --bad: #ee174d;
+    --bad-50: #0f0202;
+    --bad-100: #1b0404;
+    --bad-200: #270606;
+    --bad-300: #33090a;
+    --bad-400: #3f0c0d;
+    --bad-500: #571516;
+    --bad-600: #6f1f20;
+    --bad-700: #872c2e;
+    --bad-800: #9f3e40;
+    --bad-900: #b76162;
+    --bad-1000: #cf9293;
+    --bad-1100: #e7c3c4;
+    --bad-1200: #fff7f7;
+
+    --good: #78cc9d;
+    --good-50: #59876d;
+    --good-100: #98d8b2;
+    --good-200: #a7ddbd;
+    --good-300: #a7ddbd;
+    --good-400: #b6e3c8;
+    --good-500: #c5e9d3;
+
+    --primary-foreground: #273147;
+    --primary-foreground-50: #273147;;
+    --primary-foreground-100: #3c4559;
+    --primary-foreground-200: #52596c;
+    --primary-foreground-300: #696f80;
+    --primary-foreground-400: #808594;
+    --primary-foreground-500: #999da9;
+
+    --secondary: #2d0773;
+    --secondary-50: #2d0773;
+    --secondary-100: #472482;
+    --secondary-200: #5f3d92;
+    --secondary-300: #7657a1;
+    --secondary-400: #8d71b1;
+    --secondary-500: #a48cc0;
+
+    --accent: #545134;
+    --accent-500: #545134;
+    --accent-400: #666248;
+    --accent-300: #78745d;
+    --accent-200: #8a8772;
+    --accent-100: #9d9a88;
+    --accent-50: #b0ad9f;
+
+    --secondary: #3e1191;
+    --secondary-50: #3e1191;
+    --secondary-100: #572d9e;
+    --secondary-200: #6e46aa;
+    --secondary-300: #835fb6;
+    --secondary-400: #9978c3;
+    --secondary-500: #ad92cf;
+
+    --secondary-foreground: #1d1c26;
+    --secondary-foreground-50: #1d1c26;
+    --secondary-foreground-100: #32313a;
+    --secondary-foreground-200: #484750;
+    --secondary-foreground-300: #605f67;
+    --secondary-foreground-400: #78777e;
+    --secondary-foreground-500: #929197;
+
+
   }
 }

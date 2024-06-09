@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import  dotenv  from 'dotenv'
 import { BACKEND_URL } from "../utils/config"
 import { User } from 'lib/types/user'
-
+import { PersonalDetailsEdit } from "./user/cv/details"
 import {
   Card,
   CardContent,
@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/card"
 
 import {  Popover } from '@/components/ui/popover'
-
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useEffect, useRef, useState } from "react"
@@ -23,6 +22,8 @@ import { useAuth } from "./auth";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label"
 
+
+import  CV  from "./user/cv/cv"
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -108,13 +109,15 @@ export function Profile() {
 
   
   if (loading) {
-      return <div><div>Loading...</div>
-      <Popover></Popover>
-      </div>;
+      return (<div><div>Loading...</div>
+      <CV><div></div></CV>
+      </div>);
 
   }
   return (
+    
     <div className="flex min-h-screen w-full flex-col">
+      
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
         <div className="mx-auto grid w-full max-w-6xl gap-2">
           <h1 className="text-3xl font-semibold">{name}</h1>

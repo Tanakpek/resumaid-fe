@@ -26,12 +26,6 @@ export const AuthProvider = ({ children } : any) => {
         console.log(resp)
     
     }
-    useEffect(() => {
-        const google = (window as Window)
-        console.log(google.sessionStorage.getItem('connect.sid'))
-        console.log(google.localStorage.getItem('connect.sid'))
-        
-    });
 
     const login = (user: ClientUserData) => {
         setUser(user);

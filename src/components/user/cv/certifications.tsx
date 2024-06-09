@@ -1,0 +1,1 @@
+import { DefaultView } from '@/src/components/ui/defaultView'

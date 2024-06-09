@@ -97,29 +97,27 @@ import { useNavigate } from "react-router-dom";
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Dashboard
+              Applicant
             </a>
             <a
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Orders
+              Resumés
             </a>
             <a
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Products
+              Cover Letters
             </a>
             <a
               href="#"
               className="text-muted-foreground hover:text-foreground"
             >
-              Customers
+              Jobs
             </a>
-            <a href="#" className="hover:text-foreground">
-              Settings
-            </a>
+           
           </nav>
         </SheetContent>
       </Sheet>

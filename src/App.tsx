@@ -7,6 +7,7 @@ import './App.css'
 import Home from './views/home'
 import React from 'react'
 import { NavBar } from './components/navbar'
+
 import { Profile } from './components/profile'
 import { Login, Dashboard } from './components/login'
 
@@ -18,12 +19,22 @@ function App() {
       
       <AuthProvider>
         <Routes>
-            <Route path="/" element={<div><NavBar/> <Home/> </div>}>
-              
+            <Route path="/" element={
+              <div>
+                <NavBar/> 
+                <Home/>
+              </div>
+            }>
             </Route>
-            <Route path="/auth" element={<Dashboard/>}>
+
+            <Route path="/auth" element={
+                <Dashboard/>
+            }>
             </Route>
-            <Route path="/profile" element={<div><NavBar/> <Profile/></div>}>
+
+            <Route path="/profile" element={
+                <div><NavBar/> <Profile/></div>
+            }>
             </Route>
         </Routes>
       </AuthProvider>
