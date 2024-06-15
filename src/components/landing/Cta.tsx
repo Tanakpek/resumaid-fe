@@ -4,13 +4,13 @@ export const Cta = () => {
   return (
     <section
       id="cta"
-      className="bg-muted/50 py-16 my-24 sm:my-32"
+      className="bg-muted/50 py-16 my-24 sm:my-32 p-14"
     >
       <div className="container lg:grid lg:grid-cols-2 place-items-center">
         <div className="lg:col-start-1">
           <h2 className="text-3xl md:text-4xl font-bold ">
             All Your
-            <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+            <span className="bg-secondary-200 text-transparent bg-clip-text">
               {" "}
               Ideas & Concepts{" "}
             </span>

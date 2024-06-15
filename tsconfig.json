@@ -19,6 +19,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
   },
+  "exclude": ["node_modules", "dist", "build", "shadcn-landing-page"],
   // "include": ["src", "@"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

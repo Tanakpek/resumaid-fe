@@ -12,6 +12,7 @@ import {
 import { Check, Linkedin } from "lucide-react";
 import { LightBulbIcon } from "./Icons";
 import { GitHubLogoIcon } from "@radix-ui/react-icons";
+import { BackgroundGradient } from "@/components/ui/bg-gradient";
 
 export const HeroCards = () => {
   return (
@@ -109,13 +110,16 @@ export const HeroCards = () => {
       </Card>
 
       {/* Pricing */}
-      <Card className="absolute top-[150px] left-[50px] w-72  drop-shadow-xl shadow-black/10 dark:shadow-white/10">
-        <CardHeader>
-          <CardTitle className="flex item-center justify-between">
+      
+      <div className="absolute top-[150px] left-[50px] w-72  drop-shadow-xl shadow-black/10 dark:shadow-white/10 z-1">
+      <BackgroundGradient className="z-50 ">
+        <div style={{borderRadius: 21}}className="z-1 bg-white dark:bg-slate-900">
+        <CardHeader className="z-1">
+          <CardTitle className="flex item-center justify-between z-1">
             Free
             <Badge
               variant="secondary"
-              className="text-sm text-primary"
+              className="text-sm text-primary z-1"
             >
               Most popular
             </Badge>
@@ -150,8 +154,11 @@ export const HeroCards = () => {
               )
             )}
           </div>
+          
         </CardFooter>
-      </Card>
+          </div>
+        </BackgroundGradient>
+      </div>
 
       {/* Service */}
       <Card className="absolute w-[350px] -right-[10px] bottom-[35px]  drop-shadow-xl shadow-black/10 dark:shadow-white/10">

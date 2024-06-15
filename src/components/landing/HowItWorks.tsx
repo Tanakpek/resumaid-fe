@@ -1,36 +1,36 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { MedalIcon, MapIcon, PlaneIcon, GiftIcon } from "./Icons";
-
+import { HoverEffect } from "@/components/ui/hover-card";
 interface FeatureProps {
-  icon: JSX.Element;
+  icon: 0 | 1 | 2 | 3;
   title: string;
   description: string;
 }
 
 const features: FeatureProps[] = [
   {
-    icon: <MedalIcon />,
-    title: "Accessibility",
+    icon: 0,
+    title: "Aggregate",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Upload your resume and let our AI populate your profile with your skills and experiences.",
   },
   {
-    icon: <MapIcon />,
-    title: "Community",
+    icon: 1,
+    title: "Edit",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Add or remove skills, experiences, and projects to your profile making them available for use in future applications.",
   },
   {
-    icon: <PlaneIcon />,
-    title: "Scalability",
+    icon: 2,
+    title: "Apply",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Generate a resume or cover letter with a single click and apply for jobs with ease using the browser extension.",
   },
   {
-    icon: <GiftIcon />,
-    title: "Gamification",
+    icon: 3,
+    title: "Track",
     description:
-      "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum quas provident cum",
+      "Make sure to skim that cover letter when you get the interview",
   },
 ];
 
@@ -38,11 +38,11 @@ export const HowItWorks = () => {
   return (
     <section
       id="howItWorks"
-      className="container text-center py-24 sm:py-32"
+      className="container text-center py-24 sm:py-32 p-14"
     >
       <h2 className="text-3xl md:text-4xl font-bold ">
         How It{" "}
-        <span className="bg-gradient-to-b  from-primary to-primary-50 text-transparent bg-clip-text">
+        <span className="bg-primary text-transparent bg-clip-text">
           Works{" "}
         </span>
         Step-by-Step Guide
@@ -54,7 +54,12 @@ export const HowItWorks = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
         {features.map(({ icon, title, description }: FeatureProps) => (
-          <Card
+          <>
+            
+          <HoverEffect className="grid gap-4 place-items-center" items={[{title:title, description, link:'', icon: icon}]}>
+          </HoverEffect>
+            
+          {/* <Card
             key={title}
             className="bg-muted/50"
           >
@@ -65,7 +70,9 @@ export const HowItWorks = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>{description}</CardContent>
-          </Card>
+          </Card> */}
+          
+          </>
         ))}
       </div>
     </section>

@@ -35,7 +35,8 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 
 const skillFormSchema = z.object({
   skills: z.array(z.object({
-    immutable: z.boolean(),
+    id: z.string().optional(),
+    immutable: z.boolean().default(false),
     value: z.string().optional(),
   })).default([]).optional(),
 })
@@ -47,7 +48,7 @@ const defaultValues: Partial<SkillFormValues> = {
   skills: [{immutable: true, value: "JavaScript"}],
 }
 
-export function SkillsEdit({data} : {data: string[]}) {
+export function SkillsEdit({data, tokens} : {data: string[], tokens:number}) {
     const form = useForm<SkillFormValues>({
         resolver: zodResolver(skillFormSchema ),
         defaultValues,
@@ -79,17 +80,17 @@ export function SkillsEdit({data} : {data: string[]}) {
             <FormField
               control={form.control}
               key={field.id}
-              name={`skills.${index}`}
+              name={`skills.${index}.value`}
             render={({ field }) => (
                 <FormItem>
                     <FormLabel className={cn(index !== 0 && "sr-only")}>
-                        URLs
+                        Skills
                     </FormLabel>
                     <FormDescription className={cn(index !== 0 && "sr-only")}>
-                        Add links to your website, blog, or social media profiles.
+                        Add your skills.
                     </FormDescription>
                     <FormControl>
-                        <Input {...field} value={field.value.value || ""} />
+                        <Input {...field} value={field.value|| ""} />
                     </FormControl>
                     <FormMessage />
                 </FormItem>
@@ -112,10 +113,25 @@ export function SkillsEdit({data} : {data: string[]}) {
   )
 }
 
-export const SkillsView: CVPartView = ({ data }: { data: string[]}) => {
+export const SkillsView: CVPartView = ({ data }: { data: SkillFormValues['skills']}) => {
   return (
-    <DefaultView>
-    </DefaultView>
+    
+      <Table>
+        <TableCaption>Skills</TableCaption>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Skill</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {data.map((skill, index) => (
+            <TableRow key={index}>
+              <TableCell>{skill.value}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    
   )
     
 }

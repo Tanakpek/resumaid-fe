@@ -55,7 +55,7 @@ type ProfileFormValues = z.infer<typeof profileFormSchema>
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I own a computer.",
 }
-export function PersonalDetailsEdit({data} : {data: UserDetails}) {
+export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:number}) {
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),

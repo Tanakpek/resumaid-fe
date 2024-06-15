@@ -3,6 +3,8 @@ import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 import basicSsl from '@vitejs/plugin-basic-ssl'
 import svgr from 'vite-plugin-svgr';
+import wasm from "vite-plugin-wasm";
+import topLevelAwait from "vite-plugin-top-level-await";
 
 export default defineConfig({
   plugins: [
@@ -12,7 +14,9 @@ export default defineConfig({
       domains: ['localhost'],
       name: 'yo'
     }),
-    svgr()
+    svgr(),
+    wasm(),
+    topLevelAwait()
   ],
   resolve: {
     alias: {

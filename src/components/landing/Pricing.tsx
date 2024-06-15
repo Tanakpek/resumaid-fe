@@ -1,5 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { BackgroundGradient } from "@/components/ui/bg-gradient";
 import {
   Card,
   CardContent,
@@ -8,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+
+
 import { Check } from "lucide-react";
 
 enum PopularPlanType {
@@ -76,14 +79,10 @@ export const Pricing = () => {
   return (
     <section
       id="pricing"
-      className="container py-24 sm:py-32"
+      className="container py-24 sm:py-32 px-14"
     >
       <h2 className="text-3xl md:text-4xl font-bold text-center">
         Get
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
-          {" "}
-          Unlimited{" "}
-        </span>
         Access
       </h2>
       <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
@@ -92,6 +91,7 @@ export const Pricing = () => {
       </h3>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {pricingList.map((pricing: PricingProps) => (
+          
           <Card
             key={pricing.title}
             className={
@@ -140,6 +140,7 @@ export const Pricing = () => {
               </div>
             </CardFooter>
           </Card>
+          
         ))}
       </div>
     </section>

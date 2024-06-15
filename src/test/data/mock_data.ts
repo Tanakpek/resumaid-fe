@@ -85,5 +85,5 @@ export const details: UserDetails = {
 
 export const skills= ['React', 'Node', 'Express', 'MongoDB']
 export const languages: string[] = ['English', 'Yoruba']
-export const professional_certifications: string[] = ['Certified Scrum Master', 'AWS Certified Developer']
+export const professional_certifications = [{id: 'asds', value: 'Certified Scrum Master', immutable: true}, {id: 'ya', immutabe: true, value: 'AWS Certified Developer'}]
 export const achievements_and_awards: string[] = ['Best Graduating Student', 'Best Software Engineer']

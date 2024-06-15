@@ -48,11 +48,11 @@ export const FAQ = () => {
   return (
     <section
       id="faq"
-      className="container py-24 sm:py-32"
+      className="container py-24 sm:py-32 mx-auto p-14"
     >
       <h2 className="text-3xl md:text-4xl font-bold mb-4">
         Frequently Asked{" "}
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+        <span className=" bg-secondary-200 text-transparent bg-clip-text">
           Questions
         </span>
       </h2>

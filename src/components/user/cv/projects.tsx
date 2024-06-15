@@ -1,5 +1,6 @@
 // Code generated with love by Applicaid
-
+// @ts-expect-error
+// @ts-nocheck
 
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
 import { CVInfo, ProjectsSlot }  from '@/src/utils/applicaid-ts-utils/cv_type'
@@ -56,8 +57,7 @@ import { DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, Dropdo
 
 // console.warn = () => {}
 // console.error = () => {}
-// @ts-expect-error
-// @ts-nocheck
+
 
 /* 
 test data, erase later
@@ -69,6 +69,7 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 const projectSchema = z.object({
     id: z.string().optional(),
     name: z.string(),
+    immutable: z.boolean().default(false),
     takeaways: z.array(
         z.object({
             immutabe: z.boolean(),
@@ -78,7 +79,7 @@ const projectSchema = z.object({
 })
 
 type ProjectValues = z.infer<typeof projectSchema>
-export function ProjectsEdit({ data }: { data: ProjectsSlot }) {
+export function ProjectsEdit({ data, tokens }: { data: ProjectsSlot, tokens:number }) {
     const [addProjectOpen, setAddProjectOpen] = useState(false)
     const [addProjectName, setAddProjectName] = useState('')
     const ProjectFormSchema = z.object({
@@ -236,7 +237,7 @@ export function ProjectsEdit({ data }: { data: ProjectsSlot }) {
                 className="mt-2"
                 onClick={() => {
                   setAddProjectOpen(false)
-                  append({ name: addProjectName, takeaways: []})
+                  append({ name: addProjectName, takeaways: [], immutable: false})
                   setTimeout(() => {
                     setAddProjectName('')
                   },300)

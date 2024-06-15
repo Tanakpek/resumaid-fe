@@ -45,7 +45,7 @@ import { Switch } from '@/components/ui/switch'
 import { CVPartView } from './utils'
 
 
-export function EducationEdit({data}) {
+export function EducationEdit({data, tokens}) {
 
     const [multipleCapError, setMultipleCapError] = useState(false)
     const [multipleGradeError, setMultipleGradeError] = useState(false)

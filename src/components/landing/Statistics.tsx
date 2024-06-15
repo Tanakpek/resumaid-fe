@@ -18,8 +18,8 @@ export const Statistics = () => {
       description: "Downloads",
     },
     {
-      quantity: "4",
-      description: "Products",
+      quantity: "1",
+      description: "Product",
     },
   ];
 
