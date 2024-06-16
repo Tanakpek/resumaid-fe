@@ -13,7 +13,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 import {  Popover } from '@/components/ui/popover'
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -24,6 +34,9 @@ import { Label } from "@/components/ui/label"
 
 
 import  CV  from "./user/cv/cv"
+import { MultiStepCVLoader } from "./ui/cv-loader"
+import { ToastDemo } from "./ui/toast/submit"
+import { toast } from "@/components/ui/use-toast"
 
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -31,12 +44,13 @@ function delay(ms) {
 
 export function Profile() {
   const [name, setName] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [cv_uploaded, setUploaded] = useState(true);
+  const [loading, setLoading] = useState(false);
+  const [cv_uploaded, setUploaded] = useState(false);
   const [cv_url, setUrl] = useState(null);
   const checkCVInterval = useRef(null)
   const auth = useAuth();
   const navigate = useNavigate();
+  const loadingLoopInterval = useRef(2000)
 
   const checkedCV = useRef(0)
   const checkCVHandler = async () => {
@@ -48,32 +62,40 @@ export function Profile() {
     console.log(data)
     if(data){
       clearInterval(checkCVInterval.current)
+      toast({
+        variant: 'default',
+        description: 'CV Parsed Successfully',
+      })
       setLoading(false)
     }
     checkedCV.current += 1
-    if(checkedCV.current > 10){
+    if(checkedCV.current > 15){
       clearInterval(checkCVInterval.current)
       console.log('CV not uploaded')
+      toast({
+        variant: 'destructive',
+        title: "Error Parsing CV",
+        description: 'An error occured while parsing your CV.Please try again.',
+      })
       setLoading(false)
     }
   }
 
   const uploadHandler = async (e:any) => {
+    console.log(e)
     e.preventDefault();
     const file = e.target.files[0];
     if (!file) return;
-    console.log(file)
     const file_type = encodeURIComponent(file.type)
     const resp = await fetch(cv_url, {
         method: 'PUT',
         body: file
       }
     );
-
     checkCVInterval.current = setInterval(checkCVHandler, 5000)
     const formData = new FormData();
     formData.append('file', file);
-    setLoading(true)
+    setLoading(() => true)
   }
 
   useEffect(() => {
@@ -85,31 +107,29 @@ export function Profile() {
       );
 
       const data:User  = await response.json();
-      setName(data.name);
-      setLoading(false);
-      setUploaded(data.cv_uploaded)
+      setName(() => data.name);
+      setLoading(() => false);
+      setUploaded(() => data.cv_uploaded)
       let url = ''
       if(!data.cv_uploaded){
         const resp = await fetch(BACKEND_URL+'/users/cv_url', {
           method: 'POST',
           credentials: 'include'
         })
-        console.log(resp)
         resp.json().then((data) => {
           url = data.upload_location
-          setUrl(url)
+          setUrl( () => url)
         })
       }
-      
       auth.login(data.name);
     }
 
     fetchData();
   }, []); // The empty array ensures this effect only runs once after the initial render
 
-  
   if (loading) {
       return (<div><div>Loading...</div>
+      <MultiStepCVLoader></MultiStepCVLoader>
       <CV><div></div></CV>
       </div>);
 
@@ -153,10 +173,29 @@ export function Profile() {
               </CardFooter>
             </Card>
             {!cv_uploaded && 
-            <div className="grid w-full max-w-sm items-center gap-1.5">
-              <Label htmlFor="doc">Resume</Label>
-              <Input id="cv" type="file" onChange={uploadHandler} />
-            </div>}
+            <>
+            <AlertDialog>
+              <AlertDialogTrigger>Upload CV</AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Please upload your CV</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    Accepted: .pdf, .doc, .docx
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  
+                  <Input title="Upload" className="bg-none hover:bg-primary-foreground-50 " id="cv" type="file" onChange={uploadHandler} />
+            
+               
+                  
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+            </>
+            }
+            
             
           </div>
         </div>

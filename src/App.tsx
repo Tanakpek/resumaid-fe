@@ -7,13 +7,11 @@ import './App.css'
 import Home from './views/home'
 import React from 'react'
 import { NavBar } from './components/navbar'
-
+import { Toaster } from "@/components/ui/toaster"
 import { Profile } from './components/profile'
 import { Login, Dashboard } from './components/login'
 
 function App() {
-  
-  const [count, setCount] = useState(0)
 
   return (
     <>
@@ -39,6 +37,8 @@ function App() {
             </Route>
         </Routes>
       </AuthProvider>
+      <Toaster />
+      
     </>
   )
 }

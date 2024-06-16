@@ -1,12 +1,8 @@
-import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
-import { CVInfo }  from '@/src/utils/applicaid-ts-utils/cv_type'
-import testcv from '@/src/test/data/cv.json'
-import Link from "next/link"
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import validator from "validator"
-import { useFieldArray, useForm } from "react-hook-form"
-import { any, z } from "zod"
-import { cn } from "@/lib/utils"
+import {  useForm } from "react-hook-form"
+import {  z } from "zod"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,23 +14,18 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
+
 import { DefaultView } from '@/src/components/ui/defaultView'
 import { CVPartView } from './utils'
 import { UserDetails } from './types'
 import { Checkbox } from '@/components/ui/checkbox'
-import { Separator } from '@radix-ui/react-dropdown-menu'
+
+import { ToastDemo } from "../../ui/toast/submit"
 
 
 const profileFormSchema = z.object({
@@ -192,11 +183,12 @@ export const PersonalDetailsView: CVPartView = ({ data }: { data: UserDetails })
 
   return (
     <Card className='w-full'>
+      <form>
       <CardHeader>
         <CardTitle>{`${title} ${first_name} ${midde_name ? midde_name[0] + '. ' + last_name : last_name}`}</CardTitle>
       </CardHeader>
       <CardContent>
-        <form>
+       
           <div className="">
             <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'>
               <div className="flex flex-col  col-start-1 col-end-2 space-y-1.5 mr-auto">
@@ -238,12 +230,13 @@ export const PersonalDetailsView: CVPartView = ({ data }: { data: UserDetails })
               <CardDescription className='mr-auto'>{linkedin}</CardDescription>
             </div></div>}
           </div>
-        </form>
+        
       </CardContent>
       <CardFooter className="flex justify-between">
         <div></div>
-        <Button>Save Preferences</Button>
+        <Button type="submit">Save Preferences</Button>
       </CardFooter>
+      </form>
     </Card>
   );
 }
