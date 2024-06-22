@@ -1,10 +1,10 @@
 
 import { CircleUser, Cookie, Menu, Package2, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import  dotenv  from 'dotenv'
 import { BACKEND_URL } from "../utils/config"
-import { User } from 'lib/types/user'
-import { PersonalDetailsEdit } from "./user/cv/details"
+import { User } from '@/lib/types/user'
+import { transformCV } from "../utils/codes"
+import { TransformedCV } from "@/src/utils/codes"
 import {
   Card,
   CardContent,
@@ -37,7 +37,22 @@ import  CV  from "./user/cv/cv"
 import { MultiStepCVLoader } from "./ui/cv-loader"
 import { ToastDemo } from "./ui/toast/submit"
 import { toast } from "@/components/ui/use-toast"
+import { set } from "date-fns"
+import { Transform } from "stream"
 
+export const default_cv: TransformedCV = {
+    details: {
+
+    },
+    education: [],
+    work: [],
+    projects: [],
+    skills: [],
+    professional_certifications: [],
+    achievements_and_awards: [],
+    volunteer: [],
+    languages: []
+}
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -47,11 +62,10 @@ export function Profile() {
   const [loading, setLoading] = useState(false);
   const [cv_uploaded, setUploaded] = useState(false);
   const [cv_url, setUrl] = useState(null);
+  const [cv, setCV] = useState(null)
   const checkCVInterval = useRef(null)
   const auth = useAuth();
   const navigate = useNavigate();
-  const loadingLoopInterval = useRef(2000)
-
   const checkedCV = useRef(0)
   const checkCVHandler = async () => {
     const resp = await fetch(BACKEND_URL+'/users/cv', {
@@ -59,13 +73,14 @@ export function Profile() {
       credentials: 'include'
     })
     const data = await resp.json()
-    console.log(data)
+    
     if(data){
       clearInterval(checkCVInterval.current)
       toast({
         variant: 'default',
         description: 'CV Parsed Successfully',
       })
+      setCV(() => transformCV(data))
       setLoading(false)
     }
     checkedCV.current += 1
@@ -82,7 +97,6 @@ export function Profile() {
   }
 
   const uploadHandler = async (e:any) => {
-    console.log(e)
     e.preventDefault();
     const file = e.target.files[0];
     if (!file) return;
@@ -108,7 +122,7 @@ export function Profile() {
 
       const data:User  = await response.json();
       setName(() => data.name);
-      setLoading(() => false);
+      setLoading(false);
       setUploaded(() => data.cv_uploaded)
       let url = ''
       if(!data.cv_uploaded){
@@ -120,24 +134,33 @@ export function Profile() {
           url = data.upload_location
           setUrl( () => url)
         })
+        setCV(default_cv)
+      }
+      else{
+        const resp = await fetch(BACKEND_URL + '/users/cv', {
+          method: 'GET',
+          credentials: 'include'
+        })
+        const cv = await resp.json()
+        // need to set details and cv separately
+        const transformed_cv = transformCV(cv)
+        setCV(transformCV(transformed_cv))
       }
       auth.login(data.name);
     }
-
     fetchData();
   }, []); // The empty array ensures this effect only runs once after the initial render
 
   if (loading) {
       return (<div><div>Loading...</div>
       <MultiStepCVLoader></MultiStepCVLoader>
-      <CV><div></div></CV>
+    
       </div>);
-
   }
   return (
     
     <div className="flex min-h-screen w-full flex-col">
-      
+      {cv && <CV data={cv}><div></div></CV>}
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
         <div className="mx-auto grid w-full max-w-6xl gap-2">
           <h1 className="text-3xl font-semibold">{name}</h1>
@@ -185,18 +208,12 @@ export function Profile() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  
                   <Input title="Upload" className="bg-none hover:bg-primary-foreground-50 " id="cv" type="file" onChange={uploadHandler} />
-            
-               
-                  
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
             </>
             }
-            
-            
           </div>
         </div>
       </main>

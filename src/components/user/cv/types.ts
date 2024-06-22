@@ -19,3 +19,9 @@ export interface UserDetails {
     // };
 
 }
+
+export interface ListedItem{
+    _id: string;
+    immutable: boolean;
+    description: string;
+}

@@ -1,5 +1,5 @@
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
-import { CVInfo }  from '@/src/utils/applicaid-ts-utils/cv_type'
+import { CVInfo, Takeaway }  from '@/src/utils/applicaid-ts-utils/cv_type'
 import testcv from '@/src/test/data/cv.json'
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -35,23 +35,23 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 
 const skillFormSchema = z.object({
   skills: z.array(z.object({
-    id: z.string().optional(),
+    _id: z.string().optional(),
     immutable: z.boolean().default(false),
     value: z.string().optional(),
   })).default([]).optional(),
 })
 
-type SkillFormValues = z.infer<typeof skillFormSchema>
+export type SkillFormValues = z.infer<typeof skillFormSchema>
 
 // This can come from your database or API.
-const defaultValues: Partial<SkillFormValues> = {
-  skills: [{immutable: true, value: "JavaScript"}],
-}
+// const defaultValues: Partial<SkillFormValues> = {
+//   skills: [{immutable: true, value: "JavaScript", _id: undefined}],
+// }
 
-export function SkillsEdit({data, tokens} : {data: string[], tokens:number}) {
+export function SkillsEdit({data, tokens} : {data: SkillFormValues['skills'], tokens:number}) {
     const form = useForm<SkillFormValues>({
         resolver: zodResolver(skillFormSchema ),
-        defaultValues,
+        defaultValues: {skills: data},
         mode: "onChange",
     })
     const { fields, append } = useFieldArray({
@@ -102,7 +102,7 @@ export function SkillsEdit({data, tokens} : {data: string[], tokens:number}) {
             variant="outline"
             size="sm"
             className="mt-2"
-            onClick={() => append({ value: "" })}
+            onClick={() => append({ value: "", immutable: false, _id: undefined})}
           >
             Add Skill
           </Button>
@@ -117,7 +117,6 @@ export const SkillsView: CVPartView = ({ data }: { data: SkillFormValues['skills
   return (
     
       <Table>
-        <TableCaption>Skills</TableCaption>
         <TableHeader>
           <TableRow>
             <TableHead>Skill</TableHead>

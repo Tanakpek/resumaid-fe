@@ -17,13 +17,13 @@ import { Textarea } from '@/components/ui/textarea';
 import { CVPartView } from './utils';
 import { Volunteer } from '@/src/utils/applicaid-ts-utils/cv_type';
 const experienceSchema = z.object({
-    id: z.string().nullable().optional(),
+    _id: z.string().nullable().optional(),
     immutable: z.boolean().default(false),
-    description: z.string().min(1, 'Description is required')
+    value: z.string().min(1, 'Description is required')
 });
 
 const volunteerSchema = z.object({
-    id: z.string().nullable().optional(),
+    _id: z.string().nullable().optional(),
     organization_name: z.string().min(1, 'Organization name is required'),
     role: z.string().min(1, 'Role is required'),
     immutable: z.boolean().default(false),
@@ -49,21 +49,14 @@ const formSchema = z.object({
     organizations: z.array(volunteerSchema)
 });
 
+export type VolunteerFormValues = z.infer<typeof formSchema>;
+
 export const VolunteerEdit = ({ data, tokens }: { data: any, tokens: number }) => {
     const methods = useForm({
         resolver: zodResolver(formSchema),
         mode: 'onChange',
         defaultValues: {
-            organizations: [
-                {
-                    id: '',
-                    organization_name: '',
-                    role: '',
-                    startDate: '',
-                    endDate: '',
-                    takeaways: [{ description: '' }]
-                }
-            ]
+            organizations: data
         }
     });
 
@@ -76,7 +69,7 @@ export const VolunteerEdit = ({ data, tokens }: { data: any, tokens: number }) =
 
     const addTakeaway = (workplaceIndex) => {
         const fieldArrayName: any = `organizations.${workplaceIndex}.takeaways`;
-        methods.setValue(fieldArrayName, [...methods.getValues(fieldArrayName), { description: '' }]);
+        methods.setValue(fieldArrayName, [...methods.getValues(fieldArrayName), { description: '', _id: undefined, immutable:false }]);
         trigger(fieldArrayName);
     };
 
@@ -198,7 +191,7 @@ export const VolunteerEdit = ({ data, tokens }: { data: any, tokens: number }) =
                                                     <div className='w-full flex justify-around my-1'>
                                                         <FormField
                                                             control={control}
-                                                            name={`organizations.${workplaceIndex}.takeaways.${experienceIndex}.description`}
+                                                            name={`organizations.${workplaceIndex}.takeaways.${experienceIndex}.value`}
                                                             render={({ field }) => (
 
                                                                 <FormItem className='flex-grow'>
@@ -206,7 +199,7 @@ export const VolunteerEdit = ({ data, tokens }: { data: any, tokens: number }) =
                                                                     <FormControl>
                                                                         <Textarea placeholder="Description" {...field} />
                                                                     </FormControl>
-                                                                    <FormMessage>{errors?.organizations?.[workplaceIndex]?.takeaways?.[experienceIndex]?.description?.message}</FormMessage>
+                                                                    <FormMessage>{errors?.organizations?.[workplaceIndex]?.takeaways?.[experienceIndex]?.value?.message}</FormMessage>
                                                                 </FormItem>
                                                             )}
                                                         />
@@ -239,12 +232,12 @@ export const VolunteerEdit = ({ data, tokens }: { data: any, tokens: number }) =
                     type="button"
                     onClick={() => {
                         appendWorkplace({
-                            id: undefined,
+                            _id: undefined,
                             organization_name: '',
                             role: '',
                             startDate: '',
                             endDate: '',
-                            takeaways: [{ description: '' }]
+                            takeaways: [{ _id: undefined, immutable: false, value: '' }]
                         });
                     }}
                 >
@@ -261,7 +254,7 @@ export const VolunteerView: CVPartView = ({ data }: { data: Volunteer[] }) => {
     return (
         data.map((experience, index) => {
             return (
-                (<Card>
+                (<Card key={index}>
                     <div className='m-4 mr-10'>
                         <p className='text-right italic'> {experience.dates.length == 1 ? experience.dates : `${experience.dates[0]} - ${experience.dates[1]}`}</p>
                     </div>
@@ -270,7 +263,7 @@ export const VolunteerView: CVPartView = ({ data }: { data: Volunteer[] }) => {
                     <div className='my-4'>
                         {experience.takeaways.map((takeaway, index) => {
                             return (
-                                <p className='my-2'>{takeaway.description}</p>
+                                <p key={index} className='my-2'>{takeaway.value}</p>
                             )
                         })}
                     </div>

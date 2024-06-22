@@ -16,17 +16,18 @@ import { Label } from '@radix-ui/react-dropdown-menu';
 import { Textarea } from '@/components/ui/textarea';
 import { CVPartView } from './utils';
 import { WorkExperience, WorkSlot } from '@/src/utils/applicaid-ts-utils/cv_type';
+import moment from 'moment';
 const experienceSchema = z.object({
-    id: z.string().nullable().optional(),
+    _id: z.string().optional(),
     immutable: z.boolean().default(false),
-    description: z.string().min(1, 'Description is required')
+    value: z.string().min(1, 'Description is required')
 });
 
 const workplaceSchema = z.object({
-    id: z.string().nullable().optional(),
+    _id: z.string().optional(),
     company: z.string().min(1, 'Company name is required'),
     role: z.string().min(1, 'Role is required'),
-    immutable: z.boolean().default(false),
+    immutable: z.boolean().default(false).optional(),
     startDate: z.string({
         required_error: 'Start date is required'
     }).min(1, 'Start date is required'),
@@ -36,8 +37,6 @@ const workplaceSchema = z.object({
         if(data.endDate === 'PRESENT') return true
         const startDate = new Date(data.startDate);
         const endDate = new Date(data.endDate);
-        console.log(startDate, endDate)
-        console.log(startDate < endDate)
         return startDate < endDate
     }
     , 
@@ -50,22 +49,14 @@ const workplaceSchema = z.object({
 const formSchema = z.object({
     workplaces: z.array(workplaceSchema)
 });
+export type WorkFormValues = z.infer<typeof formSchema>
 
-export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
+export const WorkEdit = ({ data, tokens }: { data: WorkFormValues['workplaces'], tokens: number }) => {
     const methods = useForm({
         resolver: zodResolver(formSchema),
         mode: 'onChange',
         defaultValues: {
-            workplaces: [
-                {   
-                    id: '',
-                    company: '',
-                    role: '',
-                    startDate: '',
-                    endDate: '',
-                    takeaways: [{ description: '' }]
-                }
-            ]
+            workplaces: data
         }
     });
 
@@ -78,7 +69,7 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
 
     const addTakeaway = (workplaceIndex) => {
         const fieldArrayName :any= `workplaces.${workplaceIndex}.takeaways`;
-        methods.setValue(fieldArrayName, [...methods.getValues(fieldArrayName), { description: '' }]);
+        methods.setValue(fieldArrayName, [...methods.getValues(fieldArrayName), { value: '' }]);
         trigger(fieldArrayName);
     };
 
@@ -102,7 +93,9 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
                                         control={control}
                                         name={`workplaces.${workplaceIndex}.startDate`}
                                         render={({ field: { value, onChange } }) => (
+                                            
                                             <Popover>
+                                             
                                                 <PopoverTrigger asChild>
                                                     <Button
                                                         variant={"outline"}
@@ -110,7 +103,7 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
                                                             "w-[240px] pl-3 text-left font-normal",
                                                             !value && "text-muted-foreground"
                                                         )}
-                                                    >
+                                                    >   
                                                         {value ? format(new Date(value), "PPP") : <span>Pick a date</span>}
                                                         <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                                                     </Button>
@@ -200,7 +193,7 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
                                                 <div className='w-full flex justify-around my-1'>
                                                     <FormField
                                                         control={control}
-                                                        name={`workplaces.${workplaceIndex}.takeaways.${experienceIndex}.description`}
+                                                        name={`workplaces.${workplaceIndex}.takeaways.${experienceIndex}.value`}
                                                         render={({ field }) => (
                                                             
                                                             <FormItem className='flex-grow'> 
@@ -208,7 +201,7 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
                                                                 <FormControl>
                                                                     <Textarea placeholder="Description" {...field} />
                                                                 </FormControl>
-                                                                <FormMessage>{errors?.workplaces?.[workplaceIndex]?.takeaways?.[experienceIndex]?.description?.message}</FormMessage>
+                                                                <FormMessage>{errors?.workplaces?.[workplaceIndex]?.takeaways?.[experienceIndex]?.value?.message}</FormMessage>
                                                             </FormItem>
                                                         )}
                                                     />
@@ -241,12 +234,12 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
                     type="button"
                     onClick={() => {
                         appendWorkplace({
-                            id: undefined,
+                            _id: undefined,
                             company: '',
                             role: '',
                             startDate: '',
                             endDate: '',
-                            takeaways: [{ description: '' }]
+                            takeaways: [{ value: '', immutable: false, _id: undefined}]
                         });
                     }}
                 >
@@ -259,21 +252,30 @@ export const WorkEdit = ({ data, tokens }: { data: any, tokens: number }) => {
 };
 
 
-export const WorkView: CVPartView = ({ data }: { data: WorkSlot }) => {
+export const WorkView: CVPartView = ({ data }: { data: WorkFormValues['workplaces'] }) => {
     return (
-        Object.keys(data).map((company, index) => {
-            return data[company].map((experience, index) => {
+       
+        data.map((experience, index) => {
+                let ed
+                let sd
+                if(experience.startDate && experience.startDate !== 'Invalid Date'){
+                    sd = experience.startDate === 'PRESENT' ? 'PRESENT' :moment(experience.startDate).format('MMMM YYYY')
+                }
+                if (experience.endDate && experience.endDate !== 'Invalid Date') {
+                    ed = experience.endDate === 'PRESENT' ? 'PRESENT' : moment(experience.endDate).format('MMMM YYYY')
+                }
+                console.log(sd)
                 return(
-                    (<Card>
+                    (<Card key={index}>
                         <div className='m-4 mr-10'>
-                            <p className='text-right italic'> {experience.dates.length == 1 ? experience.dates : `${experience.dates[0]} - ${experience.dates[1]}`}</p>
+                            <p className='text-right italic'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
                         </div>
-                        <CardHeader className=' font-bold p-0'> {company}</CardHeader>
+                        <CardHeader className=' font-bold p-0'> {experience.company}</CardHeader>
                         <CardDescription className='!mt-0'>{experience.role}</CardDescription>
                         <div className='my-4'>
                         {experience.takeaways.map((takeaway, index) => {
                             return (
-                                    <p className='my-2'>{takeaway.description}</p>
+                                    <p key={index} className='my-2'>{takeaway.value}</p>
                             )
                         })}
                         </div>
@@ -282,7 +284,6 @@ export const WorkView: CVPartView = ({ data }: { data: WorkSlot }) => {
                 )
             })
             
-        })
     )
 
 }

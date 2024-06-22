@@ -34,25 +34,12 @@ import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChevronsUpDown } from 'lucide-react'
 import { useState } from 'react'
-
-
-/* 
-test data, erase later
-*/
-import { education } from '@/src/test/data/mock_data'
-import { Label } from '@/components/ui/label'
-import { Switch } from '@/components/ui/switch'
 import { CVPartView } from './utils'
 
-
-export function EducationEdit({data, tokens}) {
-
-    const [multipleCapError, setMultipleCapError] = useState(false)
-    const [multipleGradeError, setMultipleGradeError] = useState(false)
-
-    const educationFormSchema = z.object({
+const educationFormSchema = z.object({
     education: z.array(
-            z.object({
+        z.object({
+            _id: z.string().optional(),
             immutable: z.boolean(),
             start: z.coerce.date().or(z.literal("")),
             end: z.date().optional().or(z.literal("").or(z.literal("PRESENT"))),
@@ -62,17 +49,11 @@ export function EducationEdit({data, tokens}) {
             capstone: z.object({
                 dissertation: z.string().optional().or(z.literal("")),
                 thesis: z.string().optional().or(z.literal("")),
-            }).default({'thesis': "", 'dissertation':""}).optional().refine(data => {
+            }).default({ 'thesis': "", 'dissertation': "" }).optional().refine(data => {
                 let filledFields: string[] | number = ['thesis', 'dissertation'].filter(field => data[field] !== undefined && data[field] !== '');
                 filledFields = filledFields.length;
                 const good = filledFields <= 1;
                 // Return true only if exactly one field is filled
-                if(!good && !multipleCapError){
-                    setMultipleCapError(true)
-                }
-                else if(good && multipleCapError){
-                    setMultipleCapError(false)
-                }
                 console.log(`capstone ${filledFields}`)
                 return good;
             }, {
@@ -82,36 +63,31 @@ export function EducationEdit({data, tokens}) {
                 gpa: z.number().max(4.3).optional().or(z.literal("")),
                 score: z.string().optional().or(z.literal("")),
                 classification: z.string().optional().or(z.literal("")),
-            }).default({'score':"", 'classification':""}).refine(data => {
-                let filledFields:string[] | number = ['gpa', 'score', 'classification'].filter(field => data[field] !== undefined && data[field] !== '')
+            }).default({ 'score': "", 'classification': "" }).refine(data => {
+                let filledFields: string[] | number = ['gpa', 'score', 'classification'].filter(field => data[field] !== undefined && data[field] !== '')
                 filledFields = filledFields.length;
                 // Return true only if exactly one field is filled
                 const good = filledFields <= 1
-                
-                if(!good && !multipleGradeError){
-                    setMultipleGradeError(true)
-                }
-                else if(good && multipleGradeError){
-                    setMultipleGradeError(false)
-                }
+
                 console.log(`scores ${filledFields}`)
                 return good;
-                
+
             }, {
-                message:'Only one field should be filled for education outcome',
-               }
+                message: 'Only one field should be filled for education outcome',
+            }
             )
         })).default([]).optional(),
-    })
-    
-    type EducationFormValues = z.infer<typeof educationFormSchema>
-    
-    // This can come from your database or API.
-    const defaultValues: Partial<EducationFormValues> = {
-    education: [{immutable: true, institution: "my school", start: new Date("2023-01-01") }],
-    }
-    let a = 0
+})
 
+export type EducationFormValues = z.infer<typeof educationFormSchema>
+
+export function EducationEdit({data, tokens}) {
+
+    const [multipleCapError, setMultipleCapError] = useState(false)
+    const [multipleGradeError, setMultipleGradeError] = useState(false)
+
+    
+    
     const [isOpen, setIsOpen] = useState<[number, boolean]>([0, false])
     const [isOpenGrade, setIsOpenGrade] = useState<[number, boolean]>([0, false])
 
@@ -121,7 +97,7 @@ export function EducationEdit({data, tokens}) {
     const form = useForm<EducationFormValues>({
         shouldFocusError: true,
         resolver: zodResolver(educationFormSchema),
-        defaultValues,
+        defaultValues: data,
         mode: "onChange"
     })
     
@@ -505,7 +481,7 @@ export function EducationEdit({data, tokens}) {
             variant="outline"
             size="sm"
             className="mt-2"
-            onClick={() => append({ immutable: false})}
+            onClick={() => append({ immutable: false, _id: undefined})}
           >
             Add Education
           </Button>
@@ -519,7 +495,7 @@ export function EducationEdit({data, tokens}) {
 export const EducationView: CVPartView = ({data} : {data: Education[]}) => {
     return (
       data.map((education, index) => {
-        return (<Card>
+        return (<Card key={index}>
             <div className='m-4 mr-10'>
                 <p className='text-right italic'> {education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}`}</p>
             </div>

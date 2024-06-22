@@ -4,4 +4,5 @@ export interface User {
     given_name: string,
     family_name: string,
     cv_uploaded: boolean,
+    cv: any
 }

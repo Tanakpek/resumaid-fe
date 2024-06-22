@@ -1,5 +1,5 @@
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
-import { CVInfo } from '@/src/utils/applicaid-ts-utils/cv_type'
+import { CVInfo, Takeaway } from '@/src/utils/applicaid-ts-utils/cv_type'
 import testcv from '@/src/test/data/cv.json'
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -33,34 +33,35 @@ import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { DefaultView } from '@/src/components/ui/defaultView'
 
-const skillFormSchema = z.object({
-    skills: z.array(z.object({
-        id: z.string().optional(),
+const languageFormSchema = z.object({
+    languages: z.array(z.object({
+        _id: z.string().optional(),
         immutable: z.boolean().default(false),
         value: z.string().optional(),
     })).default([]).optional(),
 })
 
-type SkillFormValues = z.infer<typeof skillFormSchema>
+export type LanguageFormValues = z.infer<typeof languageFormSchema>
 
 // This can come from your database or API.
-const defaultValues: Partial<SkillFormValues> = {
-    skills: [{ immutable: true, value: "JavaScript" }],
+const defaultValues: Partial<LanguageFormValues> = {
+    languages: [{ immutable: true, value: "JavaScript" , _id: undefined}],
 }
 
-export function SkillsEdit({ data, tokens }: { data: string[], tokens: number }) {
-    const form = useForm<SkillFormValues>({
-        resolver: zodResolver(skillFormSchema),
-        defaultValues,
+export function LanguagesEdit({ data, tokens }: { data: Takeaway[], tokens: number }) {
+    const form = useForm<LanguageFormValues>({
+        resolver: zodResolver(languageFormSchema),
+        
+        defaultValues: {languages: data},
         mode: "onChange",
     })
     const { fields, append } = useFieldArray({
-        name: "skills",
+        name: "languages",
         control: form.control,
     })
 
 
-    function onSubmit(data: SkillFormValues) {
+    function onSubmit(data: LanguageFormValues) {
         toast({
             title: "You submitted the following values:",
             description: (
@@ -80,14 +81,14 @@ export function SkillsEdit({ data, tokens }: { data: string[], tokens: number })
                         <FormField
                             control={form.control}
                             key={field.id}
-                            name={`skills.${index}.value`}
+                            name={`languages.${index}.value`}
                             render={({ field }) => (
                                 <FormItem>
                                     <FormLabel className={cn(index !== 0 && "sr-only")}>
-                                        Skills
+                                        Languages
                                     </FormLabel>
                                     <FormDescription className={cn(index !== 0 && "sr-only")}>
-                                        Add your skills.
+                                        What languages do you speak?.
                                     </FormDescription>
                                     <FormControl>
                                         <Input {...field} value={field.value || ""} />
@@ -102,9 +103,9 @@ export function SkillsEdit({ data, tokens }: { data: string[], tokens: number })
                         variant="outline"
                         size="sm"
                         className="mt-2"
-                        onClick={() => append({ value: "" })}
+                        onClick={() => append({ _id: undefined, immutable: false, value: "" })}
                     >
-                        Add Skill
+                        Add Language
                     </Button>
                 </div>
                 <Button type="submit">Update profile</Button>
@@ -113,14 +114,14 @@ export function SkillsEdit({ data, tokens }: { data: string[], tokens: number })
     )
 }
 
-export const SkillsView: CVPartView = ({ data }: { data: SkillFormValues['skills'] }) => {
+export const LanguagesView: CVPartView = ({ data }: { data: LanguageFormValues['languages'] }) => {
     return (
         <DefaultView>
             <Table>
-                <TableCaption>Skills</TableCaption>
+                <TableCaption>Languages</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead>Skill</TableHead>
+                        <TableHead>Language</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>

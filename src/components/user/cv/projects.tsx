@@ -67,41 +67,37 @@ import { Switch } from '@/components/ui/switch'
 import { DefaultView } from '@/src/components/ui/defaultView'
 
 const projectSchema = z.object({
-    id: z.string().optional(),
+    _id: z.string().optional(),
     name: z.string(),
     immutable: z.boolean().default(false),
     takeaways: z.array(
         z.object({
             immutabe: z.boolean(),
-            takeaway: z.string(),
-            id: z.string().optional(),
+            value: z.string(),
+            _id: z.string().optional(),
         })).default([]),
 })
+const ProjectFormSchema = z.object({
+  projects: z.array(projectSchema).default([]),
+})
 
-type ProjectValues = z.infer<typeof projectSchema>
-export function ProjectsEdit({ data, tokens }: { data: ProjectsSlot, tokens:number }) {
+export type ProjectValues = z.infer<typeof projectSchema>
+export type ProjectFormValues = z.infer<typeof ProjectFormSchema>
+
+export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projects'], tokens:number }) {
     const [addProjectOpen, setAddProjectOpen] = useState(false)
     const [addProjectName, setAddProjectName] = useState('')
-    const ProjectFormSchema = z.object({
-        projects: z.array(projectSchema).default([]),
-    })
-
+  console.log(data)
     const addProjectTypeing = (e) => {
       e.preventDefault()
       console.log(e)
       setAddProjectName(e.target.value)
   }
-
     
-    type ProjectFormValues = z.infer<typeof ProjectFormSchema>
-    
-    // This can come from your database or API.
-    const defaultValues: Partial<ProjectFormValues> = { projects: [] }
-
     const form = useForm<ProjectFormValues>({
         shouldFocusError: true,
         resolver: zodResolver(ProjectFormSchema),
-        defaultValues,
+        defaultValues: data,
         mode: "onChange"
     })
     
@@ -129,8 +125,7 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectsSlot, tokens:numb
        
         <div>
         {fields.map((field, index) => (
-            console.log(fields),
-            <Card className='mb-10 bg-primary-50'>
+            <Card index={index} className='mb-10 bg-primary-50'>
               <div className='flex justify-end'>
               <div className='padding-2 hover:bg-secondary m-3 rounded-md transition ease-in-out'>
               {/* <DropdownMenu>
@@ -202,8 +197,7 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectsSlot, tokens:numb
                 className="mt-2"
                 onClick={(e) => {
                     e.preventDefault()
-                    console.log(fields)
-                    const n = [...fields[index].takeaways, {immutabe: false, takeaway: ''}]
+                    const n = [...fields[index].takeaways, {immutabe: false, value: '', _id: undefined}]
                     fields[index].takeaways = n
                     remove(fields)
                     setTimeout(() => {
@@ -257,11 +251,13 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectsSlot, tokens:numb
 }
 
 
-export const ProjectsView = ({ data }: {data:ProjectsSlot}) => {
+export const ProjectsView = ({ data }: { data: ProjectFormValues['projects'] }) => {
   return (
-    <DefaultView>
+    <>
+    {/* <DefaultView>
 
-    </DefaultView>
+     </DefaultView> */}
+    </>
   )
 }
   

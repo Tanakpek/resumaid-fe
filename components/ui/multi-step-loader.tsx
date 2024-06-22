@@ -116,7 +116,7 @@ export const MultiStepLoader = ({
                         : prevState + 1
                     : Math.min(prevState + 1, loadingStates.length - 1)
             );
-        }, currentState === loadingStates.length - 2 ? duration * 8 :  Math.random() * 4500 );
+        }, currentState === loadingStates.length - 2 ? duration * 8 :  1000 + Math.random() * 4500 );
 
         return () => clearTimeout(timeout);
     }, [currentState, loading, loop, loadingStates.length, duration]);

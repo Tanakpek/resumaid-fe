@@ -1,10 +1,9 @@
-import Image from "next/image"
+
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/src/components/user/cv/sidebar"
 import { PersonalDetailsEdit, PersonalDetailsView } from "./details"
-import { on } from "events"
-import { ReactNode, use, useEffect, useState } from "react"
+import {  useEffect, useState } from "react"
 import { SkillsEdit, SkillsView } from "./skills"
 import { EducationEdit, EducationView } from "./education"
 import { ProjectsEdit, ProjectsView } from "./projects"
@@ -17,20 +16,22 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
-interface SettingsLayoutProps {
-  children: React.ReactNode
-}
-
 import { details,work, volunteer,education,projects, skills, professional_certifications, achievements_and_awards, languages } from "@/src/test/data/mock_data"
 import { Toggle } from "@/components/ui/toggle"
 import { set } from "date-fns"
 import { CertsEdit, CertsView } from "./certifications"
 import { AchievementsEdit, AchievementsView } from "./achivements"
 import { VolunteerEdit, VolunteerView } from "./volunteer"
+import { TransformedCV } from "@/src/utils/codes"
+
+interface SettingsLayoutProps {
+  children: React.ReactNode
+  data: TransformedCV
+}
 const encoding = get_encoding("cl100k_base");
 
-export default function CV({ children }: SettingsLayoutProps) {
-  const [cv, setCV] = useState(null)
+export default function CV({ data, children }: SettingsLayoutProps) {
+  const [cv, setCV] = useState(data)
   const [tokens, setTokens] = useState(0)
   useEffect(() => {
     // fetch('/api/cv')
@@ -38,38 +39,38 @@ export default function CV({ children }: SettingsLayoutProps) {
     // .then(data => setCV(data))
     setCV({
       details,
-      education,
-      work,
-      projects,
-      skills,
-      professional_certifications,
-      achievements_and_awards,
-      volunteer,
-      languages
+      education : cv.education,
+      work: cv.work,
+      projects: cv.projects,
+      skills: cv.skills,
+      professional_certifications: cv.professional_certifications,
+      achievements_and_awards : cv.achievements_and_awards,
+      volunteer : cv.volunteer,
+      languages: cv.languages
     })
     const tokens = encoding.encode(JSON.stringify({
       details,
-      education,
-      work,
-      projects,
-      skills,
-      professional_certifications,
-      achievements_and_awards,
-      volunteer,
-      languages
+      education: cv.education,
+      work: cv.work,
+      projects: cv.projects,
+      skills: cv.skills,
+      professional_certifications: cv.professional_certifications,
+      achievements_and_awards: cv.achievements_and_awards,
+      volunteer: cv.volunteer,
+      languages: cv.languages
     })).length
     setTokens(tokens)
   }, [])
-  
+
   const elements:JSX.Element[][] = [
     [<PersonalDetailsEdit data={details} tokens={tokens} />, <PersonalDetailsView data={details} />],
-    [<EducationEdit data={education} tokens={tokens}/>, <EducationView data={education} />],
-    [<WorkEdit data={work} tokens={tokens} />, <WorkView data={work}  />],
-    [<ProjectsEdit data={projects} tokens={tokens} />, <ProjectsView data={projects} />],
-    [<SkillsEdit data={skills} tokens={tokens} />, <SkillsView data={achievements_and_awards} />],
-    [<AchievementsEdit data={skills} tokens={tokens}/>, <AchievementsView data={achievements_and_awards} />],
-    [<CertsEdit data={professional_certifications} tokens={tokens}/>, <CertsView data={professional_certifications} />],
-    [<VolunteerEdit data={volunteer} tokens={tokens}/>, <VolunteerView data={volunteer} />],
+    [<EducationEdit data={cv.education} tokens={tokens}/>, <EducationView data={cv.education} />],
+    [<WorkEdit data={cv.work} tokens={tokens} />, <WorkView data={cv.work}  />],
+    [<ProjectsEdit data={cv.projects} tokens={tokens} />, <ProjectsView data={cv.projects} />],
+    [<SkillsEdit data={cv.skills} tokens={tokens} />, <SkillsView data={cv.skills} />],
+    [<AchievementsEdit data={cv.achievements_and_awards} tokens={tokens}/>, <AchievementsView data={cv.achievements_and_awards} />],
+    [<CertsEdit data={cv.professional_certifications} tokens={tokens}/>, <CertsView data={cv.professional_certifications} />],
+    [<VolunteerEdit data={cv.volunteer} tokens={tokens}/>, <VolunteerView data={cv.volunteer} />],
   ]
   const sidebarNavItems = [
     {
@@ -126,8 +127,8 @@ export default function CV({ children }: SettingsLayoutProps) {
   }));
   
   const col = getColor(tokens, 400)
-  console.log(tokens)
-  console.log(col)
+  // console.log(tokens)
+  // console.log(col)
   const colorStyle = {
     color: col,
     backgroundColor: col

@@ -1,5 +1,5 @@
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
-import { CVInfo } from '@/src/utils/applicaid-ts-utils/cv_type'
+import { CVInfo, Takeaway } from '@/src/utils/applicaid-ts-utils/cv_type'
 import testcv from '@/src/test/data/cv.json'
 import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -35,23 +35,23 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 
 const achivementFormSchema = z.object({
     achievements_and_awards: z.array(z.object({
-        id: z.string().optional(),
+        _id: z.string().optional(),
         immutable: z.boolean().default(false),
         value: z.string().optional(),
     })).default([]).optional(),
 })
 
-type AchivevementFormValues = z.infer<typeof achivementFormSchema>
+export type AchivevementFormValues = z.infer<typeof achivementFormSchema>
 
 // This can come from your database or API.
 const defaultValues: Partial<AchivevementFormValues> = {
-    achievements_and_awards: [{ immutable: true, value: "Got hella hoes" }],
+    achievements_and_awards: [{ immutable: true, value: "Got hella hoes" , _id: undefined}],
 }
 
-export function AchievementsEdit({ data, tokens }: { data: string[], tokens: number }) {
+export function AchievementsEdit({ data, tokens }: { data: AchivevementFormValues['achievements_and_awards'], tokens: number }) {
     const form = useForm<AchivevementFormValues>({
         resolver: zodResolver(achivementFormSchema),
-        defaultValues,
+        defaultValues: {achievements_and_awards: data},
         mode: "onChange",
     })
     const { fields, append } = useFieldArray({
@@ -103,7 +103,7 @@ export function AchievementsEdit({ data, tokens }: { data: string[], tokens: num
                         variant="outline"
                         size="sm"
                         className="mt-2"
-                        onClick={() => append({ value: "" })}
+                        onClick={() => append({ value: "", immutable: false, _id: undefined})}
                     >
                         Add Achievement
                     </Button>

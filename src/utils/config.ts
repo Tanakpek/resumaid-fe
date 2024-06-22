@@ -11,5 +11,5 @@ const options = {
 
 const qs = new URLSearchParams(options)
 export const google_oauth_url = `${GOOGLE_OAUTH_ROOT}?${qs.toString()}`
-
+export const FE_ORIGIN = 'https://127.0.0.1:5173'
 export const BACKEND_URL = 'https://127.0.0.1:3000'

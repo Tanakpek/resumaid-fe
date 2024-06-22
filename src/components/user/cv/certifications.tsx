@@ -35,23 +35,23 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 
 const certificateFormSchema = z.object({
     certifications: z.array(z.object({
-        id: z.string().optional(),
+        _id: z.string().optional(),
         immutable: z.boolean().default(false),
         value: z.string().optional(),
     })).default([]).optional(),
 })
 
-type CertFormValues = z.infer<typeof certificateFormSchema>
+export type CertFormValues = z.infer<typeof certificateFormSchema>
 
 // This can come from your database or API.
-const defaultValues: Partial<CertFormValues> = {
-    certifications: [{ immutable: true, value: "JavaScript" }],
-}
+// const defaultValues: Partial<CertFormValues> = {
+//     certifications: [{ immutable: true, value: "JavaScript", _id: undefined}],
+// }
 
 export function CertsEdit({ data, tokens }: { data: CertFormValues['certifications'], tokens: number }) {
     const form = useForm<CertFormValues>({
         resolver: zodResolver(certificateFormSchema),
-        defaultValues,
+        defaultValues: {certifications: data},
         mode: "onChange",
     })
     const { fields, append } = useFieldArray({
@@ -102,7 +102,7 @@ export function CertsEdit({ data, tokens }: { data: CertFormValues['certificatio
                         variant="outline"
                         size="sm"
                         className="mt-2"
-                        onClick={() => append({ value: "" })}
+                        onClick={() => append({ value: "", immutable: false, _id: undefined})}
                     >
                         Add
                     </Button>

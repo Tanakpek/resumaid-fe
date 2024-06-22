@@ -11,13 +11,16 @@ const loadingStates = [
         text: "Giving your CV a motivational speech...",
     },
     {
-        text: "Adding pizzazz...",
+        text: "Admiring coleagues' newborn baby photos...",
     },
     {
         text: "Sending your CV to the cloud (literally)...",
     },
     {
-        text: "Eating some low hanging fruit...",
+        text: "Circling back to the prior discussion...",
+    },
+    {
+        text: "Asking plans for the weekend...",
     },
     {
         text: "Speaking to Karen from HR...",

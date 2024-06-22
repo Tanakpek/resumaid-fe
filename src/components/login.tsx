@@ -43,15 +43,14 @@ export function Dashboard() {
     useEffect(() => {
         console.log(google_oauth_url)
     });
-    const handleOauthLogin = async (token:any) => {
-        const resp = await fetch(google_oauth_url, {
-          method: 'GET',
-          headers: {
-            'Access-Control-Allow-Credentials': 'true',
-          }
-        })
-        
-    }
+    // const handleOauthLogin = async (token:any) => {
+    //     const resp = await fetch(google_oauth_url, {
+    //       method: 'GET',
+    //       headers: {
+    //         'Access-Control-Allow-Credentials': 'true',
+    //       }
+    //     }) 
+    // }
     const handleLogin = () => {
         auth.login(user);
         navigate('/');
