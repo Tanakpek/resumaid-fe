@@ -10,12 +10,14 @@ export const projects : ProjectsSlot = {'Project 1' : {
         {
             _id: '234234',
             immutable: true,
-            value: 'Takeaway 1'
+            value: 'Takeaway 1',
+            in: true
         },
         {
             _id: '234234',
             immutable: false,
-            value: 'Takeaway 2'
+            value: 'Takeaway 2',
+            in: true
         }
     ]
 }}
@@ -45,12 +47,14 @@ export const volunteer: Volunteer[] = [{
         {
             _id: '234234',
             immutable: true,
-            value: 'Takeaway 1'
+            value: 'Takeaway 1',
+            in: true
         },
         {
             _id: '234234',
             immutable: false,
-            value: 'Takeaway 2'
+            value: 'Takeaway 2',
+            in: true
         }
     ]
 }]
@@ -64,22 +68,24 @@ export const work: WorkSlot = {"Quadra": [{
         {
             _id: '234234',
             immutable: true,
-            value: 'Takeaway 1'
+            value: 'Takeaway 1',
+            in: true
         },
         {
             _id: '234234',
             immutable: false,
-            value: 'Takeaway 2'
+            value: 'Takeaway 2',
+            in: true
         }
     ]
 }]}
 
 export const details: UserDetails = {
-    first_name: 'John',
-    last_name: 'Doe',
+    given_name: 'John',
+    family_name: 'Doe',
     midde_name: 'Marge',
     email: 'akpektan@gmail.com',
-    phone: '08123456789',
+    phone_number: '08123456789',
     bio: 'I am a software engineer',
     title: 'Mr.',
     github: 'tanakpek',

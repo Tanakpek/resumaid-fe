@@ -3,7 +3,7 @@ import { CircleUser, Cookie, Menu, Package2, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { BACKEND_URL } from "../utils/config"
 import { User } from '@/lib/types/user'
-import { transformCV } from "../utils/codes"
+import { fetchA, transformCV } from "../utils/codes"
 import { TransformedCV } from "@/src/utils/codes"
 import {
   Card,
@@ -39,6 +39,9 @@ import { ToastDemo } from "./ui/toast/submit"
 import { toast } from "@/components/ui/use-toast"
 import { set } from "date-fns"
 import { Transform } from "stream"
+import { MovingBorderDemo } from "./ui/upload-cv-button"
+import { cvURL, getCV, getProfile, startScratchCV } from "../utils/requests"
+import { start } from "repl"
 
 export const default_cv: TransformedCV = {
     details: {
@@ -58,9 +61,11 @@ function delay(ms) {
 }
 
 export function Profile() {
-  const [name, setName] = useState(null);
+  // const [name, setName] = useState(null);
+  // const [cv_uploaded, setUploaded] = useState(false);
+  
+  const [details, setDetails] = useState(null)
   const [loading, setLoading] = useState(false);
-  const [cv_uploaded, setUploaded] = useState(false);
   const [cv_url, setUrl] = useState(null);
   const [cv, setCV] = useState(null)
   const checkCVInterval = useRef(null)
@@ -68,11 +73,8 @@ export function Profile() {
   const navigate = useNavigate();
   const checkedCV = useRef(0)
   const checkCVHandler = async () => {
-    const resp = await fetch(BACKEND_URL+'/users/cv', {
-      method: 'GET',
-      credentials: 'include'
-    })
-    const data = await resp.json()
+    const resp = await getCV()
+    const data = await resp.data
     
     if(data){
       clearInterval(checkCVInterval.current)
@@ -93,12 +95,24 @@ export function Profile() {
         description: 'An error occured while parsing your CV.Please try again.',
       })
       setLoading(false)
+      checkedCV.current = 0
     }
   }
 
+  const defaultCVHandler = async () => {
+    const cv = await startScratchCV()
+    if(cv.status === 200){
+      const data = await cv.data
+      setCV(transformCV(data))
+    }
+  }
+  
   const uploadHandler = async (e:any) => {
     e.preventDefault();
-    const file = e.target.files[0];
+    
+    const t = e.target as HTMLElement;
+    const input = t.parentElement.querySelector('input') as HTMLInputElement;
+    const file = input.files[0];
     if (!file) return;
     const file_type = encodeURIComponent(file.type)
     const resp = await fetch(cv_url, {
@@ -114,39 +128,29 @@ export function Profile() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(BACKEND_URL+'/users/profile', {
-          method: 'GET',
-          credentials: 'include'
-        }
-      );
-
-      const data:User  = await response.json();
-      setName(() => data.name);
+      const response = await getProfile()
+      const data:User  = await response.data
+      
+      setDetails(() => data.details);
       setLoading(false);
-      setUploaded(() => data.cv_uploaded)
+      // setUploaded(() => data.cv_uploaded)
       let url = ''
       if(!data.cv_uploaded){
-        const resp = await fetch(BACKEND_URL+'/users/cv_url', {
-          method: 'POST',
-          credentials: 'include'
-        })
-        resp.json().then((data) => {
-          url = data.upload_location
-          setUrl( () => url)
-        })
-        setCV(default_cv)
+        const resp = await cvURL()
+        url = resp.data.upload_location
+        setUrl( () => url)
+        
+        // setCV(default_cv)
       }
       else{
-        const resp = await fetch(BACKEND_URL + '/users/cv', {
-          method: 'GET',
-          credentials: 'include'
-        })
-        const cv = await resp.json()
+        const resp = await getCV()
+        const cv = await resp.data
         // need to set details and cv separately
         const transformed_cv = transformCV(cv)
         setCV(transformCV(transformed_cv))
       }
-      auth.login(data.name);
+      const u = { name: data.name, email: data.email }
+      auth.login(u);
     }
     fetchData();
   }, []); // The empty array ensures this effect only runs once after the initial render
@@ -160,62 +164,46 @@ export function Profile() {
   return (
     
     <div className="flex min-h-screen w-full flex-col">
-      {cv && <CV data={cv}><div></div></CV>}
+      
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+        {cv && <CV data={cv} details={details}><div></div></CV>}
+        {!cv && 
+          <div className="m-auto">
         <div className="mx-auto grid w-full max-w-6xl gap-2">
-          <h1 className="text-3xl font-semibold">{name}</h1>
+          <h1 className="text-3xl font-semibold">{details?.name}</h1>
         </div>
-        <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-          <nav
-            className="grid gap-4 text-sm text-muted-foreground" x-chunk="dashboard-04-chunk-0"
-          >
-            <a href="#" className="font-semibold text-primary">
-              General
-            </a>
-            <a href="#">Security</a>
-            <a href="#">Integrations</a>
-            <a href="#">Support</a>
-            <a href="#">Organizations</a>
-            <a href="#">Advanced</a>
-          </nav>
-          <div className="grid gap-6">
-            <Card x-chunk="dashboard-04-chunk-1">
-              <CardHeader>
-                <CardTitle>Store Name</CardTitle>
-                <CardDescription>
-                  Used to identify your store in the marketplace.
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form>
-                  <Input placeholder="Store Name" />
-                </form>
-              </CardContent>
-              <CardFooter className="border-t px-6 py-4">
-                <Button>Save</Button>
-              </CardFooter>
-            </Card>
-            {!cv_uploaded && 
-            <>
-            <AlertDialog>
-              <AlertDialogTrigger>Upload CV</AlertDialogTrigger>
-              <AlertDialogContent>
-                <AlertDialogHeader>
-                  <AlertDialogTitle>Please upload your CV</AlertDialogTitle>
-                  <AlertDialogDescription>
-                    Accepted: .pdf, .doc, .docx
-                  </AlertDialogDescription>
-                </AlertDialogHeader>
-                <AlertDialogFooter>
-                  <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <Input title="Upload" className="bg-none hover:bg-primary-foreground-50 " id="cv" type="file" onChange={uploadHandler} />
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            </>
-            }
+        
+        <div className="flex justify-center">
+          <div>
+            <div className="my-6">
+              <AlertDialog>
+                <MovingBorderDemo>
+                      <AlertDialogTrigger><p className="text-base font-semibold">Upload CV</p></AlertDialogTrigger>
+                </MovingBorderDemo>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>Please upload your CV</AlertDialogTitle>
+                    <AlertDialogDescription>
+                      Accepted: .pdf, .doc, .docx
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <Input title="Upload" className="bg-none hover:bg-primary-foreground-50 " id="cv" type="file"  />
+                    <Button variant="ghost" onClick={uploadHandler}>Upload</Button>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+              </AlertDialog>
+            </div>
+            <p className=" text-s font-light">or</p>
+            <Button variant='ghost' className="my-4" onClick={defaultCVHandler}>
+                  <p className=" text-base">Start from Scratch</p>
+            </Button>
+            
           </div>
-        </div>
+          </div> 
+          </div>
+        }
       </main>
     </div>
   )

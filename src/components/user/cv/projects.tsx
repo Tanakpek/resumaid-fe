@@ -2,58 +2,28 @@
 // @ts-expect-error
 // @ts-nocheck
 
-import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody, TableCell } from '@/components/ui/table'
-import { CVInfo, ProjectsSlot }  from '@/src/utils/applicaid-ts-utils/cv_type'
-import testcv from '@/src/test/data/cv.json'
-import Link from "next/link"
 import { zodResolver } from "@hookform/resolvers/zod"
-import validator from "validator"
-import { FieldArrayWithId, UseFormReturn, useFieldArray, useForm } from "react-hook-form"
-import { z } from "zod"
-import { cn } from "@/lib/utils"
+import { FormProvider, useFieldArray, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import {
-    Collapsible,
-    CollapsibleContent,
-    CollapsibleTrigger,
-  } from "@/components/ui/collapsible"
-import { generateRandomId } from './utils'
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/components/ui/use-toast"
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
-import { Calendar } from '@/components/ui/calendar'
-import { CalendarIcon, CardStackIcon, ChevronDownIcon, PlusIcon } from '@radix-ui/react-icons'
-import { format, set } from 'date-fns'
-import { Checkbox } from '@/components/ui/checkbox'
-import { Separator } from '@/components/ui/separator'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { ChevronsUpDown } from 'lucide-react'
+
+import { Card, CardHeader } from '@/components/ui/card'
 import { useEffect, useState } from 'react'
-import { error } from 'console'
 import { Label } from '@/components/ui/label'
-import { DropdownMenu } from '@radix-ui/react-dropdown-menu'
-import { randomBytes, randomUUID } from 'crypto'
 import Trash from '../../../assets/trash-2.svg?react'
 import SvgIcon from '../../../assets/settings.svg?react'
 import XIcon from '../../../assets/x.svg?react'
-import { DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu'
+import { TransformedCV, transformCV } from '@/src/utils/codes';
 
 // console.warn = () => {}
 // console.error = () => {}
@@ -62,42 +32,24 @@ import { DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuItem, Dropdo
 /* 
 test data, erase later
 */
-import { projects } from '@/src/test/data/mock_data'
-import { Switch } from '@/components/ui/switch'
-import { DefaultView } from '@/src/components/ui/defaultView'
+import { ProjectFormSchema, ProjectFormValues } from '@/src/utils/applicaid-ts-utils/cv_form_types'
+import { deleteProject, postProjects } from '@/src/utils/requests'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { Toggle } from "@/components/ui/toggle"
 
-const projectSchema = z.object({
-    _id: z.string().optional(),
-    name: z.string(),
-    immutable: z.boolean().default(false),
-    takeaways: z.array(
-        z.object({
-            immutabe: z.boolean(),
-            value: z.string(),
-            _id: z.string().optional(),
-        })).default([]),
-})
-const ProjectFormSchema = z.object({
-  projects: z.array(projectSchema).default([]),
-})
-
-export type ProjectValues = z.infer<typeof projectSchema>
-export type ProjectFormValues = z.infer<typeof ProjectFormSchema>
-
-export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projects'], tokens:number }) {
-    const [addProjectOpen, setAddProjectOpen] = useState(false)
-    const [addProjectName, setAddProjectName] = useState('')
-  console.log(data)
-    const addProjectTypeing = (e) => {
-      e.preventDefault()
-      console.log(e)
+export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues['projects'], tokens: number, setcv: (cv: TransformedCV) => void }) {
+  const [defaultValues, setDefaultValues] = useState(data)
+  const [addProjectOpen, setAddProjectOpen] = useState(false)
+  const [addProjectName, setAddProjectName] = useState('')
+  const addProjectTypeing = (e) => {
+      // e.preventDefault()
       setAddProjectName(e.target.value)
   }
     
     const form = useForm<ProjectFormValues>({
         shouldFocusError: true,
         resolver: zodResolver(ProjectFormSchema),
-        defaultValues: data,
+        defaultValues: {projects: defaultValues},
         mode: "onChange"
     })
     
@@ -106,54 +58,90 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projec
         control: form.control,
     })
 
-  function onSubmit(data: ProjectFormValues) {
-    console.log('submitted')
-    // toast({
-    //   title: "You submitted the following values:",
-    //   description: (
-    //     <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-    //       <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-    //     </pre>
-    //   ),
-    // })
+  useEffect(() => {
+    setDefaultValues(data)
+    form.reset({projects: data})
+  }, [data])
+
+  const removeHandler = async (proj, projIndex) => {
+    if (proj._id) {
+      const cv = await deleteProject(proj._id)
+      setcv(transformCV(cv.data))
+    }
+    else {
+      remove(projIndex);
+    }
+  }
+    
+
+  async function onSubmit(data: ProjectFormValues) {
+    const resp = await postProjects(data)
+    
+    if (resp.status === 200) {
+      try {
+        const cv = transformCV(resp.data)
+        if (cv) {
+          toast({
+            title: "You changed your details successfully!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              </pre>
+            ),
+          })
+          setcv(cv)
+        }
+        else{
+          throw new Error('Could not transform CV')
+        }
+      } catch (e) {
+        toast({
+          title: "Something went wrong",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{ }</code>
+            </pre>
+          ),
+        })
+      }
+    } else {
+      toast({
+        title: "Bad Request",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{resp.statusText}</code>
+          </pre>
+        ),
+      })
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit) //onSubmit
-      } className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
        
         <div>
         {fields.map((field, index) => (
-            <Card index={index} className='mb-10 bg-primary-50'>
+            <Card index={index} className='mb-10 bg-primary-50' key={index}>
               <div className='flex justify-end'>
               <div className='padding-2 hover:bg-secondary m-3 rounded-md transition ease-in-out'>
-              {/* <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="secondary" className="px-2 shadow-none">
-                  <ChevronDownIcon className="h-4 w-4 text-secondary-foreground" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent
-                align="end"
-                alignOffset={-5}
-                className="w-[200px]"
-                forceMount
-              >
-                <DropdownMenuLabel>Suggested Lists</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuCheckboxItem checked>
-                  Future Ideas
-                </DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>My Stack</DropdownMenuCheckboxItem>
-                <DropdownMenuCheckboxItem>Inspiration</DropdownMenuCheckboxItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <PlusIcon className="mr-2 h-4 w-4" /> Create List
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu> */}
-              <Trash className='stroke-slate-500 m-2 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 align-right'/>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <Trash className='stroke-slate-500 m-1 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 flex hover:stroke-red-400 transition ease-in-out' />
+                  </AlertDialogTrigger>
+                  <AlertDialogContent>
+                    <AlertDialogHeader>
+                      <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                      <AlertDialogDescription>
+                        Are you sure you want to delete this experience? This action cannot be undone.
+                      </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                      <AlertDialogCancel>Cancel</AlertDialogCancel>
+                      <AlertDialogAction onClick={() => removeHandler(field,index)}> Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                  </AlertDialogContent>
+                </AlertDialog>
               </div>
               </div>
                 <div>
@@ -163,16 +151,15 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projec
                 <div className='flex-column w-full relative'>
 
                 {field.takeaways.map((takeaway, inx) => (
-                    <div className='flex justify-center ml-3'> 
+                    <div className='flex justify-center ml-3' index={index + '_' +inx}> 
                       <FormField
                       control={form.control}
-                      key={field.id}
-                      name={`projects.${index}.takeaways.${inx}.takeaway`}
+                      key={index+'-'+inx}
+                      name={`projects.${index}.takeaways.${inx}.value`}
                       render={({ field }) => (
-
                           <FormItem className='flex m-2 relative w-3/4'>
                               <FormControl>
-                                  <Textarea  {...field} value={takeaway.takeaway || ""}/>
+                                <Textarea value={takeaway.value} {...field} />
                               </FormControl>
                               <FormMessage />
                           </FormItem>
@@ -196,14 +183,9 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projec
                 key={field.id}
                 className="mt-2"
                 onClick={(e) => {
-                    e.preventDefault()
                     const n = [...fields[index].takeaways, {immutabe: false, value: '', _id: undefined}]
                     fields[index].takeaways = n
-                    remove(fields)
-                    setTimeout(() => {
-                        replace(fields)
-                    }, 200)
-                    
+                    replace(fields)
                 }}
             >
                 Add takeaway
@@ -214,6 +196,7 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projec
           <Popover open={addProjectOpen}>
               <PopoverTrigger>
                 <Button variant="outline"
+                type="button"
                 onClick={() => setAddProjectOpen(!addProjectOpen)}
                 role="combobox"
                 aria-expanded={addProjectOpen}
@@ -251,13 +234,101 @@ export function ProjectsEdit({ data, tokens }: { data: ProjectFormValues['projec
 }
 
 
-export const ProjectsView = ({ data }: { data: ProjectFormValues['projects'] }) => {
-  return (
-    <>
-    {/* <DefaultView>
+export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['projects'], setcv: Dispatch<SetStateAction<TransformedCV>> }) => {
+  const [defaultValues, setDefaultValues] = useState(data)
+  const form = useForm<ProjectFormValues>({
+    shouldFocusError: true,
+    resolver: zodResolver(ProjectFormSchema),
+    defaultValues: { projects: defaultValues },
+    mode: "onChange"
+  })
 
-     </DefaultView> */}
-    </>
-  )
+  const { fields, append, replace, remove } = useFieldArray<ProjectFormValues>({
+    name: "projects",
+    control: form.control,
+  })
+
+  useEffect(() => {
+    setDefaultValues(data)
+    form.reset({ projects: data })
+  }, [data])
+
+  const onSubmit = async (data: WorkFormValues) => {
+    const resp = await postProjects(data)
+    if (resp.status === 200) {
+      try {
+        const cv = (transformCV(resp.data))
+        if (cv) {
+          toast({
+            title: "You changed your details successfully!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              </pre>
+            ),
+          })
+          setcv(cv)
+        }
+        else {
+          throw new Error("Could not transform CV")
+        }
+      } catch (e) {
+        toast({
+          title: "Something went wrong",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{ }</code>
+            </pre>
+          ),
+        })
+      }
+    } else {
+      toast({
+        title: "Bad Request",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{resp.statusText}</code>
+          </pre>
+        ),
+      })
+    }
+  }
+
+  return (
+    <FormProvider {...form}>
+    <form onSubmit={form.handleSubmit(onSubmit)}>
+    {
+    data.map((project, index) => {
+      return (
+        (<Card key={index} className="p-6 mb-10">
+          <CardHeader className=' font-bold p-0'> {project.name}</CardHeader>
+          <div className='my-4'>
+            {project.takeaways.map((takeaway, idx) => {
+              return (
+                <FormField
+                    control={form.control}
+                    name={`projects.${index}.takeaways.${idx}.in`}
+                    render={({ field }) => (
+                        <FormItem className='flex-grow'>
+                            <FormControl>
+                          <Toggle className='my-3  h-auto w-full justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange} >
+                              <p key={index} className='my-2 text-justify'>{takeaway.value}</p>
+                            </Toggle>
+                </FormControl>
+                </FormItem>
+                )}
+                />
+              )
+            })}
+          </div>
+
+        </Card>)
+      )
+    })
+    }
+    <Button type="submit">Submit</Button>
+    </form>
+    </FormProvider>
+  ) 
 }
   

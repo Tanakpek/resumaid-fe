@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { AuthProvider } from './components/auth'
+import { AuthProvider, useAuth } from './components/auth'
 import { Routes, Route } from 'react-router-dom'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -9,14 +9,14 @@ import React from 'react'
 import { NavBar } from './components/navbar'
 import { Toaster } from "@/components/ui/toaster"
 import { Profile } from './components/profile'
-import { Login, Dashboard } from './components/login'
+import { Dashboard } from './components/login'
 
 function App() {
-
+  const { user, login, logout } = useAuth();
   return (
     <>
       
-      <AuthProvider>
+      
         <Routes>
             <Route path="/" element={
               <div>
@@ -26,6 +26,7 @@ function App() {
             }>
             </Route>
 
+            
             <Route path="/auth" element={
                 <Dashboard/>
             }>
@@ -36,7 +37,7 @@ function App() {
             }>
             </Route>
         </Routes>
-      </AuthProvider>
+      
       <Toaster />
       
     </>

@@ -28,11 +28,8 @@ export const About = () => {
                 </div>
               </div>
               <p className="text-xl text-muted-foreground mt-4">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit
-                amet, consectetur adipiscing elit.
+                Companies use all sorts of tools to sift through resumes. You deserve more than a few nanoseconds of computer attention. Now
+                its our machines vs. theirs. We are here to help you win.
               </p>
             </div>
 

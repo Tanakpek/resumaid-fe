@@ -116,7 +116,7 @@ export const HeroCards = () => {
         <div style={{borderRadius: 21}}className="z-1 bg-white dark:bg-slate-900">
         <CardHeader className="z-1">
           <CardTitle className="flex item-center justify-between z-1">
-            Free
+            Standard
             <Badge
               variant="secondary"
               className="text-sm text-primary z-1"
@@ -125,7 +125,7 @@ export const HeroCards = () => {
             </Badge>
           </CardTitle>
           <div>
-            <span className="text-3xl font-bold">$0</span>
+            <span className="text-3xl font-bold">$13</span>
             <span className="text-muted-foreground"> /month</span>
           </div>
 
@@ -167,10 +167,9 @@ export const HeroCards = () => {
             <LightBulbIcon />
           </div>
           <div>
-            <CardTitle>Light & dark mode</CardTitle>
+            <CardTitle>ATS Optimized</CardTitle>
             <CardDescription className="text-md mt-2">
-              Lorem ipsum dolor sit amet consect adipisicing elit. Consectetur
-              natusm.
+              Our templates are optimized for Applicant Tracking Systems
             </CardDescription>
           </div>
         </CardHeader>

@@ -26,57 +26,87 @@ import { UserDetails } from './types'
 import { Checkbox } from '@/components/ui/checkbox'
 
 import { ToastDemo } from "../../ui/toast/submit"
+import { Separator } from "@/components/ui/separator"
+import { ProfileFormValues, profileFormSchema } from "@/src/utils/applicaid-ts-utils/cv_form_types"
+import { TransformedCV, transformCV } from "@/src/utils/codes"
+import { postDetails } from "@/src/utils/requests"
+import { useEffect, useState } from "react"
 
-
-const profileFormSchema = z.object({
-  email: z
-    .string({
-      required_error: "Please select an email to display.",
-    })
-    .email(),
-  phone: z.string().refine(validator.isMobilePhone).nullish().or(z.literal("")),
-//   address: z.string().optional(),
-  bio: z.string().max(160, "Maximum 160 characters.").min(4, 'Minimum 4 characters.').optional().or(z.literal("")),
-  personal_website: z.string().url('Please Enter a valid url.').optional().or(z.literal("")),
-  linkedin: z.string().url().refine((e) => { e.startsWith('https://www.linkedin.com/in/')}, 'must be a LinkedIn profile').optional().or(z.literal("")),
-  github: z.string().refine((e) => { e.startsWith('https://github.com/')}, 'Must be a GitHub Profile').optional().or(z.literal("")),
-})
-type ProfileFormValues = z.infer<typeof profileFormSchema>
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I own a computer.",
 }
-export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:number}) {
+export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDetails, tokens:number, setdetails: (details: any) => void }) {
+
+  const [defaultValues, setDefaultValues] = useState<ProfileFormValues>(data)
 
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
-    defaultValues,
+    defaultValues: defaultValues,
     mode: "onChange",
   })
 
-  function onSubmit(data: ProfileFormValues) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+  useEffect(() => {
+    setDefaultValues(data)
+    form.reset(data)
+  }, [data])
+  
+  async function onSubmit(data: ProfileFormValues) {
+    const resp = await postDetails(data)
+    if (resp.status === 200) {
+      try {
+        const deets = resp.data.details
+        if (deets) {
+          toast({
+            title: "You changed your details successfully!",
+            description: (
+              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              </pre>
+            ),
+          })
+          
+          setdetails(deets)
+        }else{
+          throw new Error("Something went wrong")
+        }
+      } catch (e) {
+        console.log(e)
+        toast({
+          title: "Something went wrong",
+          description: (
+            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+              <code className="text-white">{ }</code>
+            </pre>
+          ),
+        })
+      }
+    } else {
+      toast({
+        title: "Bad Request",
+        description: (
+          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+            <code className="text-white">{ resp.statusText }</code>
+          </pre>
+        ),
+      })
+    }
   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit, (e) => {console.log(e)})} className="space-y-8">
         <FormField
           control={form.control}
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <div className="flex">
+                <FormLabel>Email</FormLabel>
+              </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input  {...field} />
                 </FormControl>
               </Select>
               <FormMessage />
@@ -85,10 +115,12 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
         />
         <FormField
           control={form.control}
-          name="phone"
+          name="phone_number"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Phone Number</FormLabel>
+            <FormItem className=" justify-start">
+              <div className="flex">
+                <FormLabel>Phone Number (optional)</FormLabel>
+              </div>
               <Select onValueChange={field.onChange}>
                 <FormControl>
                 <Input {...field} />
@@ -103,7 +135,9 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
           name="bio"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Bio <span>(optional)</span></FormLabel>
+              <div className="flex">
+                <FormLabel>Bio <span>(optional)</span></FormLabel>
+              </div>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
@@ -111,10 +145,6 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
                   {...field}
                 />
               </FormControl>
-              <FormDescription>
-                You can <span>@mention</span> other users and organizations to
-                link to them.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -126,10 +156,12 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
           name="personal_website"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Website <span>(optional)</span> </FormLabel>
+              <div className="flex">
+                <FormLabel>Website <span>(optional)</span> </FormLabel>
+              </div>
               <Select onValueChange={field.onChange}>
                 <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="https://www.mypage.com" {...field} />
                 </FormControl>
               </Select>
               <FormDescription>
@@ -144,11 +176,13 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
           control={form.control}
           name="linkedin"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>LinkedIn <span>(optional)</span></FormLabel>
+            <FormItem className="my-6">
+              <div className="flex">
+                <FormLabel>LinkedIn <span>(optional)</span></FormLabel>
+              </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                  <Input placeholder="your-handle-6a35b21y0" {...field} />
                 </FormControl>
               </Select>
               <FormMessage />
@@ -159,11 +193,13 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
           control={form.control}
           name="github"
           render={({ field }) => (
-            <FormItem>
-              <FormLabel>Github <span>(optional)</span></FormLabel>
+            <FormItem className="my-6">
+              <div className="flex">
+                <FormLabel>Github <span>(optional)</span></FormLabel>
+              </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="username" {...field} />
                 </FormControl>
               </Select>
               <FormMessage />
@@ -178,15 +214,17 @@ export function PersonalDetailsEdit({data, tokens} : {data: UserDetails, tokens:
 }
 
 
-export const PersonalDetailsView: CVPartView = ({ data }: { data: UserDetails }) => {
-  const { first_name, last_name, midde_name, email, phone, bio, title, github, linkedin, website } = data
+export const PersonalDetailsView: CVPartView = ({ data, setdetails }: { data: UserDetails , setdetails: (d:any) => void }) => {
+  const { given_name, family_name, midde_name, email, phone_number, bio, title, github, linkedin, website } = data
 
   return (
     <Card className='w-full'>
+      
       <form>
       <CardHeader>
-        <CardTitle>{`${title} ${first_name} ${midde_name ? midde_name[0] + '. ' + last_name : last_name}`}</CardTitle>
+        <CardTitle>{`${title ? title : ''} ${given_name} ${midde_name ? midde_name[0] + '. ' + family_name : family_name}`}</CardTitle>
       </CardHeader>
+      <Separator className="my-4" />
       <CardContent>
        
           <div className="">
@@ -209,14 +247,19 @@ export const PersonalDetailsView: CVPartView = ({ data }: { data: UserDetails })
               </div>
             </div>
             
-            {phone && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="mr-auto flex flex-col space-y-1.5 col-start-1 col-end-2">
+            {phone_number && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="mr-auto flex flex-col space-y-1.5 col-start-1 col-end-2">
               <Label className='mr-auto' htmlFor="phone">Phone Number</Label>
-              <CardDescription className='mr-auto'>{phone}</CardDescription>
+              <CardDescription className='mr-auto'>{phone_number}</CardDescription>
+              
             </div>
               <div className="flex flex-col  col-start-2 col-end-3 space-y-1.5 mr-auto">
                 <Checkbox id='phone'/>
               </div>
+              
             </div>}
+            
+              <Separator className="" />
+            
             {linkedin && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="flex flex-col space-y-1.5 mr-auto col-start-1 col-end-2">
               <Label className='mr-auto'>LinkedIn</Label>
               <CardDescription className='mr-auto'>{linkedin}</CardDescription>

@@ -7,17 +7,13 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children } : any) => {
     const [user, setUser] = useState(null);
-
     const login = (user: ClientUserData) => {
         setUser(user);
     };
-
     const logout = () => {
         setUser(null);
     };
-
     return (
-        
         <AuthContext.Provider value={{ user, login, logout } as any} >
             {children}
         </AuthContext.Provider>

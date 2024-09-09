@@ -25,52 +25,52 @@ interface PricingProps {
   description: string;
   buttonText: string;
   benefitList: string[];
+  disabled?: boolean;
 }
 
 const pricingList: PricingProps[] = [
   {
-    title: "Free",
-    popular: 0,
-    price: 0,
-    description:
-      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Get Started",
-    benefitList: [
-      "1 Team member",
-      "2 GB Storage",
-      "Upto 4 pages",
-      "Community support",
-      "lorem ipsum dolor",
-    ],
-  },
-  {
-    title: "Premium",
+    title: "Standard",
     popular: 1,
-    price: 5,
+    price: 12,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
     buttonText: "Start Free Trial",
     benefitList: [
-      "4 Team member",
-      "4 GB Storage",
-      "Upto 6 pages",
-      "Priority support",
-      "lorem ipsum dolor",
+      "20 runs per day",
+      "3 months document retention",
+      "Basic application tracking",
+      "Mix of fine-tuned GPT-4o and 3.5 Turbo",
+    ],
+  },
+  {
+    title: "Premium",
+    popular: 0,
+    price: 20,
+    disabled: true,
+    description:
+      "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
+    buttonText: "Coming soon",
+    benefitList: [
+      "50 Generations per day",
+      "More customization options",
+      "Tag takeaways for resume presets",
+      "Freedom to choose from models",
     ],
   },
   {
     title: "Enterprise",
+    disabled: true,
     popular: 0,
     price: 40,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
-    buttonText: "Contact US",
+    buttonText: "Coming Soon",
     benefitList: [
-      "10 Team member",
-      "8 GB Storage",
-      "Upto 10 pages",
-      "Priority support",
-      "lorem ipsum dolor",
+      "Backdoor to employers",
+      "RAG augmented screening call suggestions",
+      "Unlimited runs",
+      "Daily application kit"
     ],
   },
 ];
@@ -86,8 +86,7 @@ export const Pricing = () => {
         Access
       </h2>
       <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-        reiciendis.
+        Get started with standard. 
       </h3>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {pricingList.map((pricing: PricingProps) => (
@@ -121,7 +120,7 @@ export const Pricing = () => {
             </CardHeader>
 
             <CardContent>
-              <Button className="w-full">{pricing.buttonText}</Button>
+              <Button variant={pricing.disabled ? 'ghost' : 'default'} className={`w-full`}>{pricing.buttonText}</Button>
             </CardContent>
 
             <hr className="w-4/5 m-auto mb-4" />

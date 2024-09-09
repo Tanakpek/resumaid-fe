@@ -32,23 +32,16 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { DefaultView } from '@/src/components/ui/defaultView'
-
-const certificateFormSchema = z.object({
-    certifications: z.array(z.object({
-        _id: z.string().optional(),
-        immutable: z.boolean().default(false),
-        value: z.string().optional(),
-    })).default([]).optional(),
-})
-
-export type CertFormValues = z.infer<typeof certificateFormSchema>
+import { CertFormValues, certificateFormSchema } from '@/src/utils/applicaid-ts-utils/cv_form_types'
+import { TransformedCV, transformCV } from '@/src/utils/codes'
+import { postCertifications } from '@/src/utils/requests'
 
 // This can come from your database or API.
 // const defaultValues: Partial<CertFormValues> = {
 //     certifications: [{ immutable: true, value: "JavaScript", _id: undefined}],
 // }
 
-export function CertsEdit({ data, tokens }: { data: CertFormValues['certifications'], tokens: number }) {
+export function CertsEdit({ data, tokens, setcv }: { data: CertFormValues['certifications'], tokens: number, setcv: (cv: TransformedCV) => void }) {
     const form = useForm<CertFormValues>({
         resolver: zodResolver(certificateFormSchema),
         defaultValues: {certifications: data},
@@ -60,15 +53,45 @@ export function CertsEdit({ data, tokens }: { data: CertFormValues['certificatio
     })
 
 
-    function onSubmit(data: CertFormValues) {
-        toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        })
+    async function onSubmit(data: CertFormValues) {
+        const resp = await postCertifications(data)
+        if (resp.status === 200) {
+            try {
+                const cv = (transformCV(resp.data))
+                if (cv) {
+                    toast({
+                        title: "You changed your details successfully!",
+                        description: (
+                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                            </pre>
+                        ),
+                    })
+                    setcv(cv)
+                }
+                else {
+                    throw new Error("Could not transform CV")
+                }
+            } catch (e) {
+                toast({
+                    title: "Something went wrong",
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                            <code className="text-white">{ }</code>
+                        </pre>
+                    ),
+                })
+            }
+        } else {
+            toast({
+                title: "Bad Request",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white">{resp.statusText}</code>
+                    </pre>
+                ),
+            })
+        }
     }
 
     return (

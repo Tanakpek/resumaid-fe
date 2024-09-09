@@ -14,21 +14,21 @@ interface ServiceProps {
 
 const serviceList: ServiceProps[] = [
   {
-    title: "Code Collaboration",
+    title: "Result Driven",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Realize interviews, offers, and hires in record time. We boast a 80% reduction in time-to-first-interview on our sample group.",
     icon: <ChartIcon />,
   },
   {
-    title: "Project Management",
+    title: "Affordable Pricing",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "We make sure those GPUs are put to good use. Our pricing is 20% lower than the competition. You break even before lunch on your first day!",
     icon: <WalletIcon />,
   },
   {
-    title: "Task Automation",
+    title: "Easy to Use",
     description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi nesciunt est nostrum omnis ab sapiente.",
+      "Just press the button and watch the magic happen. Our platform is so easy to use, you'll be up and running in no time.",
     icon: <MagnifierIcon />,
   },
 ];

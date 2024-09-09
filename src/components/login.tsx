@@ -6,31 +6,31 @@ import { google_oauth_url } from "../utils/config";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import Google from '@/src/assets/google.svg?react'
 
-
-export const Login = () => {
-    const [user, setUser] = useState("");
-    const auth = useAuth();
-    const navigate = useNavigate();
+// export const Login = () => {
+//     const [user, setUser] = useState("");
+//     const auth = useAuth();
+//     const navigate = useNavigate();
 
     
     
-    const handleLogin = () => {
-        auth.login(user);
-        navigate('/');
-    }
+//     const handleLogin = () => {
+//         auth.login(user);
+//         navigate('/');
+//     }
 
-    return (
-        <div>
-            <label>
-                Username:{' '}
-                <input type="text" value={user} onChange={(e) => setUser(e.target.value)} />
-            </label>
-            <button onClick={handleLogin}>Login</button>
-        </div>
-    )
+//     return (
+//         <div>
+//             <label>
+//                 Username:{' '}
+//                 <input type="text" value={user} onChange={(e) => setUser(e.target.value)} />
+//             </label>
+//             <button onClick={handleLogin}>Login</button>
+//         </div>
+//     )
     
-}
+// }
 
 
 export function Dashboard() {
@@ -38,11 +38,7 @@ export function Dashboard() {
     const [pass, setPass] = useState("");
     const auth = useAuth();
     const navigate = useNavigate();
-
-    
-    useEffect(() => {
-        console.log(google_oauth_url)
-    });
+   
     // const handleOauthLogin = async (token:any) => {
     //     const resp = await fetch(google_oauth_url, {
     //       method: 'GET',
@@ -92,9 +88,12 @@ export function Dashboard() {
               Login
             </Button>
             
-            <div>
-              <a href={google_oauth_url} className="flex items-center gap-2 justify-center">Login with google</a>
-            </div>
+            
+              <Button className=" grid grid-cols-3 gap-4">
+                <Google className=" h-full col-span-1"/>
+                <a href={google_oauth_url} className=" col-span-1 flex items-center gap-2 justify-center">Login with Google</a>
+              </Button>
+           
             
             
             

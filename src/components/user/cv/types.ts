@@ -1,9 +1,9 @@
 export interface UserDetails {
-    first_name: string;
-    last_name: string;
+    given_name: string;
+    family_name: string;
     midde_name?: string;
     email: string;
-    phone: string;
+    phone_number: string;
     bio: string;
     title?: string;
     github?: string;

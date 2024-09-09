@@ -32,23 +32,15 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Label } from '@/components/ui/label'
 import { Switch } from '@/components/ui/switch'
 import { DefaultView } from '@/src/components/ui/defaultView'
+import { AchivevementFormValues, achivementFormSchema } from '@/src/utils/applicaid-ts-utils/cv_form_types'
+import { postAchievements } from '@/src/utils/requests'
+import { TransformedCV, transformCV } from '@/src/utils/codes'
 
-const achivementFormSchema = z.object({
-    achievements_and_awards: z.array(z.object({
-        _id: z.string().optional(),
-        immutable: z.boolean().default(false),
-        value: z.string().optional(),
-    })).default([]).optional(),
-})
 
-export type AchivevementFormValues = z.infer<typeof achivementFormSchema>
 
 // This can come from your database or API.
-const defaultValues: Partial<AchivevementFormValues> = {
-    achievements_and_awards: [{ immutable: true, value: "Got hella hoes" , _id: undefined}],
-}
 
-export function AchievementsEdit({ data, tokens }: { data: AchivevementFormValues['achievements_and_awards'], tokens: number }) {
+export function AchievementsEdit({ data, tokens, setcv }: { data: AchivevementFormValues['achievements_and_awards'], tokens: number, setcv: (cv: TransformedCV) => void }) {
     const form = useForm<AchivevementFormValues>({
         resolver: zodResolver(achivementFormSchema),
         defaultValues: {achievements_and_awards: data},
@@ -60,16 +52,46 @@ export function AchievementsEdit({ data, tokens }: { data: AchivevementFormValue
     })
 
 
-    function onSubmit(data: AchivevementFormValues) {
+    async function onSubmit(data: AchivevementFormValues) {
         
-        toast({
-            title: "You submitted the following values:",
-            description: (
-                <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                    <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-                </pre>
-            ),
-        })
+        const resp = await postAchievements(data)
+        if (resp.status === 200) {
+            try {
+                const cv = (transformCV(resp.data))
+                if (cv) {
+                    toast({
+                        title: "You changed your details successfully!",
+                        description: (
+                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                            </pre>
+                        ),
+                    })
+                    setcv(cv)
+                }
+                else {
+                    throw new Error("Could not transform CV")
+                }
+            } catch (e) {
+                toast({
+                    title: "Something went wrong",
+                    description: (
+                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                            <code className="text-white">{ }</code>
+                        </pre>
+                    ),
+                })
+            }
+        } else {
+            toast({
+                title: "Bad Request",
+                description: (
+                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                        <code className="text-white">{resp.statusText}</code>
+                    </pre>
+                ),
+            })
+        }
     }
 
     return (

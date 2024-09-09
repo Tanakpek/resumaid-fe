@@ -33,61 +33,19 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Separator } from '@/components/ui/separator'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
 import { ChevronsUpDown } from 'lucide-react'
-import { useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { CVPartView } from './utils'
+import { EducationFormValues, educationFormSchema } from '@/src/utils/applicaid-ts-utils/cv_form_types'
+import { TransformedCV, transformCV } from '@/src/utils/codes'
+import { deleteEducation, postEducation } from '@/src/utils/requests'
+import Trash from '../../../assets/trash-2.svg?react'
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 
-const educationFormSchema = z.object({
-    education: z.array(
-        z.object({
-            _id: z.string().optional(),
-            immutable: z.boolean(),
-            start: z.coerce.date().or(z.literal("")),
-            end: z.date().optional().or(z.literal("").or(z.literal("PRESENT"))),
-            institution: z.string(),
-            location: z.string().optional().or(z.literal("")),
-            degree: z.string().optional().or(z.literal("")),
-            capstone: z.object({
-                dissertation: z.string().optional().or(z.literal("")),
-                thesis: z.string().optional().or(z.literal("")),
-            }).default({ 'thesis': "", 'dissertation': "" }).optional().refine(data => {
-                let filledFields: string[] | number = ['thesis', 'dissertation'].filter(field => data[field] !== undefined && data[field] !== '');
-                filledFields = filledFields.length;
-                const good = filledFields <= 1;
-                // Return true only if exactly one field is filled
-                console.log(`capstone ${filledFields}`)
-                return good;
-            }, {
-                message: "only one field should be filled for capstone project", path: ['thesis', 'dissertation']
-            }),
-            outcome: z.object({
-                gpa: z.number().max(4.3).optional().or(z.literal("")),
-                score: z.string().optional().or(z.literal("")),
-                classification: z.string().optional().or(z.literal("")),
-            }).default({ 'score': "", 'classification': "" }).refine(data => {
-                let filledFields: string[] | number = ['gpa', 'score', 'classification'].filter(field => data[field] !== undefined && data[field] !== '')
-                filledFields = filledFields.length;
-                // Return true only if exactly one field is filled
-                const good = filledFields <= 1
-
-                console.log(`scores ${filledFields}`)
-                return good;
-
-            }, {
-                message: 'Only one field should be filled for education outcome',
-            }
-            )
-        })).default([]).optional(),
-})
-
-export type EducationFormValues = z.infer<typeof educationFormSchema>
-
-export function EducationEdit({data, tokens}) {
-
+export function EducationEdit({data, tokens, setcv}) {
+    const [defaultValues, setDefaultValues] = useState({education: data})
     const [multipleCapError, setMultipleCapError] = useState(false)
     const [multipleGradeError, setMultipleGradeError] = useState(false)
 
-    
-    
     const [isOpen, setIsOpen] = useState<[number, boolean]>([0, false])
     const [isOpenGrade, setIsOpenGrade] = useState<[number, boolean]>([0, false])
 
@@ -97,28 +55,68 @@ export function EducationEdit({data, tokens}) {
     const form = useForm<EducationFormValues>({
         shouldFocusError: true,
         resolver: zodResolver(educationFormSchema),
-        defaultValues: data,
+        defaultValues: {education: data},
         mode: "onChange"
     })
     
+    useEffect(() => {
+        setDefaultValues(data)
+        form.reset({ education: data })
+    }, [data])
 
-    const { fields, append } = useFieldArray({
+    const { fields, append, remove } = useFieldArray({
         name: "education",
         control: form.control,
     })
 
-
-  function onSubmit(data: EducationFormValues) {
-    console.log('submitted')
-    console.log(data)
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    })
+    const removeHandler = async (ed, edIndex) => {
+        if (ed._id) {
+            const cv = await deleteEducation(ed._id)
+            setcv(transformCV(cv.data))
+        }
+        else {
+            remove(edIndex);
+        }
+    }
+  async function onSubmit(data: EducationFormValues) {
+      const resp = await postEducation(data)
+      if (resp.status === 200) {
+          try {
+              const cv = (transformCV(resp.data))
+              if (cv) {
+                  toast({
+                      title: "You changed your details successfully!",
+                      description: (
+                          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                              <code className="text-white">EDUCATION</code>
+                          </pre>
+                      ),
+                  })
+                  setcv(cv)
+              }
+              else{
+                throw new Error("Could not transform CV")
+              }
+          } catch (e) {
+              toast({
+                  title: "Something went wrong",
+                  description: (
+                      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                          <code className="text-white">{ }</code>
+                      </pre>
+                  ),
+              })
+          }
+      } else {
+          toast({
+              title: "Bad Request",
+              description: (
+                  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+                      <code className="text-white">{resp.statusText}</code>
+                  </pre>
+              ),
+          })
+      }
   }
 
   return (
@@ -130,12 +128,33 @@ export function EducationEdit({data, tokens}) {
             
           {fields.map((field, index) => (
             
-            <div className='flex-column m-5'>
+            <div className='flex-column m-5' key={index}>
                 <Card>
+                      <div className='flex justify-end mt-3 mr-4'>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                  <Trash className='stroke-slate-500 m-2 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 align-right hover:stroke-red-400 transition ease-in-out' />
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        Are you sure you want to delete this experience? This action cannot be undone.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={() => { removeHandler(field, index) }}>Continue</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
+                      </div>
+                
+
                 <div className='m-5'>
                 <div className='flex justify-between'>
                 <FormField
-                key={field.id}
+                key={field.id + 'start'}
                 control={form.control}
                 name={`education.${index}.start`}
                 render={({ field }) => (
@@ -151,12 +170,7 @@ export function EducationEdit({data, tokens}) {
                                 !field.value && "text-muted-foreground"
                             )}
                             >
-                            {field.value ? (
-                                format(field.value, "PPP")
-                            ) : (
-                                <span>Pick a date</span>
-                            )}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                            {field.value ? field.value === 'PRESENT' ? <span>Pick a date</span> : format(new Date(field.value), "PPP") : <span>Pick a date</span>}                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
                         </FormControl>
                         </PopoverTrigger>
@@ -168,7 +182,7 @@ export function EducationEdit({data, tokens}) {
                             toYear={new Date().getFullYear() + 1}
                             mode="single"
                             // selected={field.value || null}
-                            onSelect={field.onChange}
+                            onSelect={(x) => {field.onChange(x.toISOString()) }}
                             disabled={(date) =>
                             date > new Date() || date < new Date("1900-01-01")
                             }
@@ -181,7 +195,7 @@ export function EducationEdit({data, tokens}) {
                 )}
                 />
                 <FormField
-                key={field.id}
+                key={field.id + 'end'}
                 control={form.control}
                 name={`education.${index}.end`}
                 render={({ field }) => (
@@ -197,11 +211,7 @@ export function EducationEdit({data, tokens}) {
                                 !field.value && "text-muted-foreground"
                             )}
                             >
-                            {field.value ? (
-                                format(field.value, "PPP")
-                            ) : (
-                                <span>{ field.value === "" ? "PRESENT" : "Pick a date" }</span>
-                            )}
+                            {field.value ? field.value === 'PRESENT' ? <span>Present</span> : format(new Date(field.value), "PPP") : <span>Pick a date</span>}
                             <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
                         </FormControl>
@@ -214,7 +224,7 @@ export function EducationEdit({data, tokens}) {
                             toYear={new Date().getFullYear() + 1}
                             mode="single"
                             // selected={field.value || null}
-                            onSelect={field.onChange}
+                            onSelect={(x) => { field.onChange(x.toISOString()) }}
                             disabled={(date) =>
                             date > new Date() || date <= new Date("1900-01-01")
                             }
@@ -492,12 +502,13 @@ export function EducationEdit({data, tokens}) {
   )
 }
 
-export const EducationView: CVPartView = ({data} : {data: Education[]}) => {
+export const EducationView: CVPartView = ({ data, setcv }: { data: Education[], setcv: Dispatch<SetStateAction<TransformedCV>> }) => {
     return (
+        
       data.map((education, index) => {
         return (<Card key={index}>
             <div className='m-4 mr-10'>
-                <p className='text-right italic'> {education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}`}</p>
+                <p className='text-right italic'> {education.dates ? education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}` : ''}</p>
             </div>
             <CardHeader className=' font-bold !mb-0 p-0'> {education.degree}</CardHeader>
             <CardDescription className='!mt-0'>{education.institution}</CardDescription>

@@ -39,8 +39,6 @@ export function SidebarNav({ className, items, ...props }: SidebarNavProps) {
             buttonVariants({ variant: "ghost"}),
           )}
           onClick={(e) => {
-            e.preventDefault()
-            console.log('changed')
             item.onClick(e)
           }}
         >

@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/
 import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "@/src/components/user/cv/sidebar"
 import { PersonalDetailsEdit, PersonalDetailsView } from "./details"
-import {  useEffect, useState } from "react"
+import {  Dispatch, SetStateAction, useEffect, useState } from "react"
 import { SkillsEdit, SkillsView } from "./skills"
 import { EducationEdit, EducationView } from "./education"
 import { ProjectsEdit, ProjectsView } from "./projects"
@@ -26,19 +26,22 @@ import { TransformedCV } from "@/src/utils/codes"
 
 interface SettingsLayoutProps {
   children: React.ReactNode
-  data: TransformedCV
+  data: TransformedCV,
+  details: { family_name: string, given_name: string, name: string, bio:string, email: string, phone_number: string, website: string, linkedin: string, github: string  }
 }
 const encoding = get_encoding("cl100k_base");
 
-export default function CV({ data, children }: SettingsLayoutProps) {
+export default function CV({ data, children, details }: SettingsLayoutProps) {
   const [cv, setCV] = useState(data)
   const [tokens, setTokens] = useState(0)
+  const [detail, setDetail] = useState(details)
+
   useEffect(() => {
     // fetch('/api/cv')
     // .then(response => response.json())
     // .then(data => setCV(data))
+    setDetail(detail)
     setCV({
-      details,
       education : cv.education,
       work: cv.work,
       projects: cv.projects,
@@ -49,7 +52,6 @@ export default function CV({ data, children }: SettingsLayoutProps) {
       languages: cv.languages
     })
     const tokens = encoding.encode(JSON.stringify({
-      details,
       education: cv.education,
       work: cv.work,
       projects: cv.projects,
@@ -63,14 +65,14 @@ export default function CV({ data, children }: SettingsLayoutProps) {
   }, [])
 
   const elements:JSX.Element[][] = [
-    [<PersonalDetailsEdit data={details} tokens={tokens} />, <PersonalDetailsView data={details} />],
-    [<EducationEdit data={cv.education} tokens={tokens}/>, <EducationView data={cv.education} />],
-    [<WorkEdit data={cv.work} tokens={tokens} />, <WorkView data={cv.work}  />],
-    [<ProjectsEdit data={cv.projects} tokens={tokens} />, <ProjectsView data={cv.projects} />],
-    [<SkillsEdit data={cv.skills} tokens={tokens} />, <SkillsView data={cv.skills} />],
-    [<AchievementsEdit data={cv.achievements_and_awards} tokens={tokens}/>, <AchievementsView data={cv.achievements_and_awards} />],
-    [<CertsEdit data={cv.professional_certifications} tokens={tokens}/>, <CertsView data={cv.professional_certifications} />],
-    [<VolunteerEdit data={cv.volunteer} tokens={tokens}/>, <VolunteerView data={cv.volunteer} />],
+    [<PersonalDetailsEdit data={detail} tokens={tokens} setdetails={setDetail} />, <PersonalDetailsView data={detail} setdetails={setDetail} />],
+    [<EducationEdit data={cv.education} tokens={tokens} setcv={setCV} />, <EducationView data={cv.education} setcv={setCV}  />],
+    [<WorkEdit data={cv.work} tokens={tokens} setcv={setCV} />, <WorkView data={cv.work} setcv={setCV} />],
+    [<ProjectsEdit data={cv.projects} tokens={tokens} setcv={setCV} />, <ProjectsView data={cv.projects} setcv={setCV} />],
+    [<SkillsEdit data={cv.skills} tokens={tokens} setcv={setCV} />, <SkillsView data={cv.skills} />],
+    [<AchievementsEdit data={cv.achievements_and_awards} tokens={tokens} setcv={setCV} />, <AchievementsView data={cv.achievements_and_awards} />],
+    [<CertsEdit data={cv.professional_certifications} tokens={tokens} setcv={setCV} />, <CertsView data={cv.professional_certifications} />],
+    [<VolunteerEdit data={cv.volunteer} tokens={tokens} setcv={setCV} />, <VolunteerView data={cv.volunteer} setcv={setCV} />],
   ]
   const sidebarNavItems = [
     {
@@ -115,7 +117,6 @@ export default function CV({ data, children }: SettingsLayoutProps) {
   }
   const handleItemClick = (title: string) => {
     setActiveItem(title);
-    console.log(activeItem)
   };
 
   const itemsWithHandlers = sidebarNavItems.map(item => ({
@@ -169,8 +170,8 @@ export default function CV({ data, children }: SettingsLayoutProps) {
               </HoverCard>
           </aside>
           <div className="flex-1 lg:max-w-2xl">
-            {itemsWithHandlers.map(item => (
-              <div key={item.title} className={item.title === activeItem ? '' : 'hidden'}>
+            {itemsWithHandlers.map((item, index) => (
+              <div key={item.title + index} className={item.title === activeItem ? '' : 'hidden'}>
                 {item.element[edit ? 0 : 1]}
               </div>
             ))}
