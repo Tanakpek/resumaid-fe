@@ -29,7 +29,6 @@ import { useNavigate } from "react-router-dom";
     const handleLogout = () => {
       auth.logout()
       navigate('/auth')
-      
     }
     return (
       
@@ -43,16 +42,16 @@ import { useNavigate } from "react-router-dom";
           <span className="sr-only">Acme Inc</span>
         </a>
         <a
-          href="#"
+          href="/profile"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
           Profile
         </a>
         <a
-          href="#"
+          href="/applications"
           className="text-muted-foreground transition-colors hover:text-foreground"
         >
-          Runs
+          Applications
         </a>
         
       </nav>

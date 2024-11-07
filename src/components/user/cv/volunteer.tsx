@@ -395,11 +395,11 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                             return (
                                 <FormField
                                     control={control}
-                                    name={`organizations.${index}.takeaways.${idx}.in`}
+                                    name={`organizations.${index}.takeaways.${idx}.sel`}
                                     render={({ field }) => (
                                         <FormItem className='flex-grow'>
                                             <FormControl>
-                                            <Toggle className=' h-auto w-full justify-start my-2' variant='outline' defaultPressed={takeaway.in} onPressedChange={field.onChange}>
+                                            <Toggle className=' h-auto w-full justify-start my-2' variant='outline' defaultPressed={takeaway.sel} onPressedChange={field.onChange}>
                                                 <p key={index} className='my-2 text-justify'>{takeaway.value}</p>
                                             </Toggle>
                                 </FormControl>

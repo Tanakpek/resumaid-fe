@@ -13,12 +13,12 @@ import {
 
 import { Check } from "lucide-react";
 
-enum PopularPlanType {
+export enum PopularPlanType {
   NO = 0,
   YES = 1,
 }
 
-interface PricingProps {
+export interface PricingProps {
   title: string;
   popular: PopularPlanType;
   price: number;
@@ -37,7 +37,7 @@ const pricingList: PricingProps[] = [
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
     buttonText: "Start Free Trial",
     benefitList: [
-      "20 runs per day",
+      "Pay as you go",
       "3 months document retention",
       "Basic application tracking",
       "Mix of fine-tuned GPT-4o and 3.5 Turbo",
@@ -52,7 +52,6 @@ const pricingList: PricingProps[] = [
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
     buttonText: "Coming soon",
     benefitList: [
-      "50 Generations per day",
       "More customization options",
       "Tag takeaways for resume presets",
       "Freedom to choose from models",
@@ -69,7 +68,6 @@ const pricingList: PricingProps[] = [
     benefitList: [
       "Backdoor to employers",
       "RAG augmented screening call suggestions",
-      "Unlimited runs",
       "Daily application kit"
     ],
   },
@@ -124,7 +122,7 @@ export const Pricing = () => {
             </CardContent>
 
             <hr className="w-4/5 m-auto mb-4" />
-
+          
             <CardFooter className="flex">
               <div className="space-y-4">
                 {pricing.benefitList.map((benefit: string) => (

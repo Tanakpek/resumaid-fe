@@ -4,4 +4,6 @@ export interface ClientUserData {
     email: string;
     picture?: string;
     token: string;
+    plan: string | null,
+    billing_id: string | null,
 }

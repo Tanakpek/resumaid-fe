@@ -32,7 +32,6 @@ import { useAuth } from "./auth";
 import { useNavigate } from "react-router-dom";
 import { Label } from "@/components/ui/label"
 
-
 import  CV  from "./user/cv/cv"
 import { MultiStepCVLoader } from "./ui/cv-loader"
 import { ToastDemo } from "./ui/toast/submit"
@@ -42,6 +41,7 @@ import { Transform } from "stream"
 import { MovingBorderDemo } from "./ui/upload-cv-button"
 import { cvURL, getCV, getProfile, startScratchCV } from "../utils/requests"
 import { start } from "repl"
+import { TrialOrContinue } from "./trial"
 
 export const default_cv: TransformedCV = {
     details: {
@@ -60,7 +60,7 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-export function Profile() {
+export function Profile({subStatus, setSubStatus, plan, setPlan}) {
   // const [name, setName] = useState(null);
   // const [cv_uploaded, setUploaded] = useState(false);
   
@@ -70,6 +70,8 @@ export function Profile() {
   const [cv, setCV] = useState(null)
   const checkCVInterval = useRef(null)
   const auth = useAuth();
+
+
   const navigate = useNavigate();
   const checkedCV = useRef(0)
   const checkCVHandler = async () => {
@@ -98,6 +100,7 @@ export function Profile() {
       checkedCV.current = 0
     }
   }
+  
 
   const defaultCVHandler = async () => {
     const cv = await startScratchCV()
@@ -109,7 +112,6 @@ export function Profile() {
   
   const uploadHandler = async (e:any) => {
     e.preventDefault();
-    
     const t = e.target as HTMLElement;
     const input = t.parentElement.querySelector('input') as HTMLInputElement;
     const file = input.files[0];
@@ -128,19 +130,18 @@ export function Profile() {
 
   useEffect(() => {
     async function fetchData() {
-      const response = await getProfile()
+      const window_loc = window.location.href
+      const uri = new URL(window_loc)
+      const revalidate = uri.searchParams.get('session_id')
+      const response = await getProfile(revalidate ? revalidate : null)
       const data:User  = await response.data
-      
       setDetails(() => data.details);
       setLoading(false);
-      // setUploaded(() => data.cv_uploaded)
       let url = ''
       if(!data.cv_uploaded){
         const resp = await cvURL()
         url = resp.data.upload_location
         setUrl( () => url)
-        
-        // setCV(default_cv)
       }
       else{
         const resp = await getCV()
@@ -149,11 +150,19 @@ export function Profile() {
         const transformed_cv = transformCV(cv)
         setCV(transformCV(transformed_cv))
       }
-      const u = { name: data.name, email: data.email }
+      const u = { name: data.name, email: data.email, plan: data.plan, billing_id: data.billing_id }
+      // TODO separate user app data and auth data in the context
+      /* Profile component should only be concerned with user data
+         and should not be concerned with auth data
+         the auth data gets loaded on the top level component
+       */
+      
       auth.login(u);
+      setSubStatus(() => data.subscription_status || null)
+      setPlan((e) => {data.plan || null})
     }
     fetchData();
-  }, []); // The empty array ensures this effect only runs once after the initial render
+  }, [plan, subStatus]); // The empty array ensures this effect only runs once after the initial render
 
   if (loading) {
       return (<div><div>Loading...</div>
@@ -164,10 +173,11 @@ export function Profile() {
   return (
     
     <div className="flex min-h-screen w-full flex-col">
-      
       <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-        {cv && <CV data={cv} details={details}><div></div></CV>}
-        {!cv && 
+        
+        <TrialOrContinue plan={plan} subscription_status={subStatus}/>
+        {  cv && <CV data={cv} details={details}><div></div></CV>}
+        {  !cv && 
           <div className="m-auto">
         <div className="mx-auto grid w-full max-w-6xl gap-2">
           <h1 className="text-3xl font-semibold">{details?.name}</h1>

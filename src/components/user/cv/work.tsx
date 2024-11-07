@@ -401,7 +401,7 @@ export const WorkView: CVPartView = ({ data, setcv }: { data: WorkFormValues['wo
                             return (
                                 <FormField
                                 control={control}
-                                name={`workplaces.${index}.takeaways.${idx}.in`}
+                                name={`workplaces.${index}.takeaways.${idx}.sel`}
                                 render={({ field }) => (
                                     <FormItem className='flex-grow'> 
                                         <FormControl>

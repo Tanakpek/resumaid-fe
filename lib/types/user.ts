@@ -4,7 +4,10 @@ export interface User {
     given_name: string,
     family_name: string,
     cv_uploaded: boolean,
-    cv: any
+    cv: any,
+    plan: string | null | undefined,
+    subscription_status: string | null | undefined,
+    billing_id: string | null | undefined,
     details: {
         family_name: string,
         given_name: string,
@@ -15,6 +18,14 @@ export interface User {
         website: string,
         linkedin: string,
         github: string
+        location?: {
+            city: string,
+            country: string,
+            line1?: string,
+            line2?: string,
+            postalCode?: string,
+            state?: string
+        } | null
     }
 
 }

@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/hover-card"
 import { details,work, volunteer,education,projects, skills, professional_certifications, achievements_and_awards, languages } from "@/src/test/data/mock_data"
 import { Toggle } from "@/components/ui/toggle"
-import { set } from "date-fns"
+import { max, set } from "date-fns"
 import { CertsEdit, CertsView } from "./certifications"
 import { AchievementsEdit, AchievementsView } from "./achivements"
 import { VolunteerEdit, VolunteerView } from "./volunteer"
@@ -35,7 +35,7 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
   const [cv, setCV] = useState(data)
   const [tokens, setTokens] = useState(0)
   const [detail, setDetail] = useState(details)
-
+  const maxTokens = 64000
   useEffect(() => {
     // fetch('/api/cv')
     // .then(response => response.json())
@@ -61,7 +61,8 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
       volunteer: cv.volunteer,
       languages: cv.languages
     })).length
-    setTokens(tokens)
+    
+    setTokens(maxTokens - tokens)
   }, [])
 
   const elements:JSX.Element[][] = [
@@ -127,7 +128,7 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
     }
   }));
   
-  const col = getColor(tokens, 400)
+  const col = getColor(tokens, maxTokens)
   // console.log(tokens)
   // console.log(col)
   const colorStyle = {

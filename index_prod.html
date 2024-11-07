@@ -9,12 +9,11 @@
   <body class="bg-background">
     <div id="root"></div>
   </body>
-  
-  <script async type="module" >
+  <script type="module" src="/src/main.tsx"></script>
+  <script  async type="module" >
     import { loadStripe } from '@stripe/stripe-js';
     const stripePromise = loadStripe('pk_test_51PLWQGCWfivE25ydYQpTSFNWAJwtjsU4n58q8dmkUIIatg8WCngRpKZFJFQl1LQLeNI7iHDjqVxZHKqsGNJeVRqH006eK7fVWV');
     // const stripe = await stripePromise;
     window.stripe = stripePromise;
   </script>
-  <script defer type="module" src="/src/main.tsx"></script>
 </html>

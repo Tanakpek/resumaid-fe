@@ -39,15 +39,9 @@ export function Dashboard() {
     const auth = useAuth();
     const navigate = useNavigate();
    
-    // const handleOauthLogin = async (token:any) => {
-    //     const resp = await fetch(google_oauth_url, {
-    //       method: 'GET',
-    //       headers: {
-    //         'Access-Control-Allow-Credentials': 'true',
-    //       }
-    //     }) 
-    // }
-    const handleLogin = () => {
+
+    // TODO doesn't work yet
+    const handleLogin = (event) => {
         auth.login(user);
         navigate('/');
     }

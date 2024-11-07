@@ -11,7 +11,6 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
     config => {
         // Get the token from the cookie
-        console.log(config)
         const token = document.cookie.split(';').reduce((acc, cookie) => {
             const [key, value] = cookie.split('=');
             if (key.trim() === 'token') {
@@ -59,8 +58,12 @@ export const cvURL = async () => {
 export const startScratchCV = async () => {
     return await axiosInstance.post('/users/cv_scratch');
 }
-export const getProfile = async () => {
-    return await axiosInstance.get('/users/profile');
+export const getProfile = async (revalidate: string) => {
+    return await axiosInstance.get('/users/profile' , {
+        params: revalidate ? {
+            stripe_session_id: revalidate
+        } : {}
+    });
 }
 
 export const postDetails = async (data: ProfileFormValues) => {
@@ -115,4 +118,18 @@ export const deleteVolunteer = async (id: string)  : Promise<AxiosResponse>=> {
     return await axiosInstance.delete(`/users/cv/volunteer/${id}`);
 }
 
+export const createCheckoutSession = async (priceId: string) => {
+    return await axiosInstance.post('/billing/create-checkout-session', {priceId});
+}
 
+export const getBillingConfig = async () => {
+    return await axiosInstance.get('/billing/config');
+}
+
+export const getSubscriptionPrices = async () => {
+    return await axiosInstance.get('/billing/subscription-prices');
+}
+
+export const getBillingId = async () => {
+    return await axiosInstance.get('/billing/id');
+}

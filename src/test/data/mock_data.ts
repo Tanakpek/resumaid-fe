@@ -11,13 +11,13 @@ export const projects : ProjectsSlot = {'Project 1' : {
             _id: '234234',
             immutable: true,
             value: 'Takeaway 1',
-            in: true
+            sel: true
         },
         {
             _id: '234234',
             immutable: false,
             value: 'Takeaway 2',
-            in: true
+            sel: true
         }
     ]
 }}
@@ -48,13 +48,13 @@ export const volunteer: Volunteer[] = [{
             _id: '234234',
             immutable: true,
             value: 'Takeaway 1',
-            in: true
+            sel: true
         },
         {
             _id: '234234',
             immutable: false,
             value: 'Takeaway 2',
-            in: true
+            sel: true
         }
     ]
 }]
@@ -69,13 +69,13 @@ export const work: WorkSlot = {"Quadra": [{
             _id: '234234',
             immutable: true,
             value: 'Takeaway 1',
-            in: true
+            sel: true
         },
         {
             _id: '234234',
             immutable: false,
             value: 'Takeaway 2',
-            in: true
+            sel: true
         }
     ]
 }]}

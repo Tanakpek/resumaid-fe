@@ -116,6 +116,6 @@ colors: {
 You have to feed keychain the _cert outputted by vite.
 
 openssl genrsa -out key.pem 2048
-openssl req -new -sha256 -key key.pem -out csr.csr
-openssl req -x509 -sha256 -days 365 -key key.pem -in csr.csr -out certificate.pem
+openssl req -new -sha256 -key key.pem -out csr.csr (E for common name, same on on vite config for ssl name) dont forget to restart chrome after importing key
+openssl req -x509 -sha256 -days 90 -key key.pem -in csr.csr -out certificate.pem
 openssl req -in csr.csr -text -noout 
