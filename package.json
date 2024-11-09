@@ -37,7 +37,7 @@
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.5.0",
     "@tabler/icons-react": "^3.6.0",
-    "@tanstack/react-table": "^8.17.3",
+    "@tanstack/react-table": "^8.20.5",
     "@types/chrome": "^0.0.268",
     "axios": "^1.7.2",
     "class-variance-authority": "^0.7.0",
