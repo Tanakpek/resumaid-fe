@@ -128,7 +128,7 @@ export function ApplicationsDataTable<TData, TValue>({
     
     return (
         <>
-        <div className="flex items-center py-4">
+            <div className="tw-flex tw-items-center tw-py-4">
         <Input 
           placeholder="Filter Companies..."
             value={
@@ -139,7 +139,7 @@ export function ApplicationsDataTable<TData, TValue>({
                     table.getColumn("company_key")?.setFilterValue(event.target.value)
                 }
             }
-          className="max-w-sm dark:bg-slate-900 bg-white"
+                    className="tw-max-w-sm dark:tw-bg-slate-900 tw-bg-white"
         />
       </div>
         <div className="rounded-md border">
@@ -152,7 +152,7 @@ export function ApplicationsDataTable<TData, TValue>({
                                     
                                     <TableHead key={header.id}>
 
-                                        <div className="flex justify-between">
+                                        <div className="tw-flex tw-justify-between">
                                         
                                         {
                                         header.isPlaceholder
@@ -163,7 +163,7 @@ export function ApplicationsDataTable<TData, TValue>({
                                             )
                                         }
 
-                                            {header.id === 'creation_dt' && <Button variant="ghost"><ArrowUpDown className="h-full  w-4 mx-2" onClick={() => {
+                                            {header.id === 'creation_dt' && <Button variant="ghost"><ArrowUpDown className="tw-h-full  tw-w-4 tw-mx-2" onClick={() => {
                                                 setFilterState({...filterState, order: filterState.order === 'asc' ? 'desc' : 'asc' })
                                                 fetchData(pagination, {...filterState, order: filterState.order === 'asc' ? 'desc' : 'asc' })
                                                 // fetchData(pagination, {...filterState, order: filterState.order === 'asc' ? 'desc' : 'asc' })
@@ -194,14 +194,14 @@ export function ApplicationsDataTable<TData, TValue>({
                     })
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center mx-2">
+                                    <TableCell colSpan={columns.length} className="tw-h-24 tw-text-center tw-mx-2">
                                 No results.
                             </TableCell>
                         </TableRow>
                     )}
                 </TableBody>
             </Table>
-            <div className="flex items-center justify-end space-x-2 py-4 px-3 bg-white">
+                <div className="tw-flex tw-items-center tw-justify-end tw-space-x-2 tw-py-4 tw-px-3 tw-bg-white">
                 <Button
                     variant="outline"
                     size="sm"

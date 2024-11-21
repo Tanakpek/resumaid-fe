@@ -2,28 +2,28 @@ import { LogoIcon } from "./Icons";
 
 export const Footer = () => {
   return (
-    <footer id="footer" className="bg-gradient-to-t from-[#1c1c1c]  via-[#232323] to-[#151515] py-2">
-      <hr className="w-11/12 mx-auto border-none" />
+    <footer id="footer" className="tw-bg-gradient-to-t tw-from-[#1c1c1c]  tw-via-[#232323] tw-to-[#151515] tw-py-2">
+      <hr className="tw-w-11/12 tw-mx-auto tw-border-none" />
 
-      <section className="container py-20 grid grid-cols-2 md:grid-cols-4 xl:grid-cols-5 gap-x-12 gap-y-8">
-        <div className="col-span-full xl:col-span-2 text-gray-400">
+      <section className="tw-tw-container tw-py-20 tw-grid tw-grid-cols-2 md:tw-grid-cols-4 xl:tw-grid-cols-5 tw-gap-x-12 tw-gap-y-8">
+        <div className="tw-col-span-full xl:tw-col-span-2 tw-text-gray-400">
           <a
             rel="noreferrer noopener"
             href="/"
-            className="font-bold text-xl flex"
+            className="tw-font-bold tw-text-xl tw-flex"
           >
             <LogoIcon />
             ShadcnUI/React
           </a>
         </div>
 
-        <div className="flex flex-col gap-2 text-gray-400">
-          <h3 className="font-bold text-lg">Follow US</h3>
+        <div className="tw-flex tw-flex-col tw-gap-2 tw-text-gray-400">
+          <h3 className="tw-font-bold tw-text-lg">Follow US</h3>
           <div>
             <a
               rel="noreferrer noopener"
               href="#"
-              className="opacity-60 hover:opacity-100"
+              className="tw-opacity-60 hover:tw-opacity-100"
             >
               Instagram
             </a>
@@ -33,7 +33,7 @@ export const Footer = () => {
             <a
               rel="noreferrer noopener"
               href="#"
-              className="opacity-60 hover:opacity-100"
+              className="tw-opacity-60 hover:tw-opacity-100"
             >
               X
             </a>
@@ -43,13 +43,13 @@ export const Footer = () => {
 
        
 
-        <div className="flex flex-col gap-2 text-gray-400">
-          <h3 className="font-bold text-lg">About</h3>
+        <div className="tw-flex tw-flex-col tw-gap-2 tw-text-gray-400">
+          <h3 className="tw-font-bold tw-text-lg">About</h3>
           <div>
             <a
               rel="noreferrer noopener"
               href="#"
-              className="opacity-60 hover:opacity-100"
+              className="tw-opacity-60 hover:tw-opacity-100"
             >
               Features
             </a>
@@ -59,7 +59,7 @@ export const Footer = () => {
             <a
               rel="noreferrer noopener"
               href="#"
-              className="opacity-60 hover:opacity-100"
+              className="tw-opacity-60 hover:tw-opacity-100"
             >
               Pricing
             </a>
@@ -69,22 +69,22 @@ export const Footer = () => {
             <a
               rel="noreferrer noopener"
               href="#"
-              className="opacity-60 hover:opacity-100"
+              className="tw-opacity-60 hover:tw-opacity-100"
             >
               FAQ
             </a>
           </div>
         </div>
 
-        <div className="flex flex-col gap-2  text-gray-400">
-          <h3 className="font-bold text-lg">Community</h3>
+        <div className="tw-flex tw-flex-col tw-gap-2  tw-text-gray-400">
+          <h3 className="tw-font-bold tw-text-lg">Community</h3>
           
 
           <div>
             <a
               rel="noreferrer noopener"
               href="#"
-              className="opacity-60 hover:opacity-100"
+              className="tw-opacity-60 hover:tw-opacity-100"
             >
               Discord
             </a>

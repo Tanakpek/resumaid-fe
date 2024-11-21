@@ -60,8 +60,8 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
           toast({
             title: "You changed your details successfully!",
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md bg-slate-950 tw-p-4">
+                <code className="tw-text-white">{JSON.stringify(data, null, 2)}</code>
               </pre>
             ),
           })
@@ -75,8 +75,8 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
         toast({
           title: "Something went wrong",
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{ }</code>
+            <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+              <code className="tw-text-white">{ }</code>
             </pre>
           ),
         })
@@ -85,7 +85,7 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
       toast({
         title: "Bad Request",
         description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <pre className="tw-mt-2 w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
             <code className="text-white">{ resp.statusText }</code>
           </pre>
         ),
@@ -117,7 +117,7 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
           control={form.control}
           name="phone_number"
           render={({ field }) => (
-            <FormItem className=" justify-start">
+            <FormItem className=" tw-justify-start">
               <div className="flex">
                 <FormLabel>Phone Number (optional)</FormLabel>
               </div>
@@ -135,13 +135,13 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
           name="bio"
           render={({ field }) => (
             <FormItem>
-              <div className="flex">
+              <div className="tw-flex">
                 <FormLabel>Bio <span>(optional)</span></FormLabel>
               </div>
               <FormControl>
                 <Textarea
                   placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
+                  className="tw-resize-none"
                   {...field}
                 />
               </FormControl>
@@ -156,7 +156,7 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
           name="personal_website"
           render={({ field }) => (
             <FormItem>
-              <div className="flex">
+              <div className="tw-flex">
                 <FormLabel>Website <span>(optional)</span> </FormLabel>
               </div>
               <Select onValueChange={field.onChange}>
@@ -177,7 +177,7 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
           name="linkedin"
           render={({ field }) => (
             <FormItem className="my-6">
-              <div className="flex">
+              <div className="tw-flex">
                 <FormLabel>LinkedIn <span>(optional)</span></FormLabel>
               </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -193,8 +193,8 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
           control={form.control}
           name="github"
           render={({ field }) => (
-            <FormItem className="my-6">
-              <div className="flex">
+            <FormItem className="tw-my-6">
+              <div className="tw-flex">
                 <FormLabel>Github <span>(optional)</span></FormLabel>
               </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
@@ -218,41 +218,41 @@ export const PersonalDetailsView: CVPartView = ({ data, setdetails }: { data: Us
   const { given_name, family_name, midde_name, email, phone_number, bio, title, github, linkedin, website } = data
 
   return (
-    <Card className='w-full'>
+    <Card className='tw-w-full'>
       
       <form>
       <CardHeader>
         <CardTitle>{`${title ? title : ''} ${given_name} ${midde_name ? midde_name[0] + '. ' + family_name : family_name}`}</CardTitle>
       </CardHeader>
-      <Separator className="my-4" />
+        <Separator className="tw-my-4" />
       <CardContent>
        
           <div className="">
-            <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'>
-              <div className="flex flex-col  col-start-1 col-end-2 space-y-1.5 mr-auto">
-                <CardDescription className='mr-auto'>Details</CardDescription>
+            <div className='tw-grid tw-w-full tw-ml-6 tw-gap-4 tw-grid-cols-2 tw-my-3'>
+              <div className="tw-flex tw-flex-col  tw-col-start-1 tw-col-end-2 tw-space-y-1.5 tw-mr-auto">
+                <CardDescription className='tw-mr-auto'>Details</CardDescription>
               </div>
-              <div className="flex flex-col  col-start-2 col-end-3 space-y-1.5 mr-auto">
-                <CardDescription className='mr-auto'>In Cover Letter?</CardDescription>
+              <div className="tw-flex tw-flex-col  tw-col-start-2 tw-col-end-3 tw-space-y-1.5 tw-mr-auto">
+                <CardDescription className='tw-mr-auto'>In Cover Letter?</CardDescription>
               </div>
             </div>
             
-            <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'>
-              <div className="flex flex-col  col-start-1 col-end-2 space-y-1.5 mr-auto">
-                <Label className='mr-auto' htmlFor="email">Email</Label> 
-                <CardDescription className='mr-auto'>{email}</CardDescription>
+            <div className='tw-grid tw-w-full tw-ml-6 tw-gap-4 tw-grid-cols-2 tw-my-3'>
+              <div className="tw-flex tw-flex-col  tw-col-start-1 tw-col-end-2 tw-space-y-1.5 tw-mr-auto">
+                <Label className='tw-mr-auto' htmlFor="email">Email</Label> 
+                <CardDescription className='tw-mr-auto'>{email}</CardDescription>
               </div>
-              <div className="flex flex-col  col-start-2 col-end-3 space-y-1.5 mr-auto">
+              <div className="tw-flex tw-flex-col  tw-col-start-2 tw-col-end-3 tw-space-y-1.5 tw-mr-auto">
                 <Checkbox id='email' />
               </div>
             </div>
             
-            {phone_number && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="mr-auto flex flex-col space-y-1.5 col-start-1 col-end-2">
-              <Label className='mr-auto' htmlFor="phone">Phone Number</Label>
-              <CardDescription className='mr-auto'>{phone_number}</CardDescription>
+            {phone_number && <div className='tw-grid tw-w-full tw-ml-6 tw-gap-4 tw-grid-cols-2 tw-my-3'><div className="tw-mr-auto tw-flex tw-flex-col tw-space-y-1.5 tw-col-start-1 tw-col-end-2">
+              <Label className='tw-mr-auto' htmlFor="phone">Phone Number</Label>
+              <CardDescription className='tw-mr-auto'>{phone_number}</CardDescription>
               
             </div>
-              <div className="flex flex-col  col-start-2 col-end-3 space-y-1.5 mr-auto">
+              <div className="tw-flex tw-flex-col  tw-col-start-2 tw-col-end-3 tw-space-y-1.5 tw-mr-auto">
                 <Checkbox id='phone'/>
               </div>
               
@@ -260,22 +260,22 @@ export const PersonalDetailsView: CVPartView = ({ data, setdetails }: { data: Us
             
               <Separator className="" />
             
-            {linkedin && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="flex flex-col space-y-1.5 mr-auto col-start-1 col-end-2">
-              <Label className='mr-auto'>LinkedIn</Label>
-              <CardDescription className='mr-auto'>{linkedin}</CardDescription>
+            {linkedin && <div className='tw-grid tw-w-full tw-ml-6 tw-gap-4 tw-grid-cols-2 tw-my-3'><div className="tw-flex tw-flex-col tw-space-y-1.5 tw-mr-auto tw-col-start-1 tw-col-end-2">
+              <Label className='tw-mr-auto'>LinkedIn</Label>
+              <CardDescription className='tw-mr-auto'>{linkedin}</CardDescription>
             </div></div>}
-            {website && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="flex flex-col space-y-1.5 mr-auto col-start-1 col-end-2">
-              <Label className='mr-auto'>Website</Label>
-              <CardDescription className='mr-auto'>{linkedin}</CardDescription>
+            {website && <div className='tw-grid tw-w-full tw-ml-6 tw-gap-4 tw-grid-cols-2 my-3'><div className="tw-flex tw-flex-col tw-space-y-1.5 tw-mr-auto tw-col-start-1 tw-col-end-2">
+              <Label className='tw-mr-auto'>Website</Label>
+              <CardDescription className='tw-mr-auto'>{linkedin}</CardDescription>
             </div></div>}
-            {github && <div className='grid w-full ml-6 gap-4 grid-cols-2 my-3'><div className="flex flex-col space-y-1.5 mr-auto col-start-1 col-end-2">
-              <Label className='mr-auto'>GitHub</Label>
-              <CardDescription className='mr-auto'>{linkedin}</CardDescription>
+            {github && <div className='tw-grid tw-w-full tw-ml-6 tw-gap-4 tw-grid-cols-2 tw-my-3'><div className="tw-flex tw-flex-col tw-space-y-1.5 tw-mr-auto tw-col-start-1 tw-col-end-2">
+              <Label className='tw-mr-auto'>GitHub</Label>
+              <CardDescription className='tw-mr-auto'>{linkedin}</CardDescription>
             </div></div>}
           </div>
         
       </CardContent>
-      <CardFooter className="flex justify-between">
+        <CardFooter className="tw-flex tw-justify-between">
         <div></div>
         <Button type="submit">Save Preferences</Button>
       </CardFooter>

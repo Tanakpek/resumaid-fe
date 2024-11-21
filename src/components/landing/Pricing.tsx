@@ -77,61 +77,61 @@ export const Pricing = () => {
   return (
     <section
       id="pricing"
-      className="container py-24 sm:py-32 px-14"
+      className="tw-container tw-py-24 sm:tw-py-32 tw-px-14"
     >
-      <h2 className="text-3xl md:text-4xl font-bold text-center">
+      <h2 className="tw-text-3xl md:tw-text-4xl tw-font-bold tw-text-center">
         Get
         Access
       </h2>
-      <h3 className="text-xl text-center text-muted-foreground pt-4 pb-8">
+      <h3 className="tw-text-xl tw-text-center tw-text-muted-foreground tw-pt-4 tw-pb-8">
         Get started with standard. 
       </h3>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="tw-grid md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-8">
         {pricingList.map((pricing: PricingProps) => (
           
           <Card
             key={pricing.title}
             className={
               pricing.popular === PopularPlanType.YES
-                ? "drop-shadow-xl shadow-black/10 dark:shadow-white/10"
+                ? "tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10"
                 : ""
             }
           >
             <CardHeader>
-              <CardTitle className="flex item-center justify-between">
+              <CardTitle className="tw-flex tw-item-center tw-justify-between">
                 {pricing.title}
                 {pricing.popular === PopularPlanType.YES ? (
                   <Badge
                     variant="secondary"
-                    className="text-sm text-primary"
+                    className="tw-text-sm tw-text-primary"
                   >
                     Most popular
                   </Badge>
                 ) : null}
               </CardTitle>
               <div>
-                <span className="text-3xl font-bold">${pricing.price}</span>
-                <span className="text-muted-foreground"> /month</span>
+                <span className="tw-text-3xl tw-font-bold">${pricing.price}</span>
+                <span className="tw-text-muted-foreground"> /month</span>
               </div>
 
               <CardDescription>{pricing.description}</CardDescription>
             </CardHeader>
 
             <CardContent>
-              <Button variant={pricing.disabled ? 'ghost' : 'default'} className={`w-full`}>{pricing.buttonText}</Button>
+              <Button variant={pricing.disabled ? 'ghost' : 'default'} className={`tw-w-full`}>{pricing.buttonText}</Button>
             </CardContent>
 
-            <hr className="w-4/5 m-auto mb-4" />
+            <hr className="tw-w-4/5 tw-m-auto tw-mb-4" />
           
             <CardFooter className="flex">
-              <div className="space-y-4">
+              <div className="tw-space-y-4">
                 {pricing.benefitList.map((benefit: string) => (
                   <span
                     key={benefit}
-                    className="flex"
+                    className="tw-flex"
                   >
-                    <Check className="text-green-500" />{" "}
-                    <h3 className="ml-2">{benefit}</h3>
+                    <Check className="tw-text-green-500" />{" "}
+                    <h3 className="tw-ml-2">{benefit}</h3>
                   </span>
                 ))}
               </div>

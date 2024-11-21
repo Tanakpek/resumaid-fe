@@ -1,17 +1,16 @@
 
 /* editor.module.css */
 
-.bs-sync :global {
 
 
-
-@import url('https://cdn.syncfusion.com/ej2/27.2.2/bootstrap5.css');
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-/* Any Syncfusion-specific overrides */
-.control-section {
+    @import url('https://cdn.syncfusion.com/ej2/27.2.2/bootstrap5.css');
     
-    margin-top: 100px;
-}
+    
+    /* Any Syncfusion-specific overrides */
+    .control-section {
+        
+        margin-top: 100px;
+    }
 
 .ej2-new {
     height: 590px;
@@ -324,4 +323,4 @@ body {
         
         }
 
-    }
+    

@@ -36,20 +36,20 @@ export const Sponsors = () => {
   return (
     <section
       id="sponsors"
-      className="container pt-24 sm:py-32"
+      className="tw-container tw-pt-24 sm:tw-py-32"
     >
-      <h2 className="text-center text-md lg:text-xl font-bold mb-8 text-primary">
+      <h2 className="tw-text-center tw-text-md lg:tw-text-xl tw-font-bold tw-mb-8 tw-text-primary">
         Investors and founders
       </h2>
 
-      <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
+      <div className="tw-flex tw-flex-wrap tw-justify-center tw-items-center tw-gap-4 md:tw-gap-8">
         {sponsors.map(({ icon, name }: SponsorProps) => (
           <div
             key={name}
-            className="flex items-center gap-1 text-muted-foreground/60"
+            className="tw-flex tw-items-center tw-gap-1 tw-text-muted-foreground/60"
           >
             <span>{icon}</span>
-            <h3 className="text-xl  font-bold">{name}</h3>
+            <h3 className="tw-text-xl  tw-font-bold">{name}</h3>
           </div>
         ))}
       </div>

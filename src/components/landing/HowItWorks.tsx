@@ -38,39 +38,41 @@ export const HowItWorks = () => {
   return (
     <section
       id="howItWorks"
-      className="container text-center py-24 sm:py-32 p-14"
+      className="tw-container tw-text-center tw-py-24 sm:tw-py-32 tw-p-14"
     >
-      <h2 className="text-3xl md:text-4xl font-bold ">
+      <h2 className="tw-text-3xl md:tw-text-4xl tw-font-bold ">
         How It{" "}
-        <span className="bg-primary text-transparent bg-clip-text">
+        <span className="tw-bg-primary tw-text-transparent tw-bg-clip-text">
           Works{" "}
         </span>
         Step-by-Step Guide
       </h2>
-      <p className="md:w-3/4 mx-auto mt-4 mb-8 text-xl text-muted-foreground">
+      <p className="md:tw-w-3/4 tw-mx-auto tw-mt-4 tw-mb-8 tw-text-xl tw-text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
         dolor pariatur sit!
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="tw-grid tw-grid-cols-1 md:tw-grid-cols-2 lg:tw-grid-cols-4 tw-gap-8">
         {features.map(({ icon, title, description }: FeatureProps) => (
           <>
             
-          <HoverEffect className="grid gap-4 place-items-center" items={[{title:title, description, link:'', icon: icon}]}>
-          </HoverEffect>
+            <HoverEffect className="tw-grid tw-gap-4 tw-place-items-center" items={[{title:title, description, link:'', icon: icon}]}>
+            
             
           {/* <Card
             key={title}
-            className="bg-muted/50"
+            className="tw-bg-muted/50"
           >
             <CardHeader>
-              <CardTitle className="grid gap-4 place-items-center">
+                <CardTitle className="tw-grid tw-gap-4 tw-place-items-center">
                 {icon}
                 {title}
               </CardTitle>
             </CardHeader>
             <CardContent>{description}</CardContent>
           </Card> */}
+            </HoverEffect>
+          
           
           </>
         ))}

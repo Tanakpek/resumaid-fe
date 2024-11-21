@@ -5,11 +5,11 @@ import { GitHubLogoIcon } from "@radix-ui/react-icons";
 
 export const Hero = () => {
   return (
-    <section className="container grid lg:grid-cols-2 place-items-center py-20 md:py-32 gap-10 mx-auto p-14">
-      <div className="text-center lg:text-start space-y-6">
-        <main className="text-5xl md:text-6xl font-bold">
-          <h1 className="inline">
-            <span className="inline bg-gradient-to-r from-primary  to-[#D247BF] text-transparent bg-clip-text">
+    <section className="tw-container tw-grid lg:tw-grid-cols-2 tw-place-items-center tw-py-20 md:tw-py-32 tw-gap-10 tw-mx-auto p-14">
+      <div className="tw-text-center lg:tw-text-start tw-space-y-6">
+        <main className="tw-text-5xl md:tw-text-6xl tw-font-bold">
+          <h1 className="tw-inline">
+            <span className="tw-inline tw-bg-gradient-to-r tw-from-primary  tw-to-[#D247BF] tw-text-transparent tw-bg-clip-text">
                 Ultimate
             </span>{" "}
             tool
@@ -17,41 +17,41 @@ export const Hero = () => {
           for{" "}
           <h2 className="">
             Job{" "}
-            <span className="inline bg-gradient-to-r from-black via-secondary-200 to-secondary text-transparent bg-clip-text">
+            <span className="tw-inline tw-bg-gradient-to-r tw-from-black tw-via-secondary-200 tw-to-secondary tw-text-transparent tw-bg-clip-text">
               Applicants
             </span>{" "}
               Worldwide
           </h2>
         </main>
 
-        <p className="text-xl text-muted-foreground md:w-10/12 mx-auto lg:mx-0">
+        <p className="tw-text-xl tw-text-muted-foreground md:tw-w-10/12 tw-mx-auto lg:tw-mx-0">
           Showcase your best effortlessly. Our AI crafts applications that get you noticed.
         </p>
 
-        <div className="space-y-4 md:space-y-0 md:space-x-4">
+        <div className="tw-space-y-4 md:tw-space-y-0 md:tw-space-x-4">
           <Button className="w-full md:w-1/3">Get Started</Button>
 
           <a
             rel="noreferrer noopener"
             href="https://github.com/leoMirandaa/shadcn-landing-page.git"
             target="_blank"
-            className={`w-full md:w-1/3 ${buttonVariants({
+            className={`tw-w-full md:tw-w-1/3 ${buttonVariants({
               variant: "outline",
             })}`}
           >
             Github Repository
-            <GitHubLogoIcon className="ml-2 w-5 h-5" />
+            <GitHubLogoIcon className="tw-ml-2 tw-w-5 tw-h-5" />
           </a>
         </div>
       </div>
 
       {/* Hero cards sections */}
-      <div className="z-10">
+      <div className="tw-z-10">
         <HeroCards />
       </div>
 
       {/* Shadow effect */}
-      <div className="shadow"></div>
+      <div className="tw-shadow"></div>
     </section>
   );
 };

@@ -56,18 +56,18 @@ export const Features = () => {
   return (
     <section
       id="features"
-      className="container py-24 sm:py-32 space-y-8 p-14"
+      className="tw-container tw-py-24 sm:tw-py-32 tw-space-y-8 tw-p-14"
     >
-      <h2 className="text-3xl lg:text-4xl font-bold md:text-center">
+      <h2 className="tw-text-3xl lg:tw-text-4xl tw-font-bold md:tw-text-center">
         Many{" "}
-        <span className="text-secondary-200 bg-clip-text">
+        <span className="tw-text-secondary-200 tw-bg-clip-text">
           Great Features
         </span>
       </h2>
 
 
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="tw-grid md:tw-grid-cols-2 lg:tw-grid-cols-3 tw-gap-8">
         {features.map(({ title, description, image }: FeatureProps) => (
           <Card key={title}>
             <CardHeader>
@@ -80,7 +80,7 @@ export const Features = () => {
               <img
                 src={image}
                 alt="About feature"
-                className="w-[200px] lg:w-[300px] mx-auto"
+                className="tw-w-[200px] lg:tw-w-[300px] tw-mx-auto"
               />
             </CardFooter>
           </Card>

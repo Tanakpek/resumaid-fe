@@ -63,7 +63,7 @@ export function StatusToggle (props: {id: string, status: ApplicationObject['sta
     
     return (
         <Select value={status} onValueChange={handleStatusChange} defaultValue="New">
-            <SelectTrigger className={loading ? "bg-slate-200 transition-colors duration-200 ease-in-out " : "transition-colors duration-200 ease-in-out"}>
+            <SelectTrigger className={loading ? "tw-bg-slate-200 tw-transition-colors tw-duration-200 tw-ease-in-out " : "tw-transition-colors tw-duration-200 tw-ease-in-out"}>
                 
                 <SelectValue  placeholder={statusMaps[status]} />
             </SelectTrigger>

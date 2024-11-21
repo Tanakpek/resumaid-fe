@@ -136,8 +136,8 @@ export function RunsDataTable<TData, TValue, AppId, FRunId>({
           className="max-w-sm dark:bg-slate-900 bg-white"
         />
       </div> */}
-        <div className="rounded-md border">
-            <Table className="bg-white">
+            <div className="tw-rounded-md tw-border">
+                <Table className="tw-bg-white">
                 <TableHeader>
                     {table.getHeaderGroups().map((headerGroup) => (
                         <TableRow key={headerGroup.id}>
@@ -146,7 +146,7 @@ export function RunsDataTable<TData, TValue, AppId, FRunId>({
                                     
                                     <TableHead key={header.id}>
 
-                                        <div className="flex justify-between">
+                                        <div className="tw-flex tw-justify-between">
                                         
                                         {
                                         header.isPlaceholder
@@ -157,7 +157,7 @@ export function RunsDataTable<TData, TValue, AppId, FRunId>({
                                             )
                                         }
 
-                                            {header.id === 'creation_dt' && <Button variant="ghost"><ArrowUpDown className="h-full  w-4 mx-2" onClick={() => {
+                                            {header.id === 'creation_dt' && <Button variant="ghost"><ArrowUpDown className="tw-h-full  tw-w-4 tw-mx-2" onClick={() => {
                                                 setFilterState({...filterState, order: filterState.order === 'asc' ? 'desc' : 'asc' })
                                                 fetchData(pagination, {...filterState, order: filterState.order === 'asc' ? 'desc' : 'asc' })
                                                 // fetchData(pagination, {...filterState, order: filterState.order === 'asc' ? 'desc' : 'asc' })
@@ -188,14 +188,14 @@ export function RunsDataTable<TData, TValue, AppId, FRunId>({
                     })
                     ) : (
                         <TableRow>
-                            <TableCell colSpan={columns.length} className="h-24 text-center mx-2">
+                                    <TableCell colSpan={columns.length} className="tw-h-24 tw-text-center tw-mx-2">
                                 No results.
                             </TableCell>
                         </TableRow>
                     )}
                 </TableBody>
             </Table>
-            <div className="flex items-center justify-end space-x-2 py-4 px-3 bg-white">
+                <div className="tw-flex tw-items-center tw-justify-end tw-space-x-2 tw-py-4 tw-px-3 tw-bg-white">
                 <Button
                     variant="outline"
                     size="sm"

@@ -63,18 +63,18 @@ export const Testimonials = () => {
   return (
     <section
       id="testimonials"
-      className="container py-24 sm:py-32 px-14"
+      className="tw-container tw-py-24 sm:tw-py-32 tw-px-14"
     >
-      <h2 className="text-3xl md:text-4xl font-bold">
+      <h2 className="tw-text-3xl md:tw-text-4xl tw-font-bold">
         Discover Why
-        <span className="bg-primary text-transparent bg-clip-text">
+        <span className="tw-bg-primary tw-text-transparent tw-bg-clip-text">
           {" "}
           People Love Applicaid{" "}
         </span>
         
       </h2>
 
-      <p className="text-xl text-muted-foreground pt-4 pb-8">
+      <p className="tw-text-xl tw-text-muted-foreground tw-pt-4 tw-pb-8">
         Here are some testimonials from our satisfied customers. 
       </p>
       {/* <InfiniteMovingCardsDemo />

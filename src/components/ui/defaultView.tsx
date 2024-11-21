@@ -7,11 +7,11 @@ export const DefaultView: CVPartView = ({ children=undefined }) => {
     return (
         <Card>
             <CardHeader>
-                <div className='flex justify-end'>
+                <div className='tw-flex tw-justify-end'>
                     <Switch className='' id="necessary" defaultChecked />
                 </div>
             </CardHeader>
-            <CardContent className="grid gap-6">
+            <CardContent className="tw-grid tw-gap-6">
             </CardContent>
             <CardFooter>
                 {children || ''}

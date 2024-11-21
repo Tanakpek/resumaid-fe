@@ -43,10 +43,14 @@ export default defineConfig({
       domains: ['localhost'],
       name: 'E'
     }),
+
     svgr(),
     wasm(),
     topLevelAwait(),
   ],
+  define: {
+    'process.env': {}
+  },
   
   resolve: {
     alias: {

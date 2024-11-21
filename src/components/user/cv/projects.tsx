@@ -84,8 +84,8 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
           toast({
             title: "You changed your details successfully!",
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                <code className="tw-text-white">{JSON.stringify(data, null, 2)}</code>
               </pre>
             ),
           })
@@ -98,8 +98,8 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
         toast({
           title: "Something went wrong",
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{ }</code>
+            <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+              <code className="tw-text-white">{ }</code>
             </pre>
           ),
         })
@@ -108,8 +108,8 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
       toast({
         title: "Bad Request",
         description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{resp.statusText}</code>
+          <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+            <code className="tw-text-white">{resp.statusText}</code>
           </pre>
         ),
       })
@@ -122,12 +122,12 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
        
         <div>
         {fields.map((field, index) => (
-            <Card index={index} className='mb-10 bg-primary-50' key={index}>
-              <div className='flex justify-end'>
-              <div className='padding-2 hover:bg-secondary m-3 rounded-md transition ease-in-out'>
+          <Card index={index} className='tw-mb-10 tw-bg-primary-50' key={index}>
+            <div className='tw-flex tw-justify-end'>
+              <div className='tw-padding-2 hover:tw-bg-secondary tw-m-3 tw-rounded-md tw-transition tw-ease-in-out'>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <Trash className='stroke-slate-500 m-1 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 flex hover:stroke-red-400 transition ease-in-out' />
+                    <Trash className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
@@ -147,17 +147,17 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                 <div>
                 
                 <Label>{field.name}</Label>
-                <div className='flex mt-6 mb-6 justify-around'>
-                <div className='flex-column w-full relative'>
+              <div className='tw-flex tw-mt-6 tw-mb-6 tw-justify-around'>
+                <div className='tw-flex-column tw-w-full tw-relative'>
 
                 {field.takeaways.map((takeaway, inx) => (
-                    <div className='flex justify-center ml-3' index={index + '_' +inx}> 
+                  <div className='tw-flex tw-justify-center tw-ml-3' index={index + '_' +inx}> 
                       <FormField
                       control={form.control}
                       key={index+'-'+inx}
                       name={`projects.${index}.takeaways.${inx}.value`}
                       render={({ field }) => (
-                          <FormItem className='flex m-2 relative w-3/4'>
+                        <FormItem className='tw-flex m-2 tw-relative tw-w-3/4'>
                               <FormControl>
                                 <Textarea value={takeaway.value} {...field} />
                               </FormControl>
@@ -165,9 +165,9 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                           </FormItem>
                       )}
                       />
-                      <div className='flex relative items-center'>
+                    <div className='tw-flex tw-relative tw-items-center'>
 
-                        <XIcon className='stroke-slate-500 m-1 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 flex hover:stroke-red-400 transition ease-in-out'/>
+                      <XIcon className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out'/>
                       </div>
                     </div>
                     // Add your code here
@@ -181,7 +181,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                 variant="outline"
                 size="sm"
                 key={field.id}
-                className="mt-2"
+              className="tw-mt-2"
                 onClick={(e) => {
                     const n = [...fields[index].takeaways, {immutabe: false, value: '', _id: undefined}]
                     fields[index].takeaways = n
@@ -200,7 +200,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                 onClick={() => setAddProjectOpen(!addProjectOpen)}
                 role="combobox"
                 aria-expanded={addProjectOpen}
-                className="w-[200px] justify-between">
+                className="tw-w-[200px] tw-justify-between">
                 Add Project
                 </Button>
               </PopoverTrigger>
@@ -211,7 +211,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                 type="button"
                 variant="outline"
                 size="sm"
-                className="mt-2"
+                className="tw-mt-2"
                 onClick={() => {
                   setAddProjectOpen(false)
                   append({ name: addProjectName, takeaways: [], immutable: false})
@@ -262,8 +262,8 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
           toast({
             title: "You changed your details successfully!",
             description: (
-              <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+              <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                <code className="tw-text-white">{JSON.stringify(data, null, 2)}</code>
               </pre>
             ),
           })
@@ -276,8 +276,8 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
         toast({
           title: "Something went wrong",
           description: (
-            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-              <code className="text-white">{ }</code>
+            <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+              <code className="tw-text-white">{ }</code>
             </pre>
           ),
         })
@@ -286,8 +286,8 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
       toast({
         title: "Bad Request",
         description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <code className="text-white">{resp.statusText}</code>
+          <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+            <code className="tw-text-white">{resp.statusText}</code>
           </pre>
         ),
       })
@@ -300,9 +300,9 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
     {
     data.map((project, index) => {
       return (
-        (<Card key={index} className="p-6 mb-10">
-          <CardHeader className=' font-bold p-0'> {project.name}</CardHeader>
-          <div className='my-4'>
+        (<Card key={index} className="tw-p-6 tw-mb-10">
+          <CardHeader className=' tw-font-bold tw-p-0'> {project.name}</CardHeader>
+          <div className='tw-my-4'>
             {project.takeaways.map((takeaway, idx) => {
               return (
                 <FormField
@@ -310,10 +310,10 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
                     control={form.control}
                     name={`projects.${index}.takeaways.${idx}.in`}
                     render={({ field }) => (
-                        <FormItem className='flex-grow'>
+                      <FormItem className='tw-flex-grow'>
                             <FormControl>
-                          <Toggle className='my-3  h-auto w-full justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange} >
-                              <p key={index} className='my-2 text-justify'>{takeaway.value}</p>
+                          <Toggle className='tw-my-3  tw-h-auto tw-w-full tw-justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange} >
+                            <p key={index} className='tw-my-2 tw-text-justify'>{takeaway.value}</p>
                             </Toggle>
                 </FormControl>
                 </FormItem>

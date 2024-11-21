@@ -75,21 +75,21 @@ export const InfiniteMovingCards = ({
         <div
             ref={containerRef}
             className={cn(
-                "scroller relative z-20  max-w-7xl overflow-hidden  [mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
+                "tw-scroller tw-relative tw-z-20  tw-max-w-7xl tw-overflow-hidden  tw-[mask-image:linear-gradient(to_right,transparent,white_20%,white_80%,transparent)]",
                 className
             )}
         >
             <ul
                 ref={scrollerRef}
                 className={cn(
-                    " flex min-w-full shrink-0 gap-4 py-4 w-max flex-nowrap",
-                    start && "animate-scroll ",
-                    pauseOnHover && "hover:[animation-play-state:paused]"
+                    " tw-flex tw-min-w-full tw-shrink-0 tw-gap-4 tw-py-4 tw-w-max tw-flex-nowrap",
+                    start && "tw-animate-scroll ",
+                    pauseOnHover && "hover:tw-[animation-play-state:paused]"
                 )}
             >
                 {items.map((item, idx) => (
                     <li
-                        className="w-[350px] max-w-full relative rounded-2xl border border-b-0 flex-shrink-0 border-slate-700 px-8 py-6 md:w-[450px]"
+                        className="tw-w-[350px] tw-max-w-full tw-relative tw-rounded-2xl tw-border tw-border-b-0 tw-flex-shrink-0 tw-border-slate-700 tw-px-8 tw-py-6 md:tw-w-[450px]"
                         style={{
                             background:
                                 "linear-gradient(180deg, var(--slate-800), var(--slate-900)",
@@ -98,18 +98,18 @@ export const InfiniteMovingCards = ({
                     >
                         
                         <blockquote>
-                            <img src={item.picture} alt={item.name} className="  -top-0 mb-2 w-16 h-16 rounded-full" />
-                            <p className="flex mr-0 mb-2 text-sm  text-gray-400 font-normal !text-left">
+                            <img src={item.picture} alt={item.name} className="-tw-top-0 tw-mb-2tw- w-16 tw-h-16 tw-rounded-full" />
+                            <p className="tw-flex tw-mr-0 tw-mb-2 tw-text-sm  tw-text-gray-400 tw-font-normal !tw-text-left">
                                 {item.handle}
                             </p>
                             <div
                                 aria-hidden="true"
-                                className="user-select-none -z-1 pointer-events-none absolute -left-0.5 -top-0.5 h-[calc(100%_+_4px)] w-[calc(100%_+_4px)]"
+                                className="tw-user-select-none -tw-z-1 tw-pointer-events-none tw-absolute -tw-left-0.5 -tw-top-0.5 tw-h-[calc(100%_+_4px)] tw-w-[calc(100%_+_4px)]"
                             ></div>
-                            <p className="z-20 text-sm flex mr-0 text-gray-100 font-normal text-left">
+                            <p className="tw-z-20 tw-text-sm tw-flex tw-mr-0 tw-text-gray-100 tw-font-normal tw-text-left">
                                 {item.quote}
                             </p>
-                            <div className="relative z-20 mt-6 flex flex-row items-center">
+                            <div className="tw-relative tw-z-20 tw-mt-6 tw-flex tw-flex-row tw-items-center">
                             </div>
                         </blockquote>
                     </li>

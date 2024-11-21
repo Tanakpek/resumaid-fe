@@ -35,31 +35,31 @@ const serviceList: ServiceProps[] = [
 
 export const Services = () => {
   return (
-    <section className="container py-24 sm:py-32 px-14">
-      <div className="grid lg:grid-cols-[1fr,1fr] gap-8 place-items-center">
+    <section className="tw-container tw-py-24 sm:tw-py-32 tw-px-14">
+      <div className="tw-grid lg:tw-grid-cols-[1fr,1fr] tw-gap-8 tw-place-items-center">
         <div>
-          <h2 className="text-3xl md:text-4xl font-bold">
-            <span className="bg-gradient-to-b from-primary to-primary text-transparent bg-clip-text">
+          <h2 className="tw-text-3xl md:tw-text-4xl tw-font-bold">
+            <span className="tw-bg-gradient-to-b tw-from-primary tw-to-primary tw-text-transparent tw-bg-clip-text">
               Client-Centric{" "}
             </span>
             Services
           </h2>
 
-          <p className="text-muted-foreground text-xl mt-4 mb-8 ">
+          <p className="tw-text-muted-foreground tw-text-xl tw-mt-4 tw-mb-8 ">
             Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
             dolor.
           </p>
 
-          <div className="flex flex-col gap-8">
+          <div className="tw-flex tw-flex-col tw-gap-8">
             {serviceList.map(({ icon, title, description }: ServiceProps) => (
               <Card key={title}>
-                <CardHeader className="space-y-1 flex md:flex-row justify-start items-start gap-4">
-                  <div className="mt-1 bg-primary/20 p-1 rounded-2xl">
+                <CardHeader className="tw-space-y-1 tw-flex md:tw-flex-row tw-justify-start tw-items-start tw-gap-4">
+                  <div className="tw-mt-1 tw-bg-primary/20 tw-p-1 tw-rounded-2xl">
                     {icon}
                   </div>
                   <div>
                     <CardTitle>{title}</CardTitle>
-                    <CardDescription className="text-md mt-2">
+                    <CardDescription className="tw-text-md tw-mt-2">
                       {description}
                     </CardDescription>
                   </div>
@@ -71,7 +71,7 @@ export const Services = () => {
 
         <img
           src={cubeLeg}
-          className="w-[300px] md:w-[500px] lg:w-[600px] object-contain"
+          className="tw-w-[300px] md:tw-w-[500px] lg:tw-w-[600px] tw-object-contain"
           alt="About services"
         />
       </div>
@@ -88,7 +88,7 @@ import { InfiniteMovingCards } from "@/components/ui/infinite-moving-cards";
 
 export function InfiniteMovingCardsDemo() {
   return (
-    <div className="h-[40rem] rounded-md flex flex-col antialiased bg-white dark:bg-black dark:bg-grid-white/[0.05] items-center justify-center relative overflow-hidden">
+    <div className="tw-h-[40rem] tw-rounded-md tw-flex tw-flex-col tw-antialiased tw-bg-white dark:tw-bg-black dark:tw-bg-grid-white/[0.05] tw-tems-center tw-justify-center tw-relative tw-overflow-hidden">
       <InfiniteMovingCards
         items={testimonials}
         direction="right"

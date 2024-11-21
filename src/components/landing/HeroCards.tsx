@@ -16,9 +16,9 @@ import { BackgroundGradient } from "@/components/ui/bg-gradient";
 
 export const HeroCards = () => {
   return (
-    <div className="hidden lg:flex flex-row flex-wrap gap-8 relative w-[700px] h-[500px]">
+    <div className="tw-hidden lg:tw-flex tw-flex-row tw-flex-wrap tw-gap-8 tw-relative tw-w-[700px] tw-h-[500px]">
       {/* Testimonial */}
-      <Card className="absolute w-[340px] -top-[15px] drop-shadow-xl shadow-black/10 dark:shadow-white/10">
+      <Card className="tw-absolute tw-w-[340px] tw--top-[15px] tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
         <CardHeader className="flex flex-row items-center gap-4 pb-2">
           <Avatar>
             <AvatarImage
@@ -28,8 +28,8 @@ export const HeroCards = () => {
             <AvatarFallback>SH</AvatarFallback>
           </Avatar>
 
-          <div className="flex flex-col">
-            <CardTitle className="text-lg">John Doe React</CardTitle>
+          <div className="tw-flex tw-flex-col">
+            <CardTitle className="tw-text-lg">John Doe React</CardTitle>
             <CardDescription>@john_doe</CardDescription>
           </div>
         </CardHeader>
@@ -38,20 +38,20 @@ export const HeroCards = () => {
       </Card>
 
       {/* Team */}
-      <Card className="absolute right-[20px] top-4 w-80 flex flex-col justify-center items-center drop-shadow-xl shadow-black/10 dark:shadow-white/10">
+      <Card className="tw-absolute tw-right-[20px] tw-top-4 tw-w-80 tw-flex tw-flex-col tw-justify-center tw-items-center tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
         <CardHeader className="mt-8 flex justify-center items-center pb-2">
           <img
             src="https://i.pravatar.cc/150?img=58"
             alt="user avatar"
-            className="absolute grayscale-[0%] -top-12 rounded-full w-24 h-24 aspect-square object-cover"
+            className="tw-absolute tw-grayscale-[0%] tw--top-12 tw-rounded-full tw-w-24 tw-h-24 tw-aspect-square tw-object-cover"
           />
-          <CardTitle className="text-center">Leo Miranda</CardTitle>
-          <CardDescription className="font-normal text-primary">
+          <CardTitle className="tw-text-center">Leo Miranda</CardTitle>
+          <CardDescription className="tw-font-normal tw-text-primary">
             Frontend Developer
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="text-center pb-2">
+        <CardContent className="tw-text-center tw-pb-2">
           <p>
             I really enjoy transforming ideas into functional software that
             exceeds expectations
@@ -81,12 +81,12 @@ export const HeroCards = () => {
                 size: "sm",
               })}
             >
-              <span className="sr-only">X icon</span>
+              <span className="tw-sr-only">X icon</span>
               <svg
                 role="img"
                 viewBox="0 0 24 24"
                 xmlns="http://www.w3.org/2000/svg"
-                className="fill-foreground w-5 h-5"
+                className="tw-fill-foreground tw-w-5 tw-h-5"
               >
                 <title>X</title>
                 <path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" />
@@ -102,7 +102,7 @@ export const HeroCards = () => {
                 size: "sm",
               })}
             >
-              <span className="sr-only">Linkedin icon</span>
+              <span className="tw-sr-only">Linkedin icon</span>
               <Linkedin size="20" />
             </a>
           </div>
@@ -111,22 +111,22 @@ export const HeroCards = () => {
 
       {/* Pricing */}
       
-      <div className="absolute top-[150px] left-[50px] w-72  drop-shadow-xl shadow-black/10 dark:shadow-white/10 z-1">
-      <BackgroundGradient className="z-50 ">
-        <div style={{borderRadius: 21}}className="z-1 bg-white dark:bg-slate-900">
-        <CardHeader className="z-1">
-          <CardTitle className="flex item-center justify-between z-1">
+      <div className="tw-absolute tw-top-[150px] tw-left-[50px] tw-w-72  tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10 tw-z-1">
+        <BackgroundGradient className="tw-z-50 ">
+          <div style={{ borderRadius: 21 }} className="tw-z-1 tw-bg-white dark:tw-bg-slate-900">
+            <CardHeader className="tw-z-1">
+              <CardTitle className="tw-flex tw-item-center tw-justify-between tw-z-1">
             Standard
             <Badge
               variant="secondary"
-              className="text-sm text-primary z-1"
+                  className="tw-text-sm tw-text-primary tw-z-1"
             >
               Most popular
             </Badge>
           </CardTitle>
           <div>
-            <span className="text-3xl font-bold">$13</span>
-            <span className="text-muted-foreground"> /month</span>
+                <span className="tw-text-3xl tw-font-bold">$13</span>
+                <span className="tw-text-muted-foreground"> /month</span>
           </div>
 
           <CardDescription>
@@ -135,21 +135,21 @@ export const HeroCards = () => {
         </CardHeader>
 
         <CardContent>
-          <Button className="w-full">Start Free Trial</Button>
+              <Button className="tw-w-full">Start Free Trial</Button>
         </CardContent>
 
-        <hr className="w-4/5 m-auto mb-4" />
+            <hr className="tw-w-4/5 tw-m-auto tw-mb-4" />
 
-        <CardFooter className="flex">
-          <div className="space-y-4">
+            <CardFooter className="tw-flex">
+              <div className="tw-space-y-4">
             {["4 Team member", "4 GB Storage", "Upto 6 pages"].map(
               (benefit: string) => (
                 <span
                   key={benefit}
-                  className="flex"
+                  className="tw-flex"
                 >
-                  <Check className="text-green-500" />{" "}
-                  <h3 className="ml-2">{benefit}</h3>
+                  <Check className="tw-text-green-500" />{" "}
+                  <h3 className="tw-ml-2">{benefit}</h3>
                 </span>
               )
             )}
@@ -161,14 +161,14 @@ export const HeroCards = () => {
       </div>
 
       {/* Service */}
-      <Card className="absolute w-[350px] -right-[10px] bottom-[35px]  drop-shadow-xl shadow-black/10 dark:shadow-white/10">
-        <CardHeader className="space-y-1 flex md:flex-row justify-start items-start gap-4">
-          <div className="mt-1 bg-primary/20 p-1 rounded-2xl">
+      <Card className="tw-absolute tw-w-[350px] tw--right-[10px] tw-bottom-[35px]  tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
+        <CardHeader className="tw-space-y-1 tw-flex md:tw-flex-row tw-justify-start tw-items-start tw-gap-4">
+          <div className="tw-mt-1 tw-bg-primary/20 tw-p-1 tw-rounded-2xl">
             <LightBulbIcon />
           </div>
           <div>
             <CardTitle>ATS Optimized</CardTitle>
-            <CardDescription className="text-md mt-2">
+            <CardDescription className="tw-text-md tw-mt-2">
               Our templates are optimized for Applicant Tracking Systems
             </CardDescription>
           </div>

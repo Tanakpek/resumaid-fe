@@ -38,14 +38,14 @@ export function Applications({ subStatus, setSubStatus, plan, setPlan }) {
 
     return (
         <div>
-            <div className="flex min-h-screen w-full flex-col" id="hya">
-                <div className='your-container'>
+            <div className="tw-flex tw-min-h-screen tw-w-full tw-flex-col">
+                <div className='tw-your-container'>
                     {appId &&
                         <Runs appId={appId} setPlan={setPlan} subStatus={subStatus} plan={plan} setSubStatus={setSubStatus} />
                     }
                     {!appId &&
-                            <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-                                <div className="container mx-auto py-10">
+                        <main className="tw-flex tw-min-h-[calc(100vh_-_theme(spacing.16))] tw-flex-1 tw-flex-col tw-gap-4 tw-bg-muted/40 tw-p-4 md:tw-gap-8 md:tw-p-10">
+                            <div className="tw-container tw-mx-auto tw-py-10">
                                     
 
                                     <ApplicationsDataTable columns={columns} data={applications} />

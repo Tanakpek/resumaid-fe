@@ -87,8 +87,8 @@ export function EducationEdit({data, tokens, setcv}) {
                   toast({
                       title: "You changed your details successfully!",
                       description: (
-                          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                              <code className="text-white">EDUCATION</code>
+                          <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                              <code className="tw-text-white">EDUCATION</code>
                           </pre>
                       ),
                   })
@@ -101,8 +101,8 @@ export function EducationEdit({data, tokens, setcv}) {
               toast({
                   title: "Something went wrong",
                   description: (
-                      <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                          <code className="text-white">{ }</code>
+                      <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                          <code className="tw-text-white">{ }</code>
                       </pre>
                   ),
               })
@@ -111,8 +111,8 @@ export function EducationEdit({data, tokens, setcv}) {
           toast({
               title: "Bad Request",
               description: (
-                  <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                      <code className="text-white">{resp.statusText}</code>
+                  <pre className="tw-mt-2 w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                      <code className="tw-text-white">{resp.statusText}</code>
                   </pre>
               ),
           })
@@ -122,18 +122,18 @@ export function EducationEdit({data, tokens, setcv}) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit) //onSubmit
-      } className="space-y-8">
+          } className="tw-space-y-8">
        
         <div>
             
           {fields.map((field, index) => (
             
-            <div className='flex-column m-5' key={index}>
+              <div className='tw-flex-column tw-m-5' key={index}>
                 <Card>
-                      <div className='flex justify-end mt-3 mr-4'>
+                      <div className='tw-flex tw-justify-end tw-mt-3 tw-mr-4'>
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
-                                  <Trash className='stroke-slate-500 m-2 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 align-right hover:stroke-red-400 transition ease-in-out' />
+                                  <Trash className='tw-stroke-slate-500 tw-m-2 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-align-right hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>
@@ -151,14 +151,14 @@ export function EducationEdit({data, tokens, setcv}) {
                       </div>
                 
 
-                <div className='m-5'>
-                <div className='flex justify-between'>
+                      <div className='tw-m-5'>
+                          <div className='tw-flex tw-justify-between'>
                 <FormField
                 key={field.id + 'start'}
                 control={form.control}
                 name={`education.${index}.start`}
                 render={({ field }) => (
-                    <FormItem className="flex flex-col">
+                    <FormItem className="tw-flex tw-flex-col">
                     <FormLabel>Start Date</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
@@ -166,15 +166,15 @@ export function EducationEdit({data, tokens, setcv}) {
                             <Button
                             variant={"outline"}
                             className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
-                                !field.value && "text-muted-foreground"
+                                "tw-w-[240px] tw-pl-3 tw-text-left tw-font-normal",
+                                !field.value && "tw-text-muted-foreground"
                             )}
                             >
                             {field.value ? field.value === 'PRESENT' ? <span>Pick a date</span> : format(new Date(field.value), "PPP") : <span>Pick a date</span>}                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                             </Button>
                         </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent className="tw-w-auto p-0" align="start">
                         <Calendar
                             // captionLayout='dropdown-buttons'
                             captionLayout="dropdown"
@@ -199,7 +199,7 @@ export function EducationEdit({data, tokens, setcv}) {
                 control={form.control}
                 name={`education.${index}.end`}
                 render={({ field }) => (
-                    <FormItem className="flex flex-col">
+                    <FormItem className="tw-flex tw-flex-col">
                     <FormLabel>End Date</FormLabel>
                     <Popover>
                         <PopoverTrigger asChild>
@@ -207,16 +207,16 @@ export function EducationEdit({data, tokens, setcv}) {
                             <Button
                             variant={"outline"}
                             className={cn(
-                                "w-[240px] pl-3 text-left font-normal",
+                                "tw-w-[240px] tw-pl-3 tw-text-left tw-font-normal",
                                 !field.value && "text-muted-foreground"
                             )}
                             >
                             {field.value ? field.value === 'PRESENT' ? <span>Present</span> : format(new Date(field.value), "PPP") : <span>Pick a date</span>}
-                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                        <CalendarIcon className="tw-ml-auto tw-h-4 tw-w-4 tw-opacity-50" />
                             </Button>
                         </FormControl>
                         </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0" align="start">
+                            <PopoverContent className="tw-w-auto p-0" align="start">
                         <Calendar
                             // captionLayout='dropdown-buttons'
                             captionLayout="dropdown"
@@ -231,9 +231,9 @@ export function EducationEdit({data, tokens, setcv}) {
                             initialFocus
                         />
                         </PopoverContent>
-                        <div className='flex self-start'>
+                            <div className='tw-flex tw-self-start'>
                         <Checkbox
-                          className='self-center mx-2'
+                                    className='tw-self-center tw-mx-2'
                             checked={field.value === ""}
                             onCheckedChange={
                                 (checked => {
@@ -242,7 +242,7 @@ export function EducationEdit({data, tokens, setcv}) {
                                 })
                             }
                           />
-                        <p className='text-sm'>Present</p>
+                                <p className='tw-text-sm'>Present</p>
                         </div>
                     </Popover>
                     <FormMessage />
@@ -251,7 +251,7 @@ export function EducationEdit({data, tokens, setcv}) {
                 />
                 </div>
             <div/>
-            <div className='my-3'>
+                          <div className='tw-my-3'>
             <FormField
               control={form.control}
               key={field.id}
@@ -298,32 +298,32 @@ export function EducationEdit({data, tokens, setcv}) {
             <Collapsible
                 open={(isOpen[0] === index && isOpen[1])}
                 onOpenChange={() => setIsOpen([index, !isOpen[1]])}
-                className="w-[350px] space-y-2 mt-6"
+                              className="tw-w-[350px] space-y-2 mt-6"
             >
-            <div className="flex items-center justify-between space-x-4 px-4">
+                              <div className="tw-flex items-center justify-between space-x-4 px-4">
             <FormLabel>
                  Capstone Project (Optional) {
-                   form.getValues().education[index].capstone &&  Object.values(form.getValues().education[index].capstone).filter(e => {return e !== undefined && e !== ""}).length > 1 ? <span className='text-red-500'>Only one field should be filled</span> : ''
+                                          form.getValues().education[index].capstone && Object.values(form.getValues().education[index].capstone).filter(e => { return e !== undefined && e !== "" }).length > 1 ? <span className='tw-text-red-500'>Only one field should be filled</span> : ''
                  }
             </FormLabel>
                 <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                    <ChevronsUpDown className="h-4 w-4" />
-                    <span className="sr-only">Toggle</span>
+                                      <Button variant="ghost" size="sm" className="tw-w-9 p-0">
+                                          <ChevronsUpDown className="tw-h-4 w-4" />
+                                          <span className="tw-sr-only">Toggle</span>
                 </Button>
                 </CollapsibleTrigger>
             </div>
 
-            <CollapsibleContent className="space-y-2">
+                              <CollapsibleContent className="tw-space-y-2">
                 
-                <div className=" hover:bg-accent transition ease-in-out rounded-md border px-4 py-3 font-mono text-sm" onClick={ (e) => {
+                                  <div className=" hover:tw-bg-accent tw-transition tw-ease-in-out tw-rounded-md tw-border tw-px-4 tw-py-3 tw-font-mono tw-text-sm" onClick={ (e) => {
                     e.preventDefault()
                     setCapstone('thesis'+ index.toString())
                     setIsOpen([index, false])
                 }}>
                     Thesis
                 </div>
-                <div className="hover:bg-accent transition ease-in-out rounded-md border px-4 py-3 font-mono text-sm" onClick={(e) => {
+                                  <div className="hover:tw-bg-accent tw-transition tw-ease-in-out tw-rounded-md tw-border tw-px-4 tw-py-3 tw-font-mono tw-text-sm" onClick={(e) => {
                     e.preventDefault()
                     setCapstone('dissertation'+ index.toString())
                     setIsOpen([index,false])
@@ -337,7 +337,7 @@ export function EducationEdit({data, tokens, setcv}) {
               key={field.id}
               name={`education.${index}.capstone.dissertation`}
             render={({ field }) => (
-                <FormItem className={capstone === 'dissertation' + index.toString() ? "" : 'hidden' }>
+                <FormItem className={capstone === 'dissertation' + index.toString() ? "" : 'tw-hidden' }>
                     <FormLabel>
                         Dissertation
                     </FormLabel>
@@ -357,7 +357,7 @@ export function EducationEdit({data, tokens, setcv}) {
               name={`education.${index}.capstone.thesis`}
             render={({ field }) => (
                 
-                <FormItem className={capstone === 'thesis' + index.toString() ? "" : 'hidden' }>
+                <FormItem className={capstone === 'thesis' + index.toString() ? "" : 'tw-hidden' }>
                     <FormLabel>
                         Thesis
                     </FormLabel>
@@ -375,41 +375,41 @@ export function EducationEdit({data, tokens, setcv}) {
             <Collapsible
                 open={(isOpenGrade[0] === index && isOpenGrade[1])}
                 onOpenChange={() => setIsOpenGrade([index, !isOpenGrade[1]])}
-                className="w-[350px] space-y-2 mt-6"
+                              className="tw-w-[350px] tw-space-y-2 tw-mt-6"
             >
             
-            <div className="flex items-center justify-between space-x-4 px-4">
+                              <div className="tw-flex tw-items-center tw-justify-between tw-space-x-4 tw-px-4">
             <FormLabel>
                  Outcome (Optional) {
                    form.getValues().education[index].outcome &&  Object.values(form.getValues().education[index].outcome).filter(e => {return e !== undefined && e !== ""}).length > 1 ? <span className='text-red-500'>Only one field should be filled</span> : ''
                  }
             </FormLabel>
                 <CollapsibleTrigger asChild>
-                <Button variant="ghost" size="sm" className="w-9 p-0">
-                    <ChevronsUpDown className="h-4 w-4" />
+                                      <Button variant="ghost" size="sm" className="tw-w-9 tw-p-0">
+                                          <ChevronsUpDown className="tw-h-4 tw-w-4" />
                     <span className="sr-only">Toggle</span>
                 </Button>
                 </CollapsibleTrigger>
             </div>
             
             
-            <CollapsibleContent className="space-y-2">
+                              <CollapsibleContent className="tw-space-y-2">
                 
-                <div className=" hover:bg-accent transition ease-in-out rounded-md border px-4 py-3 font-mono text-sm" onClick={ (e) => {
+                                  <div className=" hover:tw-bg-accent tw-transition tw-ease-in-out tw-rounded-md tw-border tw-px-4 tw-py-3 tw-font-mono tw-text-sm" onClick={ (e) => {
                     e.preventDefault()
                     setGrade('score' + index.toString())
                     setIsOpenGrade([index, false])
                 }}>
                     Score
                 </div>
-                <div className="hover:bg-accent transition ease-in-out rounded-md border px-4 py-3 font-mono text-sm" onClick={(e) => {
+                                  <div className="hover:tw-bg-accent tw-transition tw-ease-in-out tw-rounded-md tw-border tw-px-4 tw-py-3 tw-font-mono tw-text-sm" onClick={(e) => {
                     e.preventDefault()
                     setGrade('gpa' + index.toString())
                     setIsOpenGrade([index, false])
                 }}>
                     GPA
                 </div>
-                <div className="hover:bg-accent transition ease-in-out rounded-md border px-4 py-3 font-mono text-sm" onClick={(e) => {
+                                  <div className="hover:tw-bg-accent tw-transition tw-ease-in-out tw-rounded-md tw-border tw-px-4 tw-py-3 tw-font-mono tw-text-sm" onClick={(e) => {
                     e.preventDefault()
                     setGrade('classification' + index.toString())
                     setIsOpenGrade([index, false])
@@ -424,7 +424,7 @@ export function EducationEdit({data, tokens, setcv}) {
               name={`education.${index}.outcome.gpa`}
             render={({ field }) => (
                 
-                <FormItem className={ grade === ('gpa' + index.toString()) ? '' : "hidden" }>
+                <FormItem className={grade === ('gpa' + index.toString()) ? '' : "tw-hidden" }>
                     <FormLabel>
                         GPA
                     </FormLabel>
@@ -444,7 +444,7 @@ export function EducationEdit({data, tokens, setcv}) {
               name={`education.${index}.outcome.score`}
             render={({ field }) => (
                 
-                <FormItem className={ grade === ('score' + index.toString()) ? '' : "hidden" }>
+                <FormItem className={grade === ('score' + index.toString()) ? '' : "tw-hidden" }>
                     <FormLabel>
                         Score
                     </FormLabel>
@@ -464,7 +464,7 @@ export function EducationEdit({data, tokens, setcv}) {
               name={`education.${index}.outcome.classification`}
             render={({ field }) => (
                 
-                <FormItem  className={ grade === ('classification' + index.toString()) ? '' : "hidden" }>
+                <FormItem className={grade === ('classification' + index.toString()) ? '' : "tw-hidden" }>
                     <FormLabel>
                         Classification
                     </FormLabel>
@@ -481,7 +481,7 @@ export function EducationEdit({data, tokens, setcv}) {
             </div>
             
             </Card>
-            <Separator className="my-6" />
+                  <Separator className="tw-my-6" />
             </div>
             
           ))}
@@ -490,7 +490,7 @@ export function EducationEdit({data, tokens, setcv}) {
             type="button"
             variant="outline"
             size="sm"
-            className="mt-2"
+                      className="tw-mt-2"
             onClick={() => append({ immutable: false, _id: undefined})}
           >
             Add Education
@@ -507,17 +507,17 @@ export const EducationView: CVPartView = ({ data, setcv }: { data: Education[], 
         
       data.map((education, index) => {
         return (<Card key={index}>
-            <div className='m-4 mr-10'>
-                <p className='text-right italic'> {education.dates ? education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}` : ''}</p>
+            <div className='tw-m-4 tw-mr-10'>
+                <p className='tw-text-right tw-italic'> {education.dates ? education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}` : ''}</p>
             </div>
-            <CardHeader className=' font-bold !mb-0 p-0'> {education.degree}</CardHeader>
-            <CardDescription className='!mt-0'>{education.institution}</CardDescription>
-            <CardContent className='mt-10'>
+            <CardHeader className=' tw-font-bold !tw-mb-0 tw-p-0'> {education.degree}</CardHeader>
+            <CardDescription className='!tw-mt-0'>{education.institution}</CardDescription>
+            <CardContent className='tw-mt-10'>
                 { (education.thesis || education.dissertation) &&
                     <div>
                         {   
-                            education.dissertation && <div><div className='flex'> <p className=' font-bold mr-2'>Dissertation:</p> {education.dissertation}</div> </div> ||
-                            education.thesis && <div className='flex'><p className=' font-bold mr-2'>Thesis: </p>{education.thesis}</div>
+                            education.dissertation && <div><div className='tw-flex'> <p className=' tw-font-bold tw-mr-2'>Dissertation:</p> {education.dissertation}</div> </div> ||
+                            education.thesis && <div className='tw-flex'><p className=' tw-font-bold tw-mr-2'>Thesis: </p>{education.thesis}</div>
                         }
                         
                     </div>

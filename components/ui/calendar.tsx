@@ -1,9 +1,9 @@
 import * as React from "react"
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 import { DayPicker } from "react-day-picker"
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -15,54 +15,51 @@ function Calendar({
 }: CalendarProps) {
   return (
     <DayPicker
-      
       showOutsideDays={showOutsideDays}
-      className={cn("p-3", className)}
+      className={cn("tw-p-3", className)}
       classNames={{
-        months: "flex [&_span]:hidden flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
-        month: "space-y-4",
-        caption: "flex justify-center relative items-center",
-        caption_label: "font-medium hidden",
-        caption_between: "hidden",
-        caption_dropdowns: "flex space-x-2 justify-between",
-        nav: "space-x-1 flex items-center",
+        months: "tw-flex tw-flex-col sm:tw-flex-row tw-space-y-4 sm:tw-space-x-4 sm:tw-space-y-0",
+        month: "tw-space-y-4",
+        caption: "tw-flex tw-justify-center tw-pt-1 tw-relative tw-items-center",
+        caption_label: "tw-text-sm tw-font-medium",
+        nav: "tw-space-x-1 tw-flex tw-items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
-          "h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100"
+          "tw-h-7 tw-w-7 tw-bg-transparent tw-p-0 tw-opacity-50 hover:tw-opacity-100"
         ),
-        nav_button_previous: "absolute left-1",
-        nav_button_next: "absolute right-1",
-        table: "w-full border-collapse space-y-1",
-        head_row: "flex",
+        nav_button_previous: "tw-absolute tw-left-1",
+        nav_button_next: "tw-absolute tw-right-1",
+        table: "tw-w-full tw-border-collapse tw-space-y-1",
+        head_row: "tw-flex",
         head_cell:
-          "text-slate-500 rounded-md w-8 font-normal text-[0.8rem] dark:text-slate-400",
-        row: "flex w-full mt-2",
+          "tw-text-slate-500 tw-rounded-md tw-w-8 tw-font-normal tw-text-[0.8rem] dark:tw-text-slate-400",
+        row: "tw-flex tw-w-full tw-mt-2",
         cell: cn(
-          "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-slate-100 [&:has([aria-selected].day-outside)]:bg-slate-100/50 [&:has([aria-selected].day-range-end)]:rounded-r-md dark:[&:has([aria-selected])]:bg-slate-800 dark:[&:has([aria-selected].day-outside)]:bg-slate-800/50",
+          "tw-relative tw-p-0 tw-text-center tw-text-sm focus-within:tw-relative focus-within:tw-z-20 [&:has([aria-selected])]:tw-bg-slate-100 [&:has([aria-selected].day-outside)]:tw-bg-slate-100/50 [&:has([aria-selected].day-range-end)]:tw-rounded-r-md dark:[&:has([aria-selected])]:tw-bg-slate-800 dark:[&:has([aria-selected].day-outside)]:tw-bg-slate-800/50",
           props.mode === "range"
-            ? "[&:has(>.day-range-end)]:rounded-r-md [&:has(>.day-range-start)]:rounded-l-md first:[&:has([aria-selected])]:rounded-l-md last:[&:has([aria-selected])]:rounded-r-md"
-            : "[&:has([aria-selected])]:rounded-md"
+            ? "[&:has(>.day-range-end)]:tw-rounded-r-md [&:has(>.day-range-start)]:tw-rounded-l-md first:[&:has([aria-selected])]:tw-rounded-l-md last:[&:has([aria-selected])]:tw-rounded-r-md"
+            : "[&:has([aria-selected])]:tw-rounded-md"
         ),
         day: cn(
           buttonVariants({ variant: "ghost" }),
-          "h-8 w-8 p-0 font-normal aria-selected:opacity-100"
+          "tw-h-8 tw-w-8 tw-p-0 tw-font-normal aria-selected:tw-opacity-100"
         ),
-        day_range_start: "day-range-start",
-        day_range_end: "day-range-end",
+        day_range_start: "tw-day-range-start",
+        day_range_end: "tw-day-range-end",
         day_selected:
-          "bg-slate-900 text-slate-50 hover:bg-slate-900 hover:text-slate-50 focus:bg-slate-900 focus:text-slate-50 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50 dark:hover:text-slate-900 dark:focus:bg-slate-50 dark:focus:text-slate-900",
-        day_today: "bg-slate-100 text-slate-900 dark:bg-slate-800 dark:text-slate-50",
+          "tw-bg-slate-900 tw-text-slate-50 hover:tw-bg-slate-900 hover:tw-text-slate-50 focus:tw-bg-slate-900 focus:tw-text-slate-50 dark:tw-bg-slate-50 dark:tw-text-slate-900 dark:hover:tw-bg-slate-50 dark:hover:tw-text-slate-900 dark:focus:tw-bg-slate-50 dark:focus:tw-text-slate-900",
+        day_today: "tw-bg-slate-100 tw-text-slate-900 dark:tw-bg-slate-800 dark:tw-text-slate-50",
         day_outside:
-          "day-outside text-slate-500 opacity-50  aria-selected:bg-slate-100/50 aria-selected:text-slate-500 aria-selected:opacity-30 dark:text-slate-400 dark:aria-selected:bg-slate-800/50 dark:aria-selected:text-slate-400",
-        day_disabled: "text-slate-500 opacity-50 dark:text-slate-400",
+          "tw-day-outside tw-text-slate-500 aria-selected:tw-bg-slate-100/50 aria-selected:tw-text-slate-500 dark:tw-text-slate-400 dark:aria-selected:tw-bg-slate-800/50 dark:aria-selected:tw-text-slate-400",
+        day_disabled: "tw-text-slate-500 tw-opacity-50 dark:tw-text-slate-400",
         day_range_middle:
-          "aria-selected:bg-slate-100 aria-selected:text-slate-900 dark:aria-selected:bg-slate-800 dark:aria-selected:text-slate-50",
-        day_hidden: "invisible",
+          "aria-selected:tw-bg-slate-100 aria-selected:tw-text-slate-900 dark:aria-selected:tw-bg-slate-800 dark:aria-selected:tw-text-slate-50",
+        day_hidden: "tw-invisible",
         ...classNames,
       }}
       components={{
-        IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
-        IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
+        IconLeft: ({ ...props }) => <ChevronLeftIcon className="tw-h-4 tw-w-4" />,
+        IconRight: ({ ...props }) => <ChevronRightIcon className="tw-h-4 tw-w-4" />,
       }}
       {...props}
     />

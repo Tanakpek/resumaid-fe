@@ -1,10 +1,15 @@
 import * as React from "react"
 import * as HoverCardPrimitive from "@radix-ui/react-hover-card"
-import { MedalIcon, MapIcon, PlaneIcon, GiftIcon } from "@/src/components/landing/Icons";
 
 import { cn } from "@/lib/utils"
 
+export { HoverCard, HoverCardTrigger, HoverCardContent }
+import { AnimatePresence, motion } from "framer-motion";
+import { useState } from "react";
+
+
 const HoverCard = HoverCardPrimitive.Root
+
 const HoverCardTrigger = HoverCardPrimitive.Trigger
 
 const HoverCardContent = React.forwardRef<
@@ -16,20 +21,13 @@ const HoverCardContent = React.forwardRef<
     align={align}
     sideOffset={sideOffset}
     className={cn(
-      "z-50 w-64 rounded-md border border-slate-200 bg-white p-4 text-slate-950 shadow-md outline-none data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:border-slate-800 dark:bg-slate-950 dark:text-slate-50",
+      "tw-z-50 tw-w-64 tw-rounded-md tw-border tw-border-slate-200 tw-bg-white tw-p-4 tw-text-slate-950 tw-shadow-md tw-outline-none data-[state=open]:tw-animate-in data-[state=closed]:tw-animate-out data-[state=closed]:tw-fade-out-0 data-[state=open]:tw-fade-in-0 data-[state=closed]:tw-zoom-out-95 data-[state=open]:tw-zoom-in-95 data-[side=bottom]:tw-slide-in-from-top-2 data-[side=left]:tw-slide-in-from-right-2 data-[side=right]:tw-slide-in-from-left-2 data-[side=top]:tw-slide-in-from-bottom-2 dark:tw-border-slate-800 dark:tw-bg-slate-950 dark:tw-text-slate-50",
       className
     )}
     {...props}
   />
 ))
 HoverCardContent.displayName = HoverCardPrimitive.Content.displayName
-
-export { HoverCard, HoverCardTrigger, HoverCardContent }
-
-
-import { AnimatePresence, motion } from "framer-motion";
-
-import { useState } from "react";
 
 export const HoverEffect = ({
   items,
@@ -39,35 +37,31 @@ export const HoverEffect = ({
     title: string;
     description: string;
     link: string;
-    icon: 0 | 1 | 2 | 3 
+    icon: number
   }[];
   className?: string;
 }) => {
   let [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const icons = [<MedalIcon />, <MapIcon />, <PlaneIcon />, <GiftIcon />]
+
   return (
     <div
       className={cn(
-        "grid gap-4 place-items-center",
+        "tw-grid tw-grid-cols-1 md:tw-grid-cols-1  lg:tw-grid-cols-1  tw-py-10",
         className
       )}
     >
       {items.map((item, idx) => (
-
-        
         <a
           href={item?.link}
           key={item?.link}
-          className="relative group  block p-2 h-full w-full"
+          className="tw-relative tw-group  tw-block tw-p-2 tw-h-full tw-w-full"
           onMouseEnter={() => setHoveredIndex(idx)}
           onMouseLeave={() => setHoveredIndex(null)}
         >
-          
           <AnimatePresence>
-            
             {hoveredIndex === idx && (
               <motion.span
-                className="absolute inset-0 h-full w-full bg-neutral-200 dark:bg-slate-800/[0.8] block  rounded-3xl"
+                className="tw-absolute tw-inset-0 tw-h-full tw-w-full tw-bg-neutral-200 dark:tw-bg-slate-800/[0.8] tw-block  tw-rounded-3xl"
                 layoutId="hoverBackground"
                 initial={{ opacity: 0 }}
                 animate={{
@@ -81,8 +75,7 @@ export const HoverEffect = ({
               />
             )}
           </AnimatePresence>
-          <Card className="bg-white align-middle">
-            {icons[item.icon]}
+          <Card>
             <CardTitle>{item.title}</CardTitle>
             <CardDescription>{item.description}</CardDescription>
           </Card>
@@ -102,12 +95,12 @@ export const Card = ({
   return (
     <div
       className={cn(
-        "rounded-2xl h-full w-full p-4 overflow-hidden dark:bg-black  border-transparent dark:border-white/[0.2] group-hover:border-slate-700 relative z-20",
+        "tw-rounded-2xl tw-h-full tw-w-full tw-p-4 tw-overflow-hidden tw-border-transparent dark:tw-border-white/[0.2]  tw-relative tw-z-20",
         className
       )}
     >
-      <div className="relative z-50">
-        <div className="p-4">{children}</div>
+      <div className="tw-relative tw-z-50">
+        <div className="tw-p-4">{children}</div>
       </div>
     </div>
   );
@@ -120,7 +113,7 @@ export const CardTitle = ({
   children: React.ReactNode;
 }) => {
   return (
-    <h4 className={cn("text-zinc-400 font-bold tracking-wide mt-4", className)}>
+    <h4 className={cn("tw-ext-zinc-100 tw-font-bold tw-tracking-wide tw-mt-4", className)}>
       {children}
     </h4>
   );
@@ -135,7 +128,7 @@ export const CardDescription = ({
   return (
     <p
       className={cn(
-        "mt-8 text-zinc-400 tracking-wide leading-relaxed text-sm",
+        "tw-mt-8 tw-text-zinc-400 tw-tracking-wide tw-leading-relaxed tw-text-sm",
         className
       )}
     >

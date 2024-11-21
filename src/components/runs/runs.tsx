@@ -36,8 +36,8 @@ export function Runs({ subStatus, setSubStatus, plan, setPlan, appId }) {
     return (
 
         
-            <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-                <div className="container mx-auto py-10">
+        <main className="tw-flex tw-min-h-[calc(100vh_-_theme(spacing.16))] tw-flex-1 tw-flex-col tw-gap-4 tw-bg-muted/40 tw-p-4 md:tw-gap-8 md:tw-p-10">
+            <div className="tw-container tw-mx-auto tw-py-10">
 
                         {!runId &&
                             <RunsDataTable columns={columns(setRunId)} data={runs} app_id={appId} setRunId={setRunId}/>

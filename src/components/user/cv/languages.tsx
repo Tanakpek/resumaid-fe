@@ -64,8 +64,8 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
                     toast({
                         title: "You changed your details successfully!",
                         description: (
-                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                            <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                                <code className="tw-text-white">{JSON.stringify(data, null, 2)}</code>
                             </pre>
                         ),
                     })
@@ -78,8 +78,8 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
                 toast({
                     title: "Something went wrong",
                     description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">{ }</code>
+                        <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                            <code className="tw-text-white">{ }</code>
                         </pre>
                     ),
                 })
@@ -88,8 +88,8 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
             toast({
                 title: "Bad Request",
                 description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{resp.statusText}</code>
+                    <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                        <code className="tw-text-white">{resp.statusText}</code>
                     </pre>
                 ),
             })
@@ -98,7 +98,7 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="tw-space-y-8">
 
                 <div>
                     {fields.map((field, index) => (
@@ -108,10 +108,10 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
                             name={`languages.${index}.value`}
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel className={cn(index !== 0 && "sr-only")}>
+                                    <FormLabel className={cn(index !== 0 && "tw-sr-only")}>
                                         Languages
                                     </FormLabel>
-                                    <FormDescription className={cn(index !== 0 && "sr-only")}>
+                                    <FormDescription className={cn(index !== 0 && "tw-sr-only")}>
                                         What languages do you speak?.
                                     </FormDescription>
                                     <FormControl>
@@ -126,7 +126,7 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
                         type="button"
                         variant="outline"
                         size="sm"
-                        className="mt-2"
+                        className="tw-mt-2"
                         onClick={() => append({ _id: undefined, immutable: false, value: "" })}
                     >
                         Add Language

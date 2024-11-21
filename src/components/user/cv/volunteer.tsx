@@ -78,8 +78,8 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                     toast({
                         title: "You changed your details successfully!",
                         description: (
-                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                            <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                                <code className="tw-text-white">{JSON.stringify(data, null, 2)}</code>
                             </pre>
                         ),
                     })
@@ -92,8 +92,8 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                 toast({
                     title: "Something went wrong",
                     description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">{ }</code>
+                        <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                            <code className="tw-text-white">{ }</code>
                         </pre>
                     ),
                 })
@@ -102,8 +102,8 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
             toast({
                 title: "Bad Request",
                 description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{resp.statusText}</code>
+                    <pre className="tw-mt-2 w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                        <code className="tw-text-white">{resp.statusText}</code>
                     </pre>
                 ),
             })
@@ -116,10 +116,10 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                 {organizationFields.map((workplace, workplaceIndex) => (
                     
                     <Card key={workplace.id}>
-                        <div className='flex justify-end  mt-3 mr-4'>
+                        <div className='tw-flex tw-justify-end  tw-mt-3 tw-mr-4'>
                             <AlertDialog>
                                 <AlertDialogTrigger asChild>
-                                    <Trash className='stroke-slate-500 m-2 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 align-right  hover:stroke-red-400 transition ease-in-out' />
+                                    <Trash className='tw-stroke-slate-500 m-2 tw-stroke-2 sm:tw-w-1 sm:h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-align-right  hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                                 </AlertDialogTrigger>
                                 <AlertDialogContent>
                                     <AlertDialogHeader>
@@ -136,9 +136,9 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                             </AlertDialog>
                             
                         </div>
-                        <div className='flex justify-center'>
-                            <div className='w-3/4'>
-                                <div className='flex'>
+                        <div className='tw-flex tw-justify-center'>
+                            <div className='tw-w-3/4'>
+                                <div className='tw-flex'>
                                     <div>
                                         <FormLabel>Start</FormLabel>
                                         <Controller
@@ -151,15 +151,15 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                                         <Button
                                                             variant={"outline"}
                                                             className={cn(
-                                                                "w-[240px] pl-3 text-left font-normal",
+                                                                "tw-w-[240px] tw-pl-3 tw-text-left tw-font-normal",
                                                                 !value && "text-muted-foreground"
                                                             )}
                                                         >
                                                             {value ? value !== 'PRESENT' ? format(new Date(value), "PPP") : <span>Pick a date</span> : <span>Pick a date</span>}
-                                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                            <CalendarIcon className="tw-ml-auto tw-h-4 tw-w-4 tw-opacity-50" />
                                                         </Button>
                                                     </PopoverTrigger>
-                                                    <PopoverContent className="w-auto p-0" align="start">
+                                                    <PopoverContent className="tw-w-auto tw-p-0" align="start">
                                                         <Calendar
                                                             mode="single"
                                                             selected={value ? new Date(value) : undefined}
@@ -185,15 +185,15 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                                         <Button
                                                             variant={"outline"}
                                                             className={cn(
-                                                                "w-[240px] pl-3 text-left font-normal",
-                                                                !value && "text-muted-foreground"
+                                                                "tw-w-[240px] tw-pl-3 tw-text-left tw-font-normal",
+                                                                !value && "tw-text-muted-foreground"
                                                             )}
                                                         >
                                                             {value ? value !== 'PRESENT' ? format(new Date(value), "PPP") : <span>Present</span> : <span>Pick a date</span>}
-                                                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                                                            <CalendarIcon className="tw-ml-auto tw-h-4 tw-w-4 tw-opacity-50" />
                                                         </Button>
                                                     </PopoverTrigger>
-                                                    <PopoverContent className="w-auto p-0" align="start">
+                                                    <PopoverContent className="tw-w-auto tw-p-0" align="start">
                                                         <Calendar
                                                             mode="single"
                                                             selected={value ? new Date(value) : undefined}
@@ -233,7 +233,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                         </FormItem>
                                     )}
                                 />
-                                <Label className='my-2'>Takeaways</Label>
+                                <Label className='tw-my-2'>Takeaways</Label>
                                 <Controller
                                     control={control}
                                     name={`organizations.${workplaceIndex}.takeaways`}
@@ -242,14 +242,14 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
 
                                             {value.map((experience, experienceIndex) => (
                                                 <>
-                                                    <div key={experienceIndex} className='flex my-1'>
-                                                        <div className='w-full flex justify-around my-1'>
+                                                    <div key={experienceIndex} className='tw-flex my-1'>
+                                                        <div className='tw-w-full tw-flex tw-justify-around tw-my-1'>
                                                             <FormField
                                                                 control={control}
                                                                 name={`organizations.${workplaceIndex}.takeaways.${experienceIndex}.value`}
                                                                 render={({ field }) => (
 
-                                                                    <FormItem className='flex-grow'>
+                                                                    <FormItem className='tw-flex-grow'>
 
                                                                         <FormControl>
                                                                             <Textarea placeholder="Description" {...field} />
@@ -258,10 +258,10 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                                                     </FormItem>
                                                                 )}
                                                             />
-                                                            <div className='flex align-middle self-center' onClick={() => {
+                                                            <div className='tw-flex tw-align-middle tw-self-center' onClick={() => {
                                                                 removeTakeaway(workplaceIndex, experienceIndex)
                                                             }}>
-                                                                <XIcon className='stroke-slate-500 m-1 stroke-2 sm:w-1 sm:h-1 md:h-3 md:w-3 lg:h-5 lg:w-5 flex hover:stroke-red-400 transition ease-in-out' />
+                                                                <XIcon className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -269,7 +269,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                                 </>
                                             ))}
                                             <Button
-                                                className='bg-transparent hover:bg-slate-200 text-black m-4'
+                                                className='tw-bg-transparent hover:tw-bg-slate-200 tw-text-black tw-m-4'
                                                 type="button"
                                                 onClick={() =>
                                                     addTakeaway(workplaceIndex)
@@ -326,8 +326,7 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
     }, [data])
 
     const onSubmit = async (data) => {
-        console.log('ionsubmit')
-        
+
         const resp = await postVolunteer(data)
         if (resp.status === 200) {
             try {
@@ -336,8 +335,8 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                     toast({
                         title: "You changed your details successfully!",
                         description: (
-                            <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                                <code className="text-white">{JSON.stringify(data, null, 2)}</code>
+                            <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                                <code className="tw-text-white">{JSON.stringify(data, null, 2)}</code>
                             </pre>
                         ),
                     })
@@ -350,8 +349,8 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                 toast({
                     title: "Something went wrong",
                     description: (
-                        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                            <code className="text-white">{ }</code>
+                        <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                            <code className="tw-text-white">{ }</code>
                         </pre>
                     ),
                 })
@@ -360,8 +359,8 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
             toast({
                 title: "Bad Request",
                 description: (
-                    <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-                        <code className="text-white">{resp.statusText}</code>
+                    <pre className="tw-mt-2 tw-w-[340px] tw-rounded-md tw-bg-slate-950 tw-p-4">
+                        <code className="tw-text-white">{resp.statusText}</code>
                     </pre>
                 ),
             })
@@ -384,13 +383,13 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                 ed = experience.endDate === 'PRESENT' ? 'Present' : moment(experience.endDate).format('MMMM YYYY')
             }
             return (
-                (<Card key={index} className="px-6 pb-6 mb-10">
-                    <div className='m-4 mr-10'>
-                        <p className='text-right italic'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
+                (<Card key={index} className="tw-px-6 tw-pb-6 tw-mb-10">
+                    <div className='tw-m-4 tw-mr-10'>
+                        <p className='tw-text-right tw-italic'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
                     </div>
-                    <CardHeader className=' font-bold p-0'> {experience.organization_name}</CardHeader>
-                    <CardDescription className='!mt-0'>{experience.role}</CardDescription>
-                    <div className='my-4'>
+                    <CardHeader className=' tw-font-bold tw-p-0'> {experience.organization_name}</CardHeader>
+                    <CardDescription className='!tw-mt-0'>{experience.role}</CardDescription>
+                    <div className='tw-my-4'>
                         {experience.takeaways.map((takeaway, idx) => {
                             return (
                                 <FormField
@@ -398,10 +397,10 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                                     control={control}
                                     name={`organizations.${index}.takeaways.${idx}.sel`}
                                     render={({ field }) => (
-                                        <FormItem className='flex-grow'>
+                                        <FormItem className='tw-flex-grow'>
                                             <FormControl>
-                                            <Toggle className=' h-auto w-full justify-start my-2' variant='outline' defaultPressed={takeaway.sel} onPressedChange={field.onChange}>
-                                                <p key={index} className='my-2 text-justify'>{takeaway.value}</p>
+                                                <Toggle className=' tw-h-auto tw-w-full tw-justify-start tw-my-2' variant='outline' defaultPressed={takeaway.sel} onPressedChange={field.onChange}>
+                                                    <p key={index} className='tw-my-2 tw-text-justify'>{takeaway.value}</p>
                                             </Toggle>
                                 </FormControl>
                                 </FormItem>

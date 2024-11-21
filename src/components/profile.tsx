@@ -172,24 +172,24 @@ export function Profile({subStatus, setSubStatus, plan, setPlan}) {
   }
   return (
     
-    <div className="flex min-h-screen w-full flex-col">
-      <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
+    <div className="tw-flex tw-min-h-screen tw-w-full tw-flex-col">
+      <main className="tw-flex tw-min-h-[calc(100vh_-_theme(spacing.16))] tw-flex-1 tw-flex-col tw-gap-4 tw-bg-muted/40 tw-p-4 md:tw-gap-8 md:tw-p-10">
         
         <TrialOrContinue plan={plan} subscription_status={subStatus}/>
         {  cv && <CV data={cv} details={details}><div></div></CV>}
         {  !cv && 
-          <div className="m-auto">
-        <div className="mx-auto grid w-full max-w-6xl gap-2">
-          <h1 className="text-3xl font-semibold">{details?.name}</h1>
+          <div className="tw-m-auto">
+        <div className="tw-mx-auto tw-grid tw-w-full tw-max-w-6xl tw-gap-2">
+          <h1 className="tw-text-3xl tw-font-semibold">{details?.name}</h1>
         </div>
         
-        <div className="flex justify-center">
+        <div className="tw-flex tw-justify-center">
           <div>
-            <div className="my-6">
+            <div className="tw-my-6">
               <AlertDialog>
                 // todo fix bug here, button inside button
                 <MovingBorderDemo>
-                      <AlertDialogTrigger><p className="text-base font-semibold">Upload CV</p></AlertDialogTrigger>
+                      <AlertDialogTrigger><p className="tw-text-base tw-font-semibold">Upload CV</p></AlertDialogTrigger>
                 </MovingBorderDemo>
                 <AlertDialogContent>
                   <AlertDialogHeader>
@@ -200,15 +200,15 @@ export function Profile({subStatus, setSubStatus, plan, setPlan}) {
                   </AlertDialogHeader>
                   <AlertDialogFooter>
                     <AlertDialogCancel>Cancel</AlertDialogCancel>
-                    <Input title="Upload" className="bg-none hover:bg-primary-foreground-50 " id="cv" type="file"  />
+                    <Input title="Upload" className="tw-bg-none hover:tw-bg-primary-foreground-50 " id="cv" type="file"  />
                     <Button variant="ghost" onClick={uploadHandler}>Upload</Button>
                   </AlertDialogFooter>
                 </AlertDialogContent>
               </AlertDialog>
             </div>
-            <p className=" text-s font-light">or</p>
-            <Button variant='ghost' className="my-4" onClick={defaultCVHandler}>
-                  <p className=" text-base">Start from Scratch</p>
+            <p className=" tw-text-s tw-font-light">or</p>
+            <Button variant='ghost' className="tw-my-4" onClick={defaultCVHandler}>
+                  <p className=" tw-text-base">Start from Scratch</p>
             </Button>
             
           </div>

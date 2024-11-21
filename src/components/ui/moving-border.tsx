@@ -32,7 +32,7 @@ export function Button({
     return (
         <Component
             className={cn(
-                "bg-transparent relative text-xl  h-10 w-40 p-[1px] overflow-hidden ",
+                "tw-bg-transparent tw-relative tw-text-xl  tw-h-10 tw-w-40 tw-p-[1px] tw-overflow-hidden ",
                 containerClassName
             )}
             style={{
@@ -41,13 +41,13 @@ export function Button({
             {...otherProps}
         >
             <div
-                className="absolute inset-0"
+                className="tw-absolute tw-inset-0"
                 style={{ borderRadius: `calc(${borderRadius} * 0.96)` }}
             >
                 <MovingBorder duration={duration} rx="30%" ry="30%">
                     <div
                         className={cn(
-                            "h-20 w-20 opacity-[0.8] bg-[radial-gradient(var(--sky-500)_40%,transparent_60%)]",
+                            "tw-h-20 tw-w-20 tw-opacity-[0.8] tw-bg-[radial-gradient(var(--sky-500)_40%,transparent_60%)]",
                             borderClassName
                         )}
                     />
@@ -56,7 +56,7 @@ export function Button({
 
             <div
                 className={cn(
-                    "relative bg-slate-900/[0.8] border border-slate-800 backdrop-blur-xl text-white flex items-center justify-center w-full h-full text-sm antialiased",
+                    "tw-relative tw-bg-slate-900/[0.8] tw-border tw-border-slate-800 tw-backdrop-blur-xl tw-text-white tw-flex tw-items-center tw-justify-center tw-w-full tw-h-full tw-text-sm tw-antialiased",
                     className
                 )}
                 style={{
@@ -109,7 +109,7 @@ export const MovingBorder = ({
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 preserveAspectRatio="none"
-                className="absolute h-full w-full"
+                className="tw-absolute tw-h-full tw-w-full"
                 width="100%"
                 height="100%"
                 {...otherProps}

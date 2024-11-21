@@ -7,9 +7,10 @@ import {
     WordExport,
     DocumentEditorComponent
 } from '@syncfusion/ej2-react-documenteditor';
-import styles from './editor.module.css';
+import   './editor.module.css';
 import ReactDOM from 'react-dom';
 import { createRoot } from 'react-dom/client';
+
 DocumentEditorContainerComponent.Inject(Toolbar);
 // DocumentEditorContainerComponent.Inject(SfdtExport, WordExport)
 export  function WordDocumentEditor({appId, runId}: {appId: string, runId: string}) {
@@ -47,6 +48,16 @@ export const Default = ({appId, runId}) => {
     let hostUrl: string =
         "https://services.syncfusion.com/react/production/api/documenteditor/";
     let container = useRef<DocumentEditorContainerComponent>(null);
+    // if(container.current){
+    //     const styles = `
+    //     @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+    //     @import url('https://cdn.syncfusion.com/ej2/27.2.2/bootstrap5.css');
+    //     .control-section {
+    //       margin-top: 100px;
+    //     }
+    //   `;
+      
+    // }
 
     const onLoadDefault = async (): Promise<void> => {
         // tslint:disable
@@ -74,7 +85,7 @@ export const Default = ({appId, runId}) => {
     };
     return (
         <div className='bs-sync'>
-        <div className={styles['control-pane']}>
+        <div className={'control-pane'}>
             <div className="control-section">
                 <div id="documenteditor_titlebar" className="e-de-ctn-title"></div>
                 <div id="documenteditor_container_body">

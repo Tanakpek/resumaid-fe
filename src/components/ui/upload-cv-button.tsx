@@ -5,7 +5,7 @@ export function MovingBorderDemo({children}) {
         <div>
             <Button
                 borderRadius="0.6rem"
-                className="bg-white dark:bg-slate-900 text-black dark:text-white border-neutral-200 dark:border-slate-800"
+                className="tw-bg-white dark:tw-bg-slate-900 tw-text-black dark:tw-text-white tw-border-neutral-200 dark:tw-border-slate-800"
             >
                 {children}
             </Button>

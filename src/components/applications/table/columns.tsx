@@ -26,17 +26,17 @@ export const columns: ColumnDef<ApplicationObject>[] = [
             const job = row.getValue("company_key") as NestedApplicationJob
             return job.company.toLowerCase().includes(filterValue.toLowerCase()) // true or false based on your custom logic 
         },  
-        header: ({column}) => <div className="div text-center"> <Button variant="ghost">
+        header: ({ column }) => <div className="tw-text-center"> <Button variant="ghost">
             Company
         </Button></div>,
         cell: ({ row }) => {
             const job = row.getValue("company_key") as NestedApplicationJob
-            return <div id={row.id} className="font-medium my-2"> <div className=" content-center"> 
-                <div className="flex m-1">
-                    <div className="m-auto">
-                        <div className="relative p-2">
-                            <Linkedin height={20} width={20} className="z-1 absolute top-0 left-0 " />
-                            <img className="top-0 left-0" height={46} width={46} src={job.icon_url} alt="" />
+            return <div id={row.id} className="font-medium my-2"> <div className="tw-content-center"> 
+                <div className="tw-flex tw-m-1">
+                    <div className="tw-m-auto">
+                        <div className="tw-relative tw-p-2">
+                            <Linkedin height={20} width={20} className="tw-z-1 tw-absolute tw-top-0 tw-left-0 " />
+                            <img className="tw-top-0 tw-left-0" height={46} width={46} src={job.icon_url} alt="" />
                         </div>
                     </div>
                 </div>
@@ -49,16 +49,16 @@ export const columns: ColumnDef<ApplicationObject>[] = [
     },
     {
         accessorKey: "job",
-        header: () => <div  className="text-center">  Job Title </div>,
+        header: () => <div className="tw-text-center">  Job Title </div>,
         cell: ({ row }) => {
             const job = (row.getValue("job") as NestedApplicationJob)
             //<img src={job.icon_url} alt="" />
-            return <div className="text-left font-medium"> {job.title}</div>
+            return <div className="tw-text-left tw-font-medium"> {job.title}</div>
         },
     },
     {
         accessorKey: "status",
-        header: () => <div className="div text-center">  Applied </div>,
+        header: () => <div className="tw-text-center">  Applied </div>,
         cell: ({ row }) => {
             const status = row.getValue("status") as ApplicationObject['status']
             return <StatusToggle id={row.original.id} status={status} />
@@ -66,10 +66,10 @@ export const columns: ColumnDef<ApplicationObject>[] = [
     },
     {
         accessorKey: "creation_dt",
-        header: () => <div className="text-center flex"> <div className="flex self-center"> Date</div></div>,
+        header: () => <div className="tw-text-center tw-flex"> <div className="tw-flex tw-self-center"> Date</div></div>,
         cell: ({ row }) => {
             const isoString = (row.getValue("creation_dt") as string)
-            return <div className="text-center font-medium flex text-xs">{moment(isoString).format('HH:mm, DD MMM')}</div>
+            return <div className="tw-text-center tw-font-medium tw-flex tw-text-xs">{moment(isoString).format('HH:mm, DD MMM')}</div>
         },
     },
     {
@@ -80,9 +80,9 @@ export const columns: ColumnDef<ApplicationObject>[] = [
             return (
                 <DropdownMenu >
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
+                        <Button variant="ghost" className="tw-h-8 tw-w-8 tw-p-0">
+                            <span className="tw-sr-only">Open menu</span>
+                            <MoreHorizontal className="tw-h-4 tw-w-4" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -94,7 +94,7 @@ export const columns: ColumnDef<ApplicationObject>[] = [
                         <AlertDialog>
                             <AlertDialogTrigger asChild>
                                 {/* <Label>a</Label> */}
-                                <DropdownMenuLabel className=" rounded-sm transition-all ease-in text-red-500 hover:bg-red-100 cursor-default">Delete</DropdownMenuLabel>
+                                <DropdownMenuLabel className=" tw-rounded-sm tw-transition-all tw-ease-in tw-text-red-500 hover:tw-bg-red-100 tw-cursor-default">Delete</DropdownMenuLabel>
                             </AlertDialogTrigger>
                             <AlertDialogContent>
                                 <AlertDialogHeader>

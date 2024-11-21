@@ -98,40 +98,40 @@ export const Team = () => {
   return (
     <section
       id="team"
-      className="container py-24 sm:py-32"
+      className="tw-container tw-py-24 sm:tw-py-32"
     >
-      <h2 className="text-3xl md:text-4xl font-bold">
-        <span className="bg-gradient-to-b from-primary/60 to-primary text-transparent bg-clip-text">
+      <h2 className="tw-text-3xl md:tw-text-4xl tw-font-bold">
+        <span className="tw-bg-gradient-to-b tw-from-primary/60 tw-to-primary tw-text-transparent tw-bg-clip-text">
           Our Dedicated{" "}
         </span>
         Crew
       </h2>
 
-      <p className="mt-4 mb-10 text-xl text-muted-foreground">
+      <p className="tw-mt-4 tw-mb-10 tw-text-xl tw-text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis
         dolor pariatur sit!
       </p>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 gap-y-10">
+      <div className="tw-grid md:tw-grid-cols-2 lg:tw-grid-cols-4 tw-gap-8 tw-gap-y-10">
         {teamList.map(
           ({ imageUrl, name, position, socialNetworks }: TeamProps) => (
             <Card
               key={name}
-              className="bg-muted/50 relative mt-8 flex flex-col justify-center items-center"
+              className="tw-bg-muted/50 tw-relative mt-8 tw-flex tw-flex-col tw-justify-center tw-items-center"
             >
-              <CardHeader className="mt-8 flex justify-center items-center pb-2">
+              <CardHeader className="tw-mt-8 tw-flex tw-justify-center tw-items-center tw-pb-2">
                 <img
                   src={imageUrl}
                   alt={`${name} ${position}`}
-                  className="absolute -top-12 rounded-full w-24 h-24 aspect-square object-cover"
+                  className="tw-absolute tw--top-12 tw-rounded-full tw-w-24 tw-h-24 tw-aspect-square tw-object-cover"
                 />
-                <CardTitle className="text-center">{name}</CardTitle>
-                <CardDescription className="text-primary">
+                <CardTitle className="tw-text-center">{name}</CardTitle>
+                <CardDescription className="tw-text-primary">
                   {position}
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="text-center pb-2">
+              <CardContent className="tw-text-center tw-pb-2">
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
               </CardContent>
 
@@ -147,7 +147,7 @@ export const Team = () => {
                         size: "sm",
                       })}
                     >
-                      <span className="sr-only">{name} icon</span>
+                      <span className="tw-sr-only">{name} icon</span>
                       {socialIcon(name)}
                     </a>
                   </div>

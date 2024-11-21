@@ -36,7 +36,7 @@ export function MultiStepCVLoader() {
 
     
     return (
-        <div className="w-full h-[60vh] flex items-center justify-center">
+        <div className="tw-w-full tw-h-[60vh] tw-flex tw-items-center tw-justify-center">
             {/* Core Loader Modal */}
             <Loader loadingStates={loadingStates} loading={loading} duration={2000} loop={false} />
 

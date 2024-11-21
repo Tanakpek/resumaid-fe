@@ -9,33 +9,33 @@ export const Newsletter = () => {
 
   return (
     <section id="newsletter" className="">
-      <hr className="w-11/12 mx-auto" />
+      <hr className="tw-w-11/12 tw-mx-auto" />
 
-      <div className="container py-24 sm:py-32">
-        <h3 className="text-center text-4xl md:text-5xl font-bold">
+      <div className="tw-container tw-py-24 sm:tw-py-32">
+        <h3 className="tw-text-center tw-text-4xl md:tw-text-5xl tw-font-bold">
           Join Our Daily{" "}
-          <span className="bg-[#D247BF] text-transparent bg-clip-text">
+          <span className="tw-bg-[#D247BF] tw-text-transparent tw-bg-clip-text">
             Newsletter
           </span>
         </h3>
-        <p className="text-xl text-muted-foreground text-center mt-4 mb-8">
+        <p className="tw-text-xl tw-text-muted-foreground tw-text-center tw-mt-4 tw-mb-8">
           Lorem ipsum dolor sit amet consectetur.
         </p>
 
         <form
-          className="flex flex-col w-full md:flex-row md:w-6/12 lg:w-4/12 mx-auto gap-4 md:gap-2"
+          className="tw-flex tw-flex-col tw-w-full md:tw-flex-row md:tw-w-6/12 lg:tw-w-4/12 tw-mx-auto tw-gap-4 md:tw-gap-2"
           onSubmit={handleSubmit}
         >
           <Input
             placeholder="leomirandadev@gmail.com"
-            className="bg-muted/50 dark:bg-muted/80 "
+            className="tw-bg-muted/50 dark:tw-bg-muted/80 "
             aria-label="email"
           />
           <Button>Subscribe</Button>
         </form>
       </div>
 
-      <hr className="w-11/12 mx-auto" />
+      <hr className="tw-w-11/12 tw-mx-auto" />
     </section>
   );
 };

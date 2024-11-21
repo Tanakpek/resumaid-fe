@@ -46,17 +46,17 @@ export function Dashboard() {
         navigate('/');
     }
   return (
-    <div className="bg-background rounded-lg w-full shadow-xl border-gray-300 lg:grid lg:min-h-[600px] lg:grid-cols-2 xl:min-h-[800px] overflow-hidden">
-      <div className="flex items-center justify-center py-12">
-        <div className="mx-auto grid w-[350px] gap-6">
-          <div className="grid gap-2 text-center">
-            <h1 className="text-3xl font-bold">Login</h1>
-            <p className="text-balance text-muted-foreground">
+    <div className="tw-bg-background tw-rounded-lg tw-w-full tw-shadow-xl tw-border-gray-300 lg:tw-grid lg:tw-min-h-[600px] lg:tw-grid-cols-2 xl:tw-min-h-[800px] tw-overflow-hidden">
+      <div className="tw-flex tw-items-center tw-justify-center tw-py-12">
+        <div className="tw-mx-auto tw-grid tw-w-[350px] tw-gap-6">
+          <div className="tw-grid tw-gap-2 tw-text-center">
+            <h1 className="tw-text-3xl tw-font-bold">Login</h1>
+            <p className="tw-text-balance tw-text-muted-foreground">
               Enter your email below to login to your account
             </p>
           </div>
-          <div className="grid gap-4">
-            <div className="grid gap-2">
+          <div className="tw-grid tw-gap-4">
+            <div className="tw-grid tw-gap-2">
               <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
@@ -66,45 +66,45 @@ export function Dashboard() {
                 onChange={(e) => setUser(e.target.value)}
               />
             </div>
-            <div className="grid gap-2">
-              <div className="flex items-center">
+            <div className="tw-grid gap-2">
+              <div className="tw-flex items-center">
                 <Label htmlFor="password">Password</Label>
                 <a
                   href="/forgot-password"
-                  className="ml-auto inline-block text-sm underline"
+                  className="tw-ml-auto tw-inline-block tw-text-sm tw-underline"
                 >
                   Forgot your password?
                 </a>
               </div>
               <Input id="password" onChange={(e) => setPass(e.target.value)} type="password" required/>
             </div>
-            <Button type="submit" className=" bg-primary hover:bg-secondary w-full h-9" onClick={handleLogin}>
+            <Button type="submit" className=" tw-bg-primary hover:tw-bg-secondary tw-w-full tw-h-9" onClick={handleLogin}>
               Login
             </Button>
             
             
-              <Button className=" grid grid-cols-3 gap-4">
-                <Google className=" h-full col-span-1"/>
-                <a href={google_oauth_url} className=" col-span-1 flex items-center gap-2 justify-center">Login with Google</a>
+            <Button className=" tw-grid tw-grid-cols-3 tw-gap-4">
+              <Google className=" tw-h-full tw-col-span-1"/>
+              <a href={google_oauth_url} className=" tw-col-span-1 tw-flex tw-items-center tw-gap-2 tw-justify-center">Login with Google</a>
               </Button>
            
             
             
             
           </div>
-          <div className="mt-4 text-center text-sm">
+          <div className="tw-mt-4 tw-text-center tw-text-sm">
             Don&apos;t have an account?{" "}
-            <a href="#" className="underline">
+            <a href="#" className="tw-underline">
               Sign up
             </a>
           </div>
         </div>
       </div>
-      <div className="hidden bg-muted lg:block">
+      <div className="tw-hidden tw-bg-muted lg:tw-block">
         <img
           src="/src/assets/dash.webp"
           alt="Image"
-          className="h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="tw-h-full tw-w-full tw-object-cover dark:tw-brightness-[0.2] dark:tw-grayscale"
         />
       </div>
     </div>

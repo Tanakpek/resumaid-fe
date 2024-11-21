@@ -148,7 +148,7 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
   return (
   
       <Card>
-      <div className="hidden space-y-6 p-10 pb-16 md:block">
+      <div className="tw-hidden tw-space-y-6 tw-p-10 tw-pb-16 md:tw-block">
       
         <CardHeader>Extended Background</CardHeader>
         <CardDescription>
@@ -160,27 +160,27 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
 
 
         <CardContent>
-        <Separator className="my-6" />
-        <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">
-          <aside className="-mx-4 lg:w-1/5">
+          <Separator className="tw-my-6" />
+          <div className="tw-flex tw-flex-col tw-space-y-8 lg:tw-flex-row lg:tw-space-x-12 lg:tw-space-y-0">
+            <aside className="tw-mx-4 lg:tw-w-1/5">
             <SidebarNav items={itemsWithHandlers} ></SidebarNav>
               <HoverCard>
                 <HoverCardTrigger asChild>
-                  <div className="w-full flex justify-center text-center font-bold my-5">
-                  <Card className="lg:w-20 lg:h-20 lg:p-0 pr-3 flex lg:block text-xs lg:text-xl"><span style={colorStyle} className="flex h-2 w-2 rounded-full m-2" /> <p className="m-auto">{tokens}</p>
+                  <div className="tw-w-full tw-flex tw-justify-center tw-text-center tw-font-bold tw-my-5">
+                    <Card className="lg:tw-w-20 lg:tw-h-20 lg:tw-p-0 tw-pr-3 tw-flex lg:tw-block tw-text-xs lg:tw-text-xl"><span style={colorStyle} className="tw-flex tw-h-2 tw-w-2 tw-rounded-full tw-m-2" /> <p className="tw-m-auto">{tokens}</p>
                   </Card>
                   </div>
                 </HoverCardTrigger>
-                <HoverCardContent className="w-80">
-                        <span className="text-xs text-muted-foreground">
+                <HoverCardContent className="tw-w-80">
+                  <span className="tw-text-xs tw-text-muted-foreground">
                           This is the amount of tokens you have left.
                         </span>
                 </HoverCardContent>
               </HoverCard>
           </aside>
-          <div className="flex-1 lg:max-w-2xl">
+            <div className="tw-flex-1 lg:tw-max-w-2xl">
             {itemsWithHandlers.map((item, index) => (
-              <div key={item.title + index} className={item.title === activeItem ? '' : 'hidden'}>
+              <div key={item.title + index} className={item.title === activeItem ? '' : 'tw-hidden'}>
                 {item.element[edit ? 0 : 1]}
               </div>
             ))}

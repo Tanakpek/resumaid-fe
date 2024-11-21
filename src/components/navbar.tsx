@@ -32,24 +32,24 @@ import { useNavigate } from "react-router-dom";
     }
     return (
       
-      <header className="text-primary dark:text-primary sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
-      <nav className="hidden flex-col gap-6 text-lg font-medium md:flex md:flex-row md:items-center md:gap-5 md:text-sm lg:gap-6">
+      <header className="tw-text-primary dark:tw-text-primary tw-sticky tw-top-0 tw-flex tw-h-16 tw-items-center tw-gap-4 tw-border-b tw-bg-background tw-px-4 md:tw-px-6">
+        <nav className="tw-hidden tw-flex-col tw-gap-6 tw-text-lg tw-font-medium md:tw-flex md:tw-flex-row md:tw-items-center md:tw-gap-5 md:tw-text-sm lg:tw-gap-6">
         <a
           href="#"
-          className="flex items-center gap-2 text-lg font-semibold md:text-base"
+            className="tw-flex tw-items-center tw-gap-2 tw-text-lg tw-font-semibold md:tw-text-base"
         >
           <Package2 className="h-6 w-6" />
-          <span className="sr-only">Acme Inc</span>
+            <span className="tw-sr-only">Acme Inc</span>
         </a>
         <a
           href="/profile"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+            className="tw-text-muted-foreground tw-transition-colors hover:tw-text-foreground"
         >
           Profile
         </a>
         <a
           href="/applications"
-          className="text-muted-foreground transition-colors hover:text-foreground"
+            className="tw-text-muted-foreground tw-transition-colors hover:tw-text-foreground"
         >
           Applications
         </a>
@@ -60,42 +60,42 @@ import { useNavigate } from "react-router-dom";
           <Button
             variant="outline"
             size="icon"
-            className="shrink-0 md:hidden"
+              className="tw-shrink-0 md:tw-hidden"
           >
-            <Menu className="h-5 w-5" />
-            <span className="sr-only">Toggle navigation menu</span>
+              <Menu className="tw-h-5 tw-w-5" />
+              <span className="tw-sr-only">Toggle navigation menu</span>
           </Button>
         </SheetTrigger>
         <SheetContent side="left">
-          <nav className="grid gap-6 text-lg font-medium">
+            <nav className="tw-grid tw-gap-6 tw-text-lg tw-font-medium">
             <a
               href="#"
-              className="flex items-center gap-2 text-lg font-semibold"
+                className="tw-flex tw-items-center tw-gap-2 tw-text-lg tw-font-semibold"
             >
-              <Package2 className="h-6 w-6" />
-              <span className="sr-only">Acme Inc</span>
+                <Package2 className="tw-h-6 tw-w-6" />
+                <span className="tw-sr-only">Acme Inc</span>
             </a>
             <a
               href="#"
-              className="text-muted-foreground hover:text-foreground"
+                className="tw-text-muted-foreground hover:tw-text-foreground"
             >
               Applicant
             </a>
             <a
               href="#"
-              className="text-muted-foreground hover:text-foreground"
+                className="tw-text-muted-foreground hover:tw-text-foreground"
             >
               Resumés
             </a>
             <a
               href="#"
-              className="text-muted-foreground hover:text-foreground"
+                className="tw-text-muted-foreground hover:tw-text-foreground"
             >
               Cover Letters
             </a>
             <a
               href="#"
-              className="text-muted-foreground hover:text-foreground"
+                className="tw-text-muted-foreground hover:tw-text-foreground"
             >
               Jobs
             </a>
@@ -103,15 +103,15 @@ import { useNavigate } from "react-router-dom";
           </nav>
         </SheetContent>
       </Sheet>
-      <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <form className="ml-auto flex-1 sm:flex-initial">
+        <div className="tw-flex tw-w-full tw-items-center tw-gap-4 md:tw-ml-auto md:tw-gap-2 lg:tw-gap-4">
+          <form className="tw-ml-auto tw-flex-1 sm:tw-flex-initial">
           
         </form>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="secondary" size="icon" className="rounded-full">
-              <CircleUser className="h-5 w-5" />
-              <span className="sr-only">Toggle user menu</span>
+              <Button variant="secondary" size="icon" className="tw-rounded-full">
+                <CircleUser className="tw-h-5 tw-w-5" />
+                <span className="tw-sr-only">Toggle user menu</span>
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">

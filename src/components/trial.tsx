@@ -108,9 +108,9 @@ export const TrialOrContinue = ({plan, subscription_status}) => {
     return (<>
         {! auth?.user?.plan &&
         <AlertDialog defaultOpen={!(auth?.user?.plan || false) || (subscription_status !== 'trial' && subscription_status !== 'active')}>
-            <AlertDialogContent className="max-w-4xl">
-            <div className="flex justify-end">
-                <Button className=" right-0"variant={"link"} onClick={handleLogout}>Logout</Button>
+            <AlertDialogContent className="tw-max-w-4xl">
+            <div className="tw-flex tw-justify-end">
+                <Button className=" tw-right-0"variant={"link"} onClick={handleLogout}>Logout</Button>
             </div>
                 {pricing && <TrialOrSubscribePlanCards items={pricing} selected={selected} setSelected={setSelected}/>}
                 <div className="mx-3">
@@ -119,12 +119,12 @@ export const TrialOrContinue = ({plan, subscription_status}) => {
                             key={benefit}
                             className="flex"
                         >
-                            <Check className="text-green-500" />{" "}
+                            <Check className="tw-text-green-500" />{" "}
                             <h3 className="ml-2">{benefit}</h3>
                         </span>
                     ))}
                 </div> 
-            <AlertDialogFooter className=" justify-around">
+            <AlertDialogFooter className="tw-justify-around">
                     
                     <AlertDialogAction asChild>
                         <Button onClick={async () => {

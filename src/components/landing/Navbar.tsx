@@ -45,14 +45,14 @@ const routeList: RouteProps[] = [
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   return (
-    <header className="sticky border-b-[1px] top-0 z-40 w-full bg-white dark:border-b-slate-700 dark:bg-background">
-      <NavigationMenu className="mx-auto">
-        <NavigationMenuList className="container h-14 px-4 w-screen flex justify-between ">
-          <NavigationMenuItem className="font-bold flex">
+    <header className="tw-sticky tw-border-b-[1px] tw-top-0 tw-z-40 tw-w-full tw-bg-white dark:tw-border-b-slate-700 dark:tw-bg-background">
+      <NavigationMenu className="tw-mx-auto">
+        <NavigationMenuList className="tw-container tw-h-14 tw-px-4 tw-w-screen tw-flex tw-justify-between ">
+          <NavigationMenuItem className="ftw-ont-bold tw-flex">
             <a
               rel="noreferrer noopener"
               href="/"
-              className="ml-2 font-bold text-xl flex"
+              className="tw-ml-2 tw-font-bold tw-text-xl tw-flex"
             >
               <LogoIcon />
               ShadcnUI/React
@@ -60,29 +60,29 @@ export const Navbar = () => {
           </NavigationMenuItem>
 
           {/* mobile */}
-          <span className="flex md:hidden">
+          <span className="tw-flex md:tw-hidden">
             {/* <ModeToggle /> */}
 
             <Sheet
               open={isOpen}
               onOpenChange={setIsOpen}
             >
-              <SheetTrigger className="px-2">
+              <SheetTrigger className="tw-px-2">
                 <Menu
-                  className="flex md:hidden h-5 w-5"
+                  className="tw-flex md:tw-hidden tw-h-5 tw-w-5"
                   onClick={() => setIsOpen(true)}
                 >
-                  <span className="sr-only">Menu Icon</span>
+                  <span className="tw-sr-only">Menu Icon</span>
                 </Menu>
               </SheetTrigger>
 
               <SheetContent side={"left"}>
                 <SheetHeader>
-                  <SheetTitle className="font-bold text-xl">
+                  <SheetTitle className="tw-font-bold tw-text-xl">
                     Shadcn/React
                   </SheetTitle>
                 </SheetHeader>
-                <nav className="flex flex-col justify-center items-center gap-2 mt-4">
+                <nav className="tw-flex tw-flex-col tw-justify-center tw-items-center tw-gap-2 tw-mt-4">
                   {routeList.map(({ href, label }: RouteProps) => (
                     <a
                       rel="noreferrer noopener"
@@ -98,11 +98,11 @@ export const Navbar = () => {
                     rel="noreferrer noopener"
                     href="https://github.com/leoMirandaa/shadcn-landing-page.git"
                     target="_blank"
-                    className={`w-[110px] border ${buttonVariants({
+                    className={`tw-w-[110px] tw-border ${buttonVariants({
                       variant: "secondary",
                     })}`}
                   >
-                    <GitHubLogoIcon className="mr-2 w-5 h-5" />
+                    <GitHubLogoIcon className="tw-mr-2 tw-w-5 tw-h-5" />
                     Github
                   </a>
                 </nav>
@@ -111,13 +111,13 @@ export const Navbar = () => {
           </span>
 
           {/* desktop */}
-          <nav className="hidden md:flex gap-2">
+          <nav className="tw-hidden md:tw-flex gap-2">
             {routeList.map((route: RouteProps, i) => (
               <a
                 rel="noreferrer noopener"
                 href={route.href}
                 key={i}
-                className={`text-[17px] ${buttonVariants({
+                className={`tw-text-[17px] ${buttonVariants({
                   variant: "ghost",
                 })}`}
               >
@@ -126,14 +126,14 @@ export const Navbar = () => {
             ))}
           </nav>
 
-          <div className="hidden md:flex gap-2">
+          <div className="tw-hidden md:tw-flex tw-gap-2">
             <a
               rel="noreferrer noopener"
               href="https://github.com/leoMirandaa/shadcn-landing-page.git"
               target="_blank"
               className={`border ${buttonVariants({ variant: "secondary" })}`}
             >
-              <GitHubLogoIcon className="mr-2 w-5 h-5" />
+              <GitHubLogoIcon className="tw-mr-2 tw-w-5 tw-h-5" />
               Github
             </a>
 

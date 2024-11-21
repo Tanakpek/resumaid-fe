@@ -23,12 +23,12 @@ export const columns: (setRunId) => ColumnDef<NestedApplicationRun>[] = (setRunI
             const job = row.getValue("type") as string
             return job.startsWith(filterValue.toLowerCase()) // true or false based on your custom logic 
         },  
-        header: ({column}) => <div className="div text-center"> <Button variant="ghost">
+        header: ({ column }) => <div className="tw-div tw-text-center"> <Button variant="ghost">
             Type
         </Button></div>,
         cell: ({ row }) => {
             const type = row.getValue("type") 
-            return <div id={row.id} className="font-medium my-2"> <div className=" content-center"> 
+            return <div id={row.id} className="tw-font-medium tw-my-2"> <div className="tw-content-center"> 
                  <Badge variant="outline">{type as string === 'resume' ? 'Resume' : 'Cover Letter'}</Badge>
                     
                 
@@ -39,28 +39,28 @@ export const columns: (setRunId) => ColumnDef<NestedApplicationRun>[] = (setRunI
     },
     {
         accessorKey: "input_tokens",
-        header: () => <div  className="text-center">  Input Tokens </div>,
+        header: () => <div className="tw-text-center">  Input Tokens </div>,
         cell: ({ row }) => {
             const input = (row.getValue("input_tokens") as number)
             //<img src={job.icon_url} alt="" />
-            return <div className="text-left font-medium"> <Badge variant="secondary">{input}</Badge></div>
+            return <div className="tw-text-left tw-font-medium"> <Badge variant="secondary">{input}</Badge></div>
         },
     },
     {
         accessorKey: "output_tokens",
-        header: () => <div className="text-center">  Output Tokens </div>,
+        header: () => <div className="tw-text-center">  Output Tokens </div>,
         cell: ({ row }) => {
             const input = (row.getValue("output_tokens") as number)
             //<img src={job.icon_url} alt="" />
-            return <div className="text-left font-medium"> <Badge variant="secondary">{input}</Badge></div>
+            return <div className="tw-text-left tw-font-medium"> <Badge variant="secondary">{input}</Badge></div>
         },
     },
     {
         accessorKey: "dt",
-        header: () => <div className="text-center flex"> <div className="flex self-center"> Date</div></div>,
+        header: () => <div className="tw-text-center tw-flex"> <div className="tw-flex tw-self-center"> Date</div></div>,
         cell: ({ row }) => {
             const isoString = (row.getValue("dt") as string)
-            return <div className="text-center font-medium text-xs flex">{moment(isoString).format('HH:mm, DD MMM')}</div>
+            return <div className="tw-text-center tw-font-medium tw-text-xs tw-flex">{moment(isoString).format('HH:mm, DD MMM')}</div>
         },
     },
     {
@@ -69,9 +69,9 @@ export const columns: (setRunId) => ColumnDef<NestedApplicationRun>[] = (setRunI
             return (
                 <DropdownMenu >
                     <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
+                        <Button variant="ghost" className="tw-h-8 tw-w-8 tw-p-0">
+                            <span className="tw-sr-only">Open menu</span>
+                            <MoreHorizontal className="tw-h-4 tw-w-4" />
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
@@ -85,7 +85,7 @@ export const columns: (setRunId) => ColumnDef<NestedApplicationRun>[] = (setRunI
                             }}> Edit </DropdownMenuItem>
                         <DropdownMenuItem>Download as .pdf</DropdownMenuItem>
                         <DropdownMenuItem>Download as .docx</DropdownMenuItem>
-                        <DropdownMenuItem className="mt-2 bg-white w-full text-slate-500  shadow-sm hover:bg-red-200/90 dark:bg-red-900 dark:text-slate-50 dark:hover:bg-red-900/90">Delete Generation</DropdownMenuItem>
+                        <DropdownMenuItem className="tw-mt-2 tw-bg-white tw-w-full tw-text-slate-500  tw-shadow-sm hover:tw-bg-red-200/90 dark:tw-bg-red-900 dark:tw-text-slate-50 dark:hover:tw-bg-red-900/90">Delete Generation</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

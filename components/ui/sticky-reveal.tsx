@@ -64,11 +64,11 @@ export const StickyScroll = ({
             animate={{
                 backgroundColor: backgroundColors[activeCard % backgroundColors.length],
             }}
-            className="h-[30rem] overflow-y-auto flex justify-center relative space-x-10 rounded-md p-10"
+            className="tw-h-[30rem] tw-overflow-y-auto tw-flex tw-justify-center tw-relative tw-space-x-10 tw-rounded-md p-10"
             ref={ref}
         >
-            <div className="div relative flex items-start px-4">
-                <div className="max-w-2xl">
+            <div className="tw-div tw-relative tw-flex tw-items-start tw-px-4">
+                <div className="tw-max-w-2xl">
                     {content.map((item, index) => (
                         <div key={item.title + index} className="my-20">
                             <motion.h2
@@ -78,7 +78,7 @@ export const StickyScroll = ({
                                 animate={{
                                     opacity: activeCard === index ? 1 : 0.3,
                                 }}
-                                className="text-2xl font-bold text-slate-100"
+                                className="tw-text-2xl tw-font-bold tw-text-slate-100"
                             >
                                 {item.title}
                             </motion.h2>
@@ -89,19 +89,19 @@ export const StickyScroll = ({
                                 animate={{
                                     opacity: activeCard === index ? 1 : 0.3,
                                 }}
-                                className="text-kg text-slate-300 max-w-sm mt-10"
+                                className="tw-text-kg tw-text-slate-300 tw-max-w-sm tw-mt-10"
                             >
                                 {item.description}
                             </motion.p>
                         </div>
                     ))}
-                    <div className="h-40" />
+                    <div className="tw-h-40" />
                 </div>
             </div>
             <div
                 style={{ background: backgroundGradient }}
                 className={cn(
-                    "hidden lg:block h-60 w-80 rounded-md bg-white sticky top-10 overflow-hidden",
+                    "tw-hidden lg:tw-block tw-h-60 tw-w-80 tw-rounded-md tw-bg-white tw-sticky tw-top-10 tw-overflow-hidden",
                     contentClassName
                 )}
             >
