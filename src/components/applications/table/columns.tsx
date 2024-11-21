@@ -11,16 +11,27 @@ import {
 import moment from "moment"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
-import { MoreHorizontal } from "lucide-react"
+import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { StatusToggle } from "./components/statusToggle"
+import { useNavigate } from "react-router-dom"
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
+import { Label } from "@/components/ui/label"
+import { deleteApplication } from "@/src/utils/requests"
+import { toast } from "@/components/ui/use-toast"
+
 export const columns: ColumnDef<ApplicationObject>[] = [
-    
     {
-        accessorKey: "job",
-        header: () => <div className="div text-center">  Company </div>,
+        accessorKey: "company_key",
+        filterFn:  (row, columnId, filterValue) => {
+            const job = row.getValue("company_key") as NestedApplicationJob
+            return job.company.toLowerCase().includes(filterValue.toLowerCase()) // true or false based on your custom logic 
+        },  
+        header: ({column}) => <div className="div text-center"> <Button variant="ghost">
+            Company
+        </Button></div>,
         cell: ({ row }) => {
-            const job = row.getValue("job") as NestedApplicationJob
-            return <div className="font-medium my-2"> <div className=" content-center"> 
+            const job = row.getValue("company_key") as NestedApplicationJob
+            return <div id={row.id} className="font-medium my-2"> <div className=" content-center"> 
                 <div className="flex m-1">
                     <div className="m-auto">
                         <div className="relative p-2">
@@ -38,7 +49,7 @@ export const columns: ColumnDef<ApplicationObject>[] = [
     },
     {
         accessorKey: "job",
-        header: () => <div className="text-center">  Job Title </div>,
+        header: () => <div  className="text-center">  Job Title </div>,
         cell: ({ row }) => {
             const job = (row.getValue("job") as NestedApplicationJob)
             //<img src={job.icon_url} alt="" />
@@ -55,19 +66,19 @@ export const columns: ColumnDef<ApplicationObject>[] = [
     },
     {
         accessorKey: "creation_dt",
-        header: () => <div className="text-center">  Date</div>,
+        header: () => <div className="text-center flex"> <div className="flex self-center"> Date</div></div>,
         cell: ({ row }) => {
             const isoString = (row.getValue("creation_dt") as string)
-            return <div className="text-center font-medium">{moment(isoString).format('HH:mm, DD MMM')}</div>
+            return <div className="text-center font-medium flex text-xs">{moment(isoString).format('HH:mm, DD MMM')}</div>
         },
     },
     {
         id: "actions",
         cell: ({ row }) => {
             const application = row.original
-
+            
             return (
-                <DropdownMenu>
+                <DropdownMenu >
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" className="h-8 w-8 p-0">
                             <span className="sr-only">Open menu</span>
@@ -75,14 +86,40 @@ export const columns: ColumnDef<ApplicationObject>[] = [
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(application.id)}
-                        >
-                            Expand
-                        </DropdownMenuItem>
+                        <DropdownMenuLabel >Actions</DropdownMenuLabel>
+
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>View All Documents</DropdownMenuItem>
+                        
+                        <DropdownMenuItem onClick={() => {window.location.href = 'applications?appId=' + row.original.id }}>View All Documents</DropdownMenuItem>
+                        <AlertDialog>
+                            <AlertDialogTrigger asChild>
+                                {/* <Label>a</Label> */}
+                                <DropdownMenuLabel className=" rounded-sm transition-all ease-in text-red-500 hover:bg-red-100 cursor-default">Delete</DropdownMenuLabel>
+                            </AlertDialogTrigger>
+                            <AlertDialogContent>
+                                <AlertDialogHeader>
+                                    <AlertDialogTitle>Are you sure?</AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                        This action will delete all documents associated with this application.
+                                    </AlertDialogDescription>
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                    <AlertDialogAction onClick={async () => {
+                                        const resp = await deleteApplication(application.id)
+                                        if(resp.status === 200){
+
+                                            window.location.reload()
+                                            toast({
+                                                title: "Application Deleted",
+                                                description: "The application has been deleted",
+                                                duration: 5000,
+                                            })
+                                        }
+                                    }}>Continue</AlertDialogAction>
+                                </AlertDialogFooter>
+                            </AlertDialogContent>
+                        </AlertDialog>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

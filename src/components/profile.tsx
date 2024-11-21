@@ -187,6 +187,7 @@ export function Profile({subStatus, setSubStatus, plan, setPlan}) {
           <div>
             <div className="my-6">
               <AlertDialog>
+                // todo fix bug here, button inside button
                 <MovingBorderDemo>
                       <AlertDialogTrigger><p className="text-base font-semibold">Upload CV</p></AlertDialogTrigger>
                 </MovingBorderDemo>

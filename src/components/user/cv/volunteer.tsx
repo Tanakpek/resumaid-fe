@@ -394,6 +394,7 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                         {experience.takeaways.map((takeaway, idx) => {
                             return (
                                 <FormField
+                                    key={idx}
                                     control={control}
                                     name={`organizations.${index}.takeaways.${idx}.sel`}
                                     render={({ field }) => (

@@ -13,14 +13,16 @@ import { Dashboard } from './components/login'
 import { Applications } from './components/applications/applications'
 import { getProfile } from './utils/requests'
 import { User } from '@/lib/types/user'
+import {registerLicense } from "@syncfusion/ej2-base"
+registerLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWGBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH9ccHRTQmlZUEN2XUo=")
 
 function App() {
   const { user, login, logout } = useAuth();
   const [plan, setPlan] = useState(null)
   const [subStatus, setSubscriptionStatus] = useState(null)
-  
   return (
     <>
+      
         <Routes>
             <Route path="/" element={
               <div>
@@ -41,8 +43,8 @@ function App() {
             }>
             </Route>
             <Route path="/applications" element={
-          <div><NavBar /><Applications plan={plan} subStatus={subStatus} setSubStatus={setSubscriptionStatus} setPlan={setPlan} /></div>
-            }>
+              <div><NavBar /><Applications plan={plan} subStatus={subStatus} setSubStatus={setSubscriptionStatus} setPlan={setPlan} /></div>
+             }>
             </Route>
         </Routes>
       

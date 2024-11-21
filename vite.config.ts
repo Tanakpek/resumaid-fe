@@ -5,8 +5,10 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 import svgr from 'vite-plugin-svgr';
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
-
 export default defineConfig({
+  css: {
+    postcss: './postcss.config.js'
+  },
   server: {
     // proxy: {
     //   // string shorthand: http://localhost:5173/foo -> http://localhost:4567/foo
@@ -15,7 +17,7 @@ export default defineConfig({
     //     headers: {
     //       origin: 'https://127.0.0.1:5173'
     //     },
-        
+    
     //     changeOrigin: false,
     //     secure: false,
     //     configure: (proxy, options) => {
@@ -43,7 +45,7 @@ export default defineConfig({
     }),
     svgr(),
     wasm(),
-    topLevelAwait()
+    topLevelAwait(),
   ],
   
   resolve: {

@@ -16,7 +16,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card"
-import { details,work, volunteer,education,projects, skills, professional_certifications, achievements_and_awards, languages } from "@/src/test/data/mock_data"
 import { Toggle } from "@/components/ui/toggle"
 import { max, set } from "date-fns"
 import { CertsEdit, CertsView } from "./certifications"
@@ -135,20 +134,29 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
     color: col,
     backgroundColor: col
   }
-  
+  window.onbeforeinput = function(event) {
+    if (event.target instanceof HTMLElement) {
+      if (event.target.tagName === 'INPUT' || event.target.tagName === 'TEXTAREA') {
+        if (event.inputType === 'insertFromPaste') {
+          event.preventDefault();
+        }
+      }
+    }
+  }
+
 
   return (
   
       <Card>
       <div className="hidden space-y-6 p-10 pb-16 md:block">
       
-        <CardHeader><h2 className="text-2xl font-bold tracking-tight">Extended Background</h2></CardHeader>
-        <CardDescription><p className="text-muted-foreground">
+        <CardHeader>Extended Background</CardHeader>
+        <CardDescription>
             Manage your extended background.
           <Toggle onClick={clickEditHandler}  aria-label="Toggle bold">
             <Edit/>
           </Toggle>
-          </p></CardDescription>
+          </CardDescription>
 
 
         <CardContent>
@@ -182,6 +190,8 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
         </CardContent>
         
       </div>
+    
+
       </Card>
     
   )

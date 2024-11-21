@@ -306,6 +306,7 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
             {project.takeaways.map((takeaway, idx) => {
               return (
                 <FormField
+                    key={idx}
                     control={form.control}
                     name={`projects.${index}.takeaways.${idx}.in`}
                     render={({ field }) => (

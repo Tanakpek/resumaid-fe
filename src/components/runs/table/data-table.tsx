@@ -22,33 +22,37 @@ import {
 } from "@/components/ui/table"
 import { Button } from "@/components/ui/button"
 import { Dispatch, useEffect, useState } from "react"
-import { getApplications } from "@/src/utils/requests"
-import { ApplicationObject } from "@/src/utils/applicaid-ts-utils/cv_form_types"
+import { getApplications, getRuns } from "@/src/utils/requests"
+import { ApplicationObject, NestedApplicationRun } from "@/src/utils/applicaid-ts-utils/cv_form_types"
 import { toast } from "@/components/ui/use-toast"
 import { multiplyKeys } from "./utils/fetch"
 import { ArrowUpDown } from "lucide-react"
 import { Input } from "@/components/ui/input"
 
 
-interface DataTableProps<TData, TValue> {
+interface RunsDataTableProps<TData, TValue, AppId> {
     columns: ColumnDef<TData, TValue>[]
-    data: TData[]
+    data: TData[],
+    app_id: string
+    setRunId: Dispatch<any>
 }
 
-export function ApplicationsDataTable<TData, TValue>({
+export function RunsDataTable<TData, TValue, AppId, FRunId>({
     columns,
     data,
-}: DataTableProps<ApplicationObject, TValue>) {
+    app_id,
+    setRunId
+}: RunsDataTableProps<NestedApplicationRun, TValue, string>) {
     const [sorting, setSorting] = useState<SortingState>([])
     const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
         []
     )
 
-    const [applications, setApplications] = useState(data)
+    const [runs, setRuns] = useState(data)
     
     const [pageIndex, setPageIndex] = useState(0);
     const [pageSize, setPageSize] = useState(10);
-    const [hasMore, setHasMore] = useState(Math.floor(applications.length / pageSize) >= 1);
+    const [hasMore, setHasMore] = useState(Math.floor(runs.length / pageSize) >= 1);
     const [loading, setLoading] = useState(false);
     const [pagination, setPagination] = useState({
         pageIndex: pageIndex, //initial page index
@@ -57,37 +61,27 @@ export function ApplicationsDataTable<TData, TValue>({
 
     const [filterState, setFilterState] = useState({    
         ts: new Date().toISOString(),
-        company: '',
-        job_title: '',
-        job_board: '',
+        app_id,
         order: 'desc' as 'asc' | 'desc'
     } );
 
     
 
-    const fetchData = async (pageintionState: PaginationState, { ts, company, job_board, job_title, order }: { ts: string, company?: string, job_title?: string, job_board?: string, order: 'asc' | 'desc' }) => {
+    const fetchData = async (pageintionState: PaginationState, { ts, app_id, order }: { ts: string, app_id: string, order: 'asc' |'desc' }) => {
         setLoading(() => true);
         try {
-            const params: any = {}
-            
-            params['company'] = company || ''
-            params['job_board'] = job_board || ''
-            params['job_title'] = job_title || ''
-            params['order'] = order
-            
-            const response = await getApplications(params, ts)
+
+         
+            const response = await getRuns(app_id, ts)
             
             // Replace with your actual API endpoint
             if (!response) {
                 throw new Error('Failed to fetch data');
             }
-            const result = multiplyKeys(response.data) //.slice(0, pageSize + 1)
-
-            if (job_board !== filterState?.job_board || company !== filterState.company || job_title !== filterState.job_title) {
-                table.setPageIndex(0);
-            }
-            setHasMore( () => Math.floor(result.length / pageSize) >= 1);
-            setApplications(() => result);
+            const result = response.data
+            setHasMore( () => Math.floor(result.runs.length / pageSize) >= 1);
+            console.log(result.runs)
+            setRuns(() => result.runs);
 
         } catch (error) {
             toast({
@@ -103,7 +97,7 @@ export function ApplicationsDataTable<TData, TValue>({
     
 
     const table = useReactTable({
-        data : applications,
+        data : runs,
         columns,
         // manualPagination: true,
         // pageCount: hasMore ? pageIndex + 2 : pageIndex + 1,
@@ -128,7 +122,7 @@ export function ApplicationsDataTable<TData, TValue>({
     
     return (
         <>
-        <div className="flex items-center py-4">
+        {/* <div className="flex items-center py-4">
         <Input 
           placeholder="Filter Companies..."
             value={
@@ -141,7 +135,7 @@ export function ApplicationsDataTable<TData, TValue>({
             }
           className="max-w-sm dark:bg-slate-900 bg-white"
         />
-      </div>
+      </div> */}
         <div className="rounded-md border">
             <Table className="bg-white">
                 <TableHeader>

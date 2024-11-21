@@ -36,6 +36,8 @@
     "@radix-ui/react-toggle": "^1.0.3",
     "@stripe/react-stripe-js": "^2.8.0",
     "@stripe/stripe-js": "^4.5.0",
+    "@syncfusion/ej2-react-documenteditor": "^27.2.2",
+    "@syncfusion/ej2-react-pdfviewer": "^27.2.2",
     "@tabler/icons-react": "^3.6.0",
     "@tanstack/react-table": "^8.20.5",
     "@types/chrome": "^0.0.268",

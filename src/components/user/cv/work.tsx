@@ -391,7 +391,7 @@ export const WorkView: CVPartView = ({ data, setcv }: { data: WorkFormValues['wo
                 
                 return(
                     (<Card key={index} className="px-6 pb-6 mb-10">
-                        <div className='m-4 mr-10'>
+                        <div key={index} className='m-4 mr-10'>
                             <p className='text-right italic'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
                         </div>
                         <CardHeader className=' font-bold p-0'> {experience.company}</CardHeader>
@@ -400,13 +400,14 @@ export const WorkView: CVPartView = ({ data, setcv }: { data: WorkFormValues['wo
                         {experience.takeaways.map((takeaway, idx) => {
                             return (
                                 <FormField
+                                key={idx}
                                 control={control}
                                 name={`workplaces.${index}.takeaways.${idx}.sel`}
                                 render={({ field }) => (
                                     <FormItem className='flex-grow'> 
                                         <FormControl>
                                             <Toggle className='m-3  h-auto w-full justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange}>
-                                                <p key={index} className='my-2 text-justify'>{takeaway.value}</p>
+                                                <p key={idx} className='my-2 text-justify'>{takeaway.value}</p>
                                             </Toggle>
                                         </FormControl>
                                     </FormItem>

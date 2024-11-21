@@ -15,10 +15,11 @@ export function TrialOrSubscribePlanCards({items, selected, setSelected} : {item
     return (
         <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
             {items.map((item, i) => (
-                <BentoGridItem
+                <BentoGridItem 
+                    key={i}
                     id={item.id}
                     product={item.product}
-                    key={i}
+              
                     title={item.title}
                     description={item.description}
                     header={<Skeleton key={i} selected={i === selected?.[0]}/>}

@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from 'axios';
 import { BACKEND_URL } from './config';
-import { AchivevementFormValues, Application, CertFormValues, EducationFormValues, LanguageFormValues, ProfileFormValues, ProjectFormValues, SkillFormValues, VolunteerFormValues, WorkFormValues } from './applicaid-ts-utils/cv_form_types';
+import { AchivevementFormValues, Application, ApplicationObject, CertFormValues, EducationFormValues, LanguageFormValues, NestedApplicationRun, ProfileFormValues, ProjectFormValues, SkillFormValues, VolunteerFormValues, WorkFormValues } from './applicaid-ts-utils/cv_form_types';
 import { TransformedCV } from './codes';
 
 const axiosInstance = axios.create({
@@ -216,14 +216,14 @@ export const getBillingId = async () => {
 }
 /** 
     * @param {string} ts - timestamp
-    * @param {{company?: string, job_board?: string}} filters - filters
+    * @param {{company?: string, job_board?: string, job_title?:string, order?: 'asc' | 'desc'}} filters - filters
     * @returns {Promise<AxiosResponse<Application[]>>}
 */
-export const getApplications = async (filters: { company?: string, job_board?: string }, ts: string = new Date().toISOString()) => {
+export const getApplications = async (filters: { company?: string, job_board?: string, job_title?: string, order?: 'asc' | 'desc' }, ts: string = new Date().toISOString()) => {
     const params = { ts, ...filters };
     return await axiosInstance.get('/applications', {
         params: params
-    }) as AxiosResponse<Application[]>;
+    }) as AxiosResponse<ApplicationObject[]>;
 }
 /**
  * 
@@ -233,4 +233,32 @@ export const getApplications = async (filters: { company?: string, job_board?: s
  *  */
 export const putApplicationStatus = async (id: string, status: string) => {
     return await axiosInstance.put(`/applications/${id}`, { status });
+}
+
+/**
+ * 
+ * @param {string} id
+ * @returns {Promise<AxiosResponse>}
+ * */
+export const deleteApplication = async (id: string) => {
+    return await axiosInstance.delete(`/applications/${id}`);
+}
+/**
+ *  @param {string} id
+ *  @param {string} ts
+ * @returns {Promise<AxiosResponse<NestedApplicationRun[]>>}
+ */
+export const getRuns = async (id: string, ts: string) : Promise<AxiosResponse<{ts: string, runs: NestedApplicationRun[]}>> => {
+    return await axiosInstance.get(`/applications/${id}/runs`, {
+        params: { ts }
+    });
+}
+
+
+export const getWordDocument = async (appId: string, runId) => {
+    return await axiosInstance.post(`/applications/${appId}/runs/${runId}/word`, {},{
+        headers: {
+             'Content-Type': 'application/json;charset=UTF-8' ,
+        }
+    });
 }
