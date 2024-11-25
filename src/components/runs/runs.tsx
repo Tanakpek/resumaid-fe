@@ -3,7 +3,7 @@ import { User } from '@/lib/types/user'
 import { Dispatch, use, useEffect, useRef, useState } from "react"
 import { useAuth } from "../auth";
 import { useNavigate } from "react-router-dom";
-import { getApplications, getProfile } from "../../utils/requests"
+import { deleteRun, getApplications, getPdf, getProfile, getWordDocument } from "../../utils/requests"
 import { TrialOrContinue } from "../trial"
 import { RunsDataTable } from './table/data-table';
 import { columns } from './table/columns';
@@ -40,7 +40,7 @@ export function Runs({ subStatus, setSubStatus, plan, setPlan, appId }) {
             <div className="tw-container tw-mx-auto tw-py-10">
 
                         {!runId &&
-                            <RunsDataTable columns={columns(setRunId)} data={runs} app_id={appId} setRunId={setRunId}/>
+                            <RunsDataTable columns={columns(setRunId, getPdf, getWordDocument, deleteRun)} data={runs} app_id={appId} setRunId={setRunId}/>
                         }
                         {runId &&
                                 <ErrorBoundary>

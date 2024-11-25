@@ -25,6 +25,8 @@ import { Transform } from 'stream';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
 import { Toggle } from '@/components/ui/toggle';
 import { Checkbox } from '@/components/ui/checkbox';
+import exp from 'constants';
+import { work } from '@/src/test/data/mock_data';
 
 export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workplaces'], tokens: number, setcv: Dispatch<SetStateAction<TransformedCV>> }) => {
     const [defaultValues, setDefaultValues] = useState(data)
@@ -55,11 +57,17 @@ export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workpl
         trigger(fieldArrayName);
     };
 
-    const removeTakeaway = (workplaceIndex, experienceIndex) => {
-        const fieldArrayName:any = `workplaces.${workplaceIndex}.takeaways`;
-        const updatedTakeaways = methods.getValues(fieldArrayName).filter((_, idx) => idx !== experienceIndex);
-        methods.setValue(fieldArrayName, updatedTakeaways);
-        trigger(fieldArrayName);
+    const removeTakeaway = (workplaceIndex, experienceIndex) => {        
+        const workplaces = methods.getValues();
+        const takeaways = workplaces.workplaces[workplaceIndex].takeaways;
+        const updatedTakeaways = takeaways.filter((_, index) => index !== experienceIndex);
+        workplaces.workplaces[workplaceIndex].takeaways = updatedTakeaways;
+        methods.setValue('workplaces', workplaces.workplaces);
+        trigger('workplaces');
+        // const updatedTakeaways = takeaways.filter((_, index) => index !== experienceIndex);
+        // methods.setValue(`workplaces.${workplaceIndex}.takeaways`, updatedTakeaways);
+        // trigger(`workplaces.${workplaceIndex}.takeaways`);
+        
     };
 
     const removeHandler = async (workplace, workplaceIndex) => {
@@ -255,20 +263,21 @@ export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workpl
                                                         <div className='tw-w-full tw-flex tw-justify-around tw-my-1'>
                                                         <FormField
                                                             control={control}
-                                                            name={`workplaces.${workplaceIndex}.takeaways.${experienceIndex}.value`}
+                                                            name={`workplaces.${workplaceIndex}.takeaways.${experienceIndex}`}
                                                             render={({ field }) => (
                                                                 
                                                                 <FormItem className='tw-flex-grow'> 
                                                                     
                                                                     <FormControl>
-                                                                        <Textarea placeholder="Description" {...field} />
+                                                                        <Textarea placeholder="Description" {...field.value} />
                                                                     </FormControl>
                                                                     <FormMessage>{errors?.workplaces?.[workplaceIndex]?.takeaways?.[experienceIndex]?.value?.message}</FormMessage>
                                                                 </FormItem>
                                                             )}
                                                         />
                                                             <div className='tw-flex tw-align-middle tw-self-center' onClick={() => {
-                                                            removeTakeaway(workplaceIndex, experienceIndex)
+                                                                console.log(experienceIndex)
+                                                                removeTakeaway(workplaceIndex, experienceIndex)
                                                         }}>
                                                                 <XIcon className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                                                         </div>

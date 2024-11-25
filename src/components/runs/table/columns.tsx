@@ -14,7 +14,19 @@ import { Button } from "@/components/ui/button"
 import { ArrowUpDown, MoreHorizontal } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Dispatch } from "react"
-export const columns: (setRunId) => ColumnDef<NestedApplicationRun>[] = (setRunId: Dispatch<any>) => [
+import { AxiosResponse } from "axios"
+import { downloadBlob } from "@/src/utils/applicaid-ts-utils/file/codes"
+import { toast } from "@/hooks/use-toast"
+export const columns: (
+    setRunId, 
+    downloadPdf: (appId: string, runId: string) => Promise<AxiosResponse<any>>,
+    downloadWord: (appId: string, runId: string, blob: boolean) => Promise<AxiosResponse<any>>,
+    deleteRun: (appId: string, runId: string) => Promise<AxiosResponse<any>>
+ ) => ColumnDef<NestedApplicationRun>[] = (
+    setRunId: Dispatch<any>, 
+    downloadPdf: (appId: string, runId: string) => Promise<AxiosResponse<any>>, 
+    downloadWord: (appId: string, runId: string, blob: boolean) => Promise<AxiosResponse<any>>,
+    deleteRun: (appId: string, runId: string) => Promise<AxiosResponse<any>>) => [
     
     {
         
@@ -83,9 +95,31 @@ export const columns: (setRunId) => ColumnDef<NestedApplicationRun>[] = (setRunI
                                 console.log(row.original.id)
                                 setRunId(row.original.id)
                             }}> Edit </DropdownMenuItem>
-                        <DropdownMenuItem>Download as .pdf</DropdownMenuItem>
-                        <DropdownMenuItem>Download as .docx</DropdownMenuItem>
-                        <DropdownMenuItem className="tw-mt-2 tw-bg-white tw-w-full tw-text-slate-500  tw-shadow-sm hover:tw-bg-red-200/90 dark:tw-bg-red-900 dark:tw-text-slate-50 dark:hover:tw-bg-red-900/90">Delete Generation</DropdownMenuItem>
+                        <DropdownMenuItem onClick={async () => {
+                            const resp = await downloadPdf(row.original.application, row.original.id)
+                            console.log(resp)
+                            downloadBlob(resp, 'Document.pdf')
+                        }
+
+                        }>Download as .pdf</DropdownMenuItem>
+                        <DropdownMenuItem onClick={async () => {
+                            const resp = await downloadWord(row.original.application, row.original.id, true)
+                            console.log(resp)
+                            downloadBlob(resp, 'Document.docx')
+                        }}>Download as .docx</DropdownMenuItem>
+                        <DropdownMenuItem onClick={async () => {
+                            const resp = await deleteRun(row.original.application, row.original.id)
+                            if(resp.status === 200) {
+                                window.location.reload()
+                            }
+                            else{
+                                toast({
+                                    variant: "destructive",
+                                    description: "Failed to delete generation",
+                                })
+                            }
+
+                        }} className="tw-mt-2 tw-bg-white tw-w-full tw-text-slate-500  tw-shadow-sm hover:tw-bg-red-200/90 dark:tw-bg-red-900 dark:tw-text-slate-50 dark:hover:tw-bg-red-900/90">Delete Generation</DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             )

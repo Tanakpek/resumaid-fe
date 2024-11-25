@@ -254,9 +254,54 @@ export const getRuns = async (id: string, ts: string) : Promise<AxiosResponse<{t
     });
 }
 
+export const getPdf = async (appId: string, runId:string) => {
+    return await axiosInstance.get(`/applications/${appId}/runs/${runId}/pdf`, {
+        headers: {
+            'Content-Type': 'application/pdf',
+            'Accept': 'application/pdf'
+        },
+        responseType: 'blob'
+    });
 
-export const getWordDocument = async (appId: string, runId) => {
-    return await axiosInstance.post(`/applications/${appId}/runs/${runId}/word`, {},{
+    
+}
+
+export const savePDFDocument = async (doc: FormData) => {
+    const resp = await axiosInstance.post(`/applications/runs/pdf`,
+        doc
+        , {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+                'Accept': 'application/pdf'
+            },
+            responseType: 'blob'
+        });
+    console.log('Type of resp.data:', typeof resp.data);
+    console.log('Instance of Blob:', resp.data instanceof Blob);
+    return resp
+}
+
+
+export const getWordDocument = async (appId: string, runId, blob:boolean = false) => {
+    let uri = `/applications/${appId}/runs/${runId}/word`
+    const config = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+        }
+    }
+    if(blob === true){
+        config['responseType'] = 'blob';
+        uri += '?blob=true'
+    }
+    return await axiosInstance.get(uri, config);
+}
+
+export const deleteRun = async (appId: string, runId: string) => {
+    return await axiosInstance.delete(`/applications/${appId}/runs/${runId}`);
+}
+
+export const saveWordDocument = async (appId: string, runId, data) => {
+    return await axiosInstance.put(`/applications/${appId}/runs/${runId}/word`, data,{
         headers: {
              'Content-Type': 'application/json;charset=UTF-8' ,
         }

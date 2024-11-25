@@ -1,9 +1,7 @@
-// Code generated with love by Applicaid
 // @ts-expect-error
 // @ts-nocheck
-
 import { zodResolver } from "@hookform/resolvers/zod"
-import { FormProvider, useFieldArray, useForm } from "react-hook-form"
+import { Controller, FormProvider, useFieldArray, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -18,7 +16,7 @@ import { toast } from "@/components/ui/use-toast"
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 
 import { Card, CardHeader } from '@/components/ui/card'
-import { useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { Label } from '@/components/ui/label'
 import Trash from '../../../assets/trash-2.svg?react'
 import SvgIcon from '../../../assets/settings.svg?react'
@@ -46,14 +44,16 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
       setAddProjectName(e.target.value)
   }
     
-    const form = useForm<ProjectFormValues>({
+    const form = useForm({
         shouldFocusError: true,
         resolver: zodResolver(ProjectFormSchema),
         defaultValues: {projects: defaultValues},
         mode: "onChange"
     })
     
-    const { fields, append, replace, remove } = useFieldArray<ProjectFormValues>({
+    const { control, handleSubmit, reset, register, trigger, formState: { errors } } = form;
+
+    const { fields, append, replace, remove } = useFieldArray({
         name: "projects",
         control: form.control,
     })
@@ -72,7 +72,20 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
       remove(projIndex);
     }
   }
-    
+  
+  const removeTakeaway = (index, inx) => {
+    const data = form.getValues()
+    console.log(data.projects)
+    const updatedProjects = data.projects.map((project, projectIndex) =>
+      projectIndex === index
+        ? {
+          ...project,
+          takeaways: project.takeaways.filter((_, takeawayIndex) => takeawayIndex !== inx),
+        }
+        : project
+    );
+    reset({ projects: updatedProjects });
+  }
 
   async function onSubmit(data: ProjectFormValues) {
     const resp = await postProjects(data)
@@ -121,8 +134,8 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
        
         <div>
-        {fields.map((field, index) => (
-          <Card index={index} className='tw-mb-10 tw-bg-primary-50' key={index}>
+        {fields.map((project, index) => (
+          <Card  className='tw-mb-10 tw-bg-primary-50' key={index}>
             <div className='tw-flex tw-justify-end'>
               <div className='tw-padding-2 hover:tw-bg-secondary tw-m-3 tw-rounded-md tw-transition tw-ease-in-out'>
                 <AlertDialog>
@@ -138,7 +151,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                     </AlertDialogHeader>
                     <AlertDialogFooter>
                       <AlertDialogCancel>Cancel</AlertDialogCancel>
-                      <AlertDialogAction onClick={() => removeHandler(field,index)}> Continue</AlertDialogAction>
+                      <AlertDialogAction onClick={() => removeHandler(project ,index)}> Continue</AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
                 </AlertDialog>
@@ -146,32 +159,41 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
               </div>
                 <div>
                 
-                <Label>{field.name}</Label>
+                <Label>{project.name}</Label>
               <div className='tw-flex tw-mt-6 tw-mb-6 tw-justify-around'>
                 <div className='tw-flex-column tw-w-full tw-relative'>
+                  <Controller
+                    control={control}
+                    name={`projects.${index}.takeaways`}
+                    render={({ field: { value, onChange } }) => (
+                      <div>
+                        {value.map((_, inx) => (
+                          <>
+                            <div className='tw-flex tw-justify-center tw-ml-3'>
+                              <FormField
+                                control={control}
+                                name={`projects.${index}.takeaways.${inx}.value`}
+                                render={({ field }) => (
+                                  <FormItem className='tw-flex m-2 tw-relative tw-w-3/4'>
+                                    <FormControl>
+                                      <Textarea {...field} />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <div className='tw-flex tw-relative tw-items-center'>
 
-                {field.takeaways.map((takeaway, inx) => (
-                  <div className='tw-flex tw-justify-center tw-ml-3' index={index + '_' +inx}> 
-                      <FormField
-                      control={form.control}
-                      key={index+'-'+inx}
-                      name={`projects.${index}.takeaways.${inx}.value`}
-                      render={({ field }) => (
-                        <FormItem className='tw-flex m-2 tw-relative tw-w-3/4'>
-                              <FormControl>
-                                <Textarea value={takeaway.value} {...field} />
-                              </FormControl>
-                              <FormMessage />
-                          </FormItem>
-                      )}
-                      />
-                    <div className='tw-flex tw-relative tw-items-center'>
-
-                      <XIcon className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out'/>
+                                <XIcon onClick={() => { removeTakeaway(index, inx) }}
+                                  className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
+                              </div>
+                            </div>
+                          </>
+                          // Add your code here
+                        ))}
                       </div>
-                    </div>
-                    // Add your code here
-                ))}
+                      )} />
+                
                 </div>
                 </div>
             </div>
@@ -180,7 +202,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                 type="button"
                 variant="outline"
                 size="sm"
-                key={field.id}
+                key={project.id}
               className="tw-mt-2"
                 onClick={(e) => {
                     const n = [...fields[index].takeaways, {immutabe: false, value: '', _id: undefined}]
@@ -253,7 +275,7 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
     form.reset({ projects: data })
   }, [data])
 
-  const onSubmit = async (data: WorkFormValues) => {
+  const onSubmit = async (data: ProjectFormValues) => {
     const resp = await postProjects(data)
     if (resp.status === 200) {
       try {
@@ -308,11 +330,11 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
                 <FormField
                     key={idx}
                     control={form.control}
-                    name={`projects.${index}.takeaways.${idx}.in`}
+                    name={`projects.${index}.takeaways.${idx}`}
                     render={({ field }) => (
                       <FormItem className='tw-flex-grow'>
                             <FormControl>
-                          <Toggle className='tw-my-3  tw-h-auto tw-w-full tw-justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange} >
+                          <Toggle className='tw-my-3  tw-h-auto tw-w-full tw-justify-start' variant='outline' defaultPressed={field.value.sel} onPressedChange={field.onChange} >
                             <p key={index} className='tw-my-2 tw-text-justify'>{takeaway.value}</p>
                             </Toggle>
                 </FormControl>

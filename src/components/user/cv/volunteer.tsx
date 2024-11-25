@@ -53,10 +53,12 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
     };
 
     const removeTakeaway = (workplaceIndex, experienceIndex) => {
-        const fieldArrayName: any = `organizations.${workplaceIndex}.takeaways`;
-        const updatedTakeaways = methods.getValues(fieldArrayName).filter((_, idx) => idx !== experienceIndex);
-        methods.setValue(fieldArrayName, updatedTakeaways);
-        trigger(fieldArrayName);
+
+        const data = methods.getValues()
+        const updatedTakeaways = data.organizations[workplaceIndex].takeaways.filter((_, index) => index !== experienceIndex);
+        data.organizations[workplaceIndex].takeaways = updatedTakeaways
+        methods.setValue('organizations', data.organizations)
+        trigger('organizations');
     };
 
     const removeHandler = async (volunteer, volunteerIndex) => {
