@@ -67,13 +67,13 @@
     --secondary-foreground-400: #bcb9fd;
     --secondary-foreground-500: #b3b1fd;
 
-    --accent: #faf1a3;
-    --accent-50: #fef9d6;
-    --accent-100: #fdf7cc;
-    --accent-200: #fdf6c2;
-    --accent-300: #fcf4b8;
-    --accent-400: #fbf3ad;
-    --accent-500: #faf1a3;
+    --accent: #D247BF;
+    --accent-50: #f7e3f7;
+    --accent-100: #f0d0f0;
+    --accent-200: #e9bde9;
+    --accent-300: #e2aae2;
+    --accent-400: #db97db;
+    --accent-500: #D247BF;
 
     --bad: #ee174d;
     --bad-50: #fff7f7;

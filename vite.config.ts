@@ -44,7 +44,7 @@ export default defineConfig({
       name: 'E'
     }),
 
-    svgr(),
+    svgr({svgrOptions : {ref: true}}),
     wasm(),
     topLevelAwait(),
   ],

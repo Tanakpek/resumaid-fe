@@ -1,5 +1,4 @@
-// @ts-expect-error
-// @ts-nocheck
+
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Controller, FormProvider, useFieldArray, useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
@@ -139,6 +138,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
             <div className='tw-flex tw-justify-end'>
               <div className='tw-padding-2 hover:tw-bg-secondary tw-m-3 tw-rounded-md tw-transition tw-ease-in-out'>
                 <AlertDialog>
+                  <AlertDialogTitle className='tw-hidden'>Are you sure you want to delete this project?</AlertDialogTitle>
                   <AlertDialogTrigger asChild>
                     <Trash className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                   </AlertDialogTrigger>
@@ -163,12 +163,13 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
               <div className='tw-flex tw-mt-6 tw-mb-6 tw-justify-around'>
                 <div className='tw-flex-column tw-w-full tw-relative'>
                   <Controller
+                    key={project.id}
                     control={control}
                     name={`projects.${index}.takeaways`}
                     render={({ field: { value, onChange } }) => (
                       <div>
                         {value.map((_, inx) => (
-                          <>
+                          <div key={project.id + '@' + inx}>
                             <div className='tw-flex tw-justify-center tw-ml-3'>
                               <FormField
                                 control={control}
@@ -188,7 +189,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
                                   className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                               </div>
                             </div>
-                          </>
+                          </div>
                           // Add your code here
                         ))}
                       </div>
@@ -216,15 +217,15 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
         ))}
           
           <Popover open={addProjectOpen}>
-              <PopoverTrigger>
-                <Button variant="outline"
+              <PopoverTrigger onClick={() => setAddProjectOpen(!addProjectOpen)}>
+                {/* <Button variant="outline"
                 type="button"
                 onClick={() => setAddProjectOpen(!addProjectOpen)}
                 role="combobox"
                 aria-expanded={addProjectOpen}
-                className="tw-w-[200px] tw-justify-between">
+                className="tw-w-[200px] tw-justify-between"> */}
                 Add Project
-                </Button>
+                {/* </Button> */}
               </PopoverTrigger>
                <PopoverContent>
                <Input onChange={addProjectTypeing}>

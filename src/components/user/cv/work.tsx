@@ -128,6 +128,7 @@ export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workpl
                     <Card key={workplace.id}>
                         <div className='tw-flex tw-justify-end tw-mt-3 tw-mr-4'>
                             <AlertDialog>
+                                <AlertDialogTitle className='tw-hidden'>Are you absolutely sure?</AlertDialogTitle>
                                 <AlertDialogTrigger asChild>
                                     <Trash className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out'/>
                                 </AlertDialogTrigger>
@@ -258,20 +259,21 @@ export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workpl
                                         <div>
                                             
                                             {value.map((experience, experienceIndex) => (
-                                                <>
-                                                    <div key={experienceIndex} className='tw-flex tw-my-1'>
+                                                <div key={workplaceIndex + 'takeaway_' + experienceIndex}>
+                                                    <div className='tw-flex tw-my-1'>
                                                         <div className='tw-w-full tw-flex tw-justify-around tw-my-1'>
                                                         <FormField
+                                                            key={workplaceIndex +'_' +experienceIndex}
                                                             control={control}
-                                                            name={`workplaces.${workplaceIndex}.takeaways.${experienceIndex}`}
+                                                            name={`workplaces.${workplaceIndex}.takeaways.${experienceIndex}.value`}
                                                             render={({ field }) => (
                                                                 
                                                                 <FormItem className='tw-flex-grow'> 
                                                                     
                                                                     <FormControl>
-                                                                        <Textarea placeholder="Description" {...field.value} />
+                                                                        <Textarea placeholder="Description" {...field} />
                                                                     </FormControl>
-                                                                    <FormMessage>{errors?.workplaces?.[workplaceIndex]?.takeaways?.[experienceIndex]?.value?.message}</FormMessage>
+                                                                    <FormMessage>{errors?.workplaces?.[workplaceIndex]?.takeaways?.[experienceIndex]?.message}</FormMessage>
                                                                 </FormItem>
                                                             )}
                                                         />
@@ -284,7 +286,7 @@ export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workpl
                                                     </div>
                                                 </div>
                                                     
-                                                </>
+                                                </div>
                                             ))}
                                             <Button
                                                 className='tw-bg-transparent hover:tw-bg-slate-200 tw-text-black tw-m-4'

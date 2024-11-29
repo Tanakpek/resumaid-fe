@@ -90,8 +90,8 @@ export const TrialOrContinue = ({plan, subscription_status}) => {
                     description: p.trial_description,
                     product: p.product,
                     header: <Skeleton />,
-                    className: "md:col-span-1",
-                    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+                    className: "md:tw-col-span-1",
+                    icon: <IconSignature className="tw-h-4 tw-w-4 tw-text-neutral-500" />,
                     price: p.unit_price_cents / 100,
                     billed: p.billing_interval,
                 }
@@ -108,19 +108,20 @@ export const TrialOrContinue = ({plan, subscription_status}) => {
     return (<>
         {! auth?.user?.plan &&
         <AlertDialog defaultOpen={!(auth?.user?.plan || false) || (subscription_status !== 'trial' && subscription_status !== 'active')}>
-            <AlertDialogContent className="tw-max-w-4xl">
+            <AlertDialogContent className="tw-max-w-4xl" >
+            <AlertDialogTitle className="tw-hidden">Start your free trial</AlertDialogTitle>
             <div className="tw-flex tw-justify-end">
                 <Button className=" tw-right-0"variant={"link"} onClick={handleLogout}>Logout</Button>
             </div>
                 {pricing && <TrialOrSubscribePlanCards items={pricing} selected={selected} setSelected={setSelected}/>}
-                <div className="mx-3">
+                <div className="tw-mx-3">
                     {benefit_list.map((benefit: string) => (
                         <span
                             key={benefit}
-                            className="flex"
+                            className="tw-flex"
                         >
                             <Check className="tw-text-green-500" />{" "}
-                            <h3 className="ml-2">{benefit}</h3>
+                            <h3 className="tw-ml-2">{benefit}</h3>
                         </span>
                     ))}
                 </div> 
@@ -135,7 +136,7 @@ export const TrialOrContinue = ({plan, subscription_status}) => {
                             }
                             
                         }} variant="outline">
-                            Start Trial
+                                <AlertDialogDescription>Start Trial</AlertDialogDescription>
                         </Button>
                     </AlertDialogAction>
             </AlertDialogFooter>

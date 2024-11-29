@@ -120,6 +120,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                     <Card key={workplace.id}>
                         <div className='tw-flex tw-justify-end  tw-mt-3 tw-mr-4'>
                             <AlertDialog>
+                                <AlertDialogTitle className='tw-hidden'>Delete Experience</AlertDialogTitle>
                                 <AlertDialogTrigger asChild>
                                     <Trash className='tw-stroke-slate-500 m-2 tw-stroke-2 sm:tw-w-1 sm:h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-align-right  hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
                                 </AlertDialogTrigger>
@@ -147,7 +148,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                             control={control}
                                             name={`organizations.${workplaceIndex}.startDate`}
                                             render={({ field: { value, onChange } }) => (
-                                                <Popover>
+                                                <Popover key={workplaceIndex + 'start'}>
                                                     
                                                     <PopoverTrigger asChild>
                                                         <Button
@@ -182,7 +183,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                             control={control}
                                             name={`organizations.${workplaceIndex}.endDate`}
                                             render={({ field: { value, onChange } }) => (
-                                                <Popover>
+                                                <Popover key = {workplaceIndex + 'end'}>
                                                     <PopoverTrigger asChild>
                                                         <Button
                                                             variant={"outline"}
@@ -243,7 +244,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                         <div>
 
                                             {value.map((experience, experienceIndex) => (
-                                                <>
+                                                <div key={`${workplaceIndex}@${experienceIndex}`}>
                                                     <div key={experienceIndex} className='tw-flex my-1'>
                                                         <div className='tw-w-full tw-flex tw-justify-around tw-my-1'>
                                                             <FormField
@@ -268,7 +269,7 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
                                                         </div>
                                                     </div>
 
-                                                </>
+                                                </div>
                                             ))}
                                             <Button
                                                 className='tw-bg-transparent hover:tw-bg-slate-200 tw-text-black tw-m-4'

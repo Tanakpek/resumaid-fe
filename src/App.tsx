@@ -14,6 +14,7 @@ import { Applications } from './components/applications/applications'
 import { getProfile } from './utils/requests'
 import { User } from '@/lib/types/user'
 import {registerLicense } from "@syncfusion/ej2-base"
+
 registerLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWGBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH9ccHRTQmlZUEN2XUo=")
 
 function App() {

@@ -180,7 +180,7 @@ export default function CV({ data, children, details }: SettingsLayoutProps) {
           </aside>
             <div className="tw-flex-1 lg:tw-max-w-2xl">
             {itemsWithHandlers.map((item, index) => (
-              <div key={item.title + index} className={item.title === activeItem ? '' : 'tw-hidden'}>
+              <div key={item.title + (edit ? 'edit' : 'view') + index} className={item.title === activeItem ? '' : 'tw-hidden'}>
                 {item.element[edit ? 0 : 1]}
               </div>
             ))}

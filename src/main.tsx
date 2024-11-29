@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './components/auth.tsx';
 import { Elements } from '@stripe/react-stripe-js';
 import { Stripe } from '@stripe/stripe-js';
+import { ThemeProvider } from "@/components/ui/theme-provider"
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 
@@ -13,7 +14,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <React.StrictMode>
       <Elements stripe={(window as any).stripe as Stripe}>
       <AuthProvider>
-        <App />
+          <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+             <App />
+          </ThemeProvider>
       </AuthProvider>
       </Elements>
       </React.StrictMode>
