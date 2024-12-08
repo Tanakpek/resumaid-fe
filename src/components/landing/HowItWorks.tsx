@@ -45,7 +45,7 @@ export const HowItWorks = () => {
         <span className="tw-bg-primary tw-text-transparent tw-bg-clip-text">
           Works{" "}
         </span>
-        Step-by-Step Guide
+
       </h2>
       <p className="md:tw-w-3/4 tw-mx-auto tw-mt-4 tw-mb-8 tw-text-xl tw-text-muted-foreground">
         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Veritatis

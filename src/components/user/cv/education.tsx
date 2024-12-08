@@ -41,8 +41,10 @@ import { deleteEducation, postEducation } from '@/src/utils/requests'
 import Trash from '../../../assets/trash-2.svg?react'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { useDirtyCV } from './dirtyTracker'
 
 export function EducationEdit({ data, tokens, setcv }) {
+    const DirtyCv = useDirtyCV()
     const [defaultValues, setDefaultValues] = useState({ education: data })
     const [multipleCapError, setMultipleCapError] = useState(false)
     const [multipleGradeError, setMultipleGradeError] = useState(false)
@@ -55,15 +57,65 @@ export function EducationEdit({ data, tokens, setcv }) {
     const [grades, setGrades] = useState<string[]>([])
     const [capstone, setCapstone] = useState<string>("none0")
     const [grade, setGrade] = useState<string>("noneGrade0")
-
+    
     const form = useForm<EducationFormValues>({
         shouldFocusError: true,
         resolver: zodResolver(educationFormSchema),
         defaultValues: { education: data },
         mode: "onChange"
     })
+    
+
+    
 
     useEffect(() => {
+        
+        const watcher = form.watch((eds) => {
+            if (JSON.stringify(eds.education) !== JSON.stringify(data)) {
+                DirtyCv.current.dirty.education = true
+            }
+            else {
+                DirtyCv.current.dirty.education = false
+            }
+
+            eds.education.forEach((ed, index) => {
+                if (!ed.capstone) {
+                    return
+                }
+                if (ed.capstone.dissertation && ed.capstone.thesis) {
+                    setTimeout(() => {
+                        const cp = capstones
+                        if (cp[index] === 'thesis') {
+                            form.setValue(`education.${index}.capstone.dissertation`, '')
+                        }
+                        else if (cp[index] === 'dissertation') {
+                            form.setValue(`education.${index}.capstone.thesis`, '')
+                        }
+                    }, 600)
+                }
+
+                if ((Number(!!(ed.outcome?.gpa)) + Number(!!(ed.outcome?.score)) + Number(!!(ed.outcome?.classification))) > 1) {
+                    setTimeout(() => {
+                        const gr = grades
+                        if (gr[index] === 'gpa') {
+                            form.setValue(`education.${index}.outcome.score`, '')
+                            form.setValue(`education.${index}.outcome.classification`, '')
+                        }
+                        else if (gr[index] === 'score') {
+                            form.setValue(`education.${index}.outcome.gpa`, '')
+                            form.setValue(`education.${index}.outcome.classification`, '')
+                        }
+                        else if (gr[index] === 'classification') {
+                            form.setValue(`education.${index}.outcome.gpa`, '')
+                            form.setValue(`education.${index}.outcome.score`, '')
+                        }
+                    }, 300)
+                }
+            })
+        } )
+        
+    
+
         const education = data as Education[]
         const capsOpen = new Array(education.length).fill(false)
         const gradesOpen = new Array(education.length).fill(false)
@@ -86,6 +138,9 @@ export function EducationEdit({ data, tokens, setcv }) {
         
         setDefaultValues(data)
         form.reset({ education: data })
+        return () => {
+            watcher.unsubscribe()
+        }
         
     }, [data])
 
@@ -94,6 +149,9 @@ export function EducationEdit({ data, tokens, setcv }) {
         control: form.control,
     })
 
+    
+
+    
     const removeHandler = async (ed, edIndex) => {
         if (ed._id) {
             const cv = await deleteEducation(ed._id)
@@ -122,7 +180,7 @@ export function EducationEdit({ data, tokens, setcv }) {
     async function onSubmit(data: EducationFormValues) {
         const caps = capstones
         const grds = grades
-        console.log(data)
+        
         const resp = await postEducation(data)
 
         if (resp.status === 200) {
@@ -168,6 +226,7 @@ export function EducationEdit({ data, tokens, setcv }) {
         }
     }
 
+    
     return (
         <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit) //onSubmit
@@ -669,20 +728,31 @@ export function EducationEdit({ data, tokens, setcv }) {
 
 export const EducationView: CVPartView = ({ data, setcv }: { data: Education[], setcv: Dispatch<SetStateAction<TransformedCV>> }) => {
     return (
-
+        
         data.map((education, index) => {
             return (<Card key={index + 'view'}>
-                <div className='tw-m-4 tw-mr-10'>
-                    <p className='tw-text-right tw-italic'> {education.dates ? education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}` : ''}</p>
+                <div className='tw-mt-5 tw-mr-10'>
+                    <p className='tw-text-right tw-italic tw-text-slate-500'> {education.dates ? education.dates.length == 1 ? education.dates : `${education.dates[0]} - ${education.dates[1]}` : ''}</p>
                 </div>
                 <CardHeader  key={index + 'view'} className=' tw-font-bold !tw-mb-0 tw-p-0'> {education.degree}</CardHeader>
-                <CardDescription className='!tw-mt-0'>{education.institution}</CardDescription>
-                <CardContent className='tw-mt-10'>
+                <CardDescription className='!tw-mt-0 tw-text-xl tw-font-extrabold tw-text-accent' >{education.institution}</CardDescription>
+                <CardContent className='tw-mt-5 tw-text'>
                     {(education.thesis || education.dissertation) &&
-                        <div>
+                        <div className='tw-flex tw-justify-center'>
                             {
                                 education.dissertation && <div><div className='tw-flex'> <p className=' tw-font-bold tw-mr-2'>Dissertation:</p> {education.dissertation}</div> </div> ||
                                 education.thesis && <div className='tw-flex'><p className=' tw-font-bold tw-mr-2'>Thesis: </p>{education.thesis}</div>
+                            }
+
+                        </div>
+                    }
+                    {(education.score || education.gpa || education.classification) &&
+                        <div className='tw-flex tw-justify-center'>
+                            {
+                                education.gpa && <div><div className='tw-flex'> <p className=' tw-font-bold tw-mr-2'>GPA:</p> {education.gpa}</div> </div> ||
+                                education.score && <div className='tw-flex'><p className=' tw-font-bold tw-mr-2'>Score: </p>{education.score}</div> ||
+                                education.classification && <div className='tw-flex'><p className=' tw-font-bold tw-mr-2'>Classification: </p>{education.classification}</div>
+
                             }
 
                         </div>

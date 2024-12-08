@@ -87,7 +87,7 @@ export const Home = () => {
             <ErrorBoundary><Testimonials /></ErrorBoundary>
             <ErrorBoundary><InfiniteMovingCardsDemo /></ErrorBoundary>
             <ErrorBoundary><Pricing /></ErrorBoundary>
-            <ErrorBoundary><Newsletter /></ErrorBoundary>
+            {/* <ErrorBoundary><Newsletter /></ErrorBoundary> */}
             <ErrorBoundary><FAQ /></ErrorBoundary>
             <ErrorBoundary><Footer /></ErrorBoundary>
             <ErrorBoundary><ScrollToTop /></ErrorBoundary> 

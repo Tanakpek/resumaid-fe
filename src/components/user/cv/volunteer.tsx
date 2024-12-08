@@ -25,8 +25,10 @@ import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, 
 import { Toggle } from '@/components/ui/toggle';
 import { on } from 'events';
 import moment from 'moment';
+import { useDirtyCV } from './dirtyTracker';
 
 export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: number, setcv:(cv:TransformedCV) => void }) => {
+    const DirtyCv = useDirtyCV()
     const [defaultValues, setDefaultValues] = React.useState(data)
     const methods = useForm({
         resolver: zodResolver(volunteerFormSchema),
@@ -43,7 +45,20 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
     });
     useEffect(() => {
         setDefaultValues(data)
+
+        
         reset({ organizations: data })
+        const sub = methods.watch((v) => {
+            if (JSON.stringify(v.organizations) !== JSON.stringify(data)) {
+                DirtyCv.current.dirty.volunteer = true
+            }
+            else {
+                DirtyCv.current.dirty.volunteer = false
+            }
+        })
+        return () => {
+            sub.unsubscribe()
+        }
     }, [data])
 
     const addTakeaway = (workplaceIndex) => {
@@ -53,7 +68,6 @@ export const VolunteerEdit = ({ data, tokens, setcv }: { data: any, tokens: numb
     };
 
     const removeTakeaway = (workplaceIndex, experienceIndex) => {
-
         const data = methods.getValues()
         const updatedTakeaways = data.organizations[workplaceIndex].takeaways.filter((_, index) => index !== experienceIndex);
         data.organizations[workplaceIndex].takeaways = updatedTakeaways
@@ -390,7 +404,7 @@ export const VolunteerView: CVPartView = ({ data, setcv }: { data: VolunteerForm
                     <div className='tw-m-4 tw-mr-10'>
                         <p className='tw-text-right tw-italic'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
                     </div>
-                    <CardHeader className=' tw-font-bold tw-p-0'> {experience.organization_name}</CardHeader>
+                    <CardHeader className=' tw-font-bold tw-p-0 tw-text-slate-800'> {experience.organization_name}</CardHeader>
                     <CardDescription className='!tw-mt-0'>{experience.role}</CardDescription>
                     <div className='tw-my-4'>
                         {experience.takeaways.map((takeaway, idx) => {

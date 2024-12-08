@@ -27,10 +27,12 @@ import { Toggle } from '@/components/ui/toggle';
 import { Checkbox } from '@/components/ui/checkbox';
 import exp from 'constants';
 import { work } from '@/src/test/data/mock_data';
+import { useDirtyCV } from './dirtyTracker';
+import { json } from 'stream/consumers';
 
 export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workplaces'], tokens: number, setcv: Dispatch<SetStateAction<TransformedCV>> }) => {
     const [defaultValues, setDefaultValues] = useState(data)
-
+    const DirtyCv = useDirtyCV()
     let methods = useForm({
         resolver: zodResolver(workFormSchema),
         mode: 'onChange',
@@ -49,6 +51,17 @@ export const WorkEdit = ({ data, tokens, setcv }: { data: WorkFormValues['workpl
     useEffect(() => {
         setDefaultValues(data)
         reset({ workplaces: data })
+        const sub = methods.watch((v) => {
+            if(JSON.stringify(v.workplaces) !== JSON.stringify(data)){
+                DirtyCv.current.dirty.work = true
+            }
+            else{
+                DirtyCv.current.dirty.work = false
+            }
+        })
+        return () => {
+            sub.unsubscribe()
+        }
     }, [data])
 
     const addTakeaway = (workplaceIndex) => {
@@ -344,6 +357,11 @@ export const WorkView: CVPartView = ({ data, setcv }: { data: WorkFormValues['wo
     useEffect(() => {
         setDefaultValues(data)
         reset({ workplaces: data })
+        const sub = methods.watch((v) => {
+        })
+        return () => {
+            sub.unsubscribe()
+        }
     }, [data])
 
     const onSubmit = async (data: WorkFormValues) => {
@@ -401,11 +419,11 @@ export const WorkView: CVPartView = ({ data, setcv }: { data: WorkFormValues['wo
                 }
                 
                 return(
-                    (<Card key={index} className="tw-px-6 tw-pb-6 tw-mb-10">
+                    (<Card key={index} className="tw-px-6 tw-pb-6 tw-mb-10 tw-flex-col tw-justify-center">
                         <div key={index} className='tw-m-4 tw-mr-10'>
-                            <p className='tw-text-right tw-italic'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
+                            <p className='tw-text-right tw-italic tw-text-slate-500'> {experience.startDate && experience.endDate ? `${sd} - ${ed}` : sd || ed}</p>
                         </div>
-                        <CardHeader className=' tw-font-bold tw-p-0'> {experience.company}</CardHeader>
+                        <CardHeader className=' tw-font-bold tw-p-0 tw-text-slate-800 '> {experience.company}</CardHeader>
                         <CardDescription className='!tw-mt-0'>{experience.role}</CardDescription>
                         <div className='tw-my-4'>
                         {experience.takeaways.map((takeaway, idx) => {
@@ -417,7 +435,7 @@ export const WorkView: CVPartView = ({ data, setcv }: { data: WorkFormValues['wo
                                 render={({ field }) => (
                                     <FormItem className='tw-flex-grow'> 
                                         <FormControl>
-                                            <Toggle className='tw-m-3  tw-h-auto tw-w-full tw-justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange}>
+                                            <Toggle className='tw-my-3  tw-h-auto tw-w-full tw-justify-start' variant='outline' defaultPressed={field.value} onPressedChange={field.onChange}>
                                                 <p key={idx} className='tw-my-2 tw-text-justify'>{takeaway.value}</p>
                                             </Toggle>
                                         </FormControl>

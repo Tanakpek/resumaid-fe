@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import Google from '@/src/assets/google.svg?react'
+import { BackgroundBeams } from "@/components/background-beams";
 
 // export const Login = () => {
 //     const [user, setUser] = useState("");
@@ -46,7 +47,11 @@ export function Dashboard() {
         navigate('/');
     }
   return (
-    <div className="tw-bg-background tw-rounded-lg tw-w-full tw-shadow-xl tw-border-gray-300 lg:tw-grid lg:tw-min-h-[600px] lg:tw-grid-cols-2 xl:tw-min-h-[800px] tw-overflow-hidden">
+    // tw-w-full
+    <>
+    <div className="tw-h-[900px]">
+    <div className="tw-flex tw-justify-center tw-my-20 tw-relative tw-antialiased lg:tw-min-h-[600px] xl:tw-min-h-[800px] ">
+    <div className="tw-bg-background  tw-rounded-lg  tw-w-4/5 tw-shadow-xl tw-border-gray-300 lg:tw-grid lg:tw-min-h-[600px] lg:tw-grid-cols-2 xl:tw-min-h-[800px] tw-overflow-hidden tw-z-10">
       <div className="tw-flex tw-items-center tw-justify-center tw-py-12">
         <div className="tw-mx-auto tw-grid tw-w-[350px] tw-gap-6">
           <div className="tw-grid tw-gap-2 tw-text-center">
@@ -99,6 +104,7 @@ export function Dashboard() {
             </a>
           </div>
         </div>
+        
       </div>
       <div className="tw-hidden tw-bg-muted lg:tw-block">
         <img
@@ -106,7 +112,16 @@ export function Dashboard() {
           alt="Image"
           className="tw-h-full tw-w-full tw-object-cover dark:tw-brightness-[0.2] dark:tw-grayscale"
         />
+
       </div>
+      
     </div>
+    
+        
+    </div>
+    
+      </div>
+      <BackgroundBeams className="tw-h-[1000px] tw-p-20" />
+    </>
   )
 }

@@ -7,6 +7,7 @@ import { AuthProvider } from './components/auth.tsx';
 import { Elements } from '@stripe/react-stripe-js';
 import { Stripe } from '@stripe/stripe-js';
 import { ThemeProvider } from "@/components/ui/theme-provider"
+import { DirtyContext, DirtyCVProvider } from './components/user/cv/dirtyTracker.tsx';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
 
@@ -14,9 +15,11 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <React.StrictMode>
       <Elements stripe={(window as any).stripe as Stripe}>
       <AuthProvider>
+        <DirtyCVProvider>
           <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
              <App />
           </ThemeProvider>
+          </DirtyCVProvider>
       </AuthProvider>
       </Elements>
       </React.StrictMode>

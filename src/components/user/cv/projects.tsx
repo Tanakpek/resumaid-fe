@@ -33,8 +33,11 @@ import { ProjectFormSchema, ProjectFormValues } from '@/src/utils/applicaid-ts-u
 import { deleteProject, postProjects } from '@/src/utils/requests'
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog"
 import { Toggle } from "@/components/ui/toggle"
+import { useDirtyCV } from "./dirtyTracker"
 
 export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues['projects'], tokens: number, setcv: (cv: TransformedCV) => void }) {
+  const DirtyCv = useDirtyCV()
+  
   const [defaultValues, setDefaultValues] = useState(data)
   const [addProjectOpen, setAddProjectOpen] = useState(false)
   const [addProjectName, setAddProjectName] = useState('')
@@ -60,6 +63,17 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
   useEffect(() => {
     setDefaultValues(data)
     form.reset({projects: data})
+    const sub = form.watch((v) => {
+      if (JSON.stringify(v.projects) !== JSON.stringify(data)) {
+        DirtyCv.current.dirty.projects = true
+      }
+      else {
+        DirtyCv.current.dirty.projects = false
+      }
+    })
+    return () => {
+      sub.unsubscribe()
+    }
   }, [data])
 
   const removeHandler = async (proj, projIndex) => {
@@ -74,7 +88,6 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
   
   const removeTakeaway = (index, inx) => {
     const data = form.getValues()
-    console.log(data.projects)
     const updatedProjects = data.projects.map((project, projectIndex) =>
       projectIndex === index
         ? {
@@ -159,7 +172,7 @@ export function ProjectsEdit({ data, tokens, setcv }: { data: ProjectFormValues[
               </div>
                 <div>
                 
-                <Label>{project.name}</Label>
+              <Label className="tw-text-accent">{project.name}</Label>
               <div className='tw-flex tw-mt-6 tw-mb-6 tw-justify-around'>
                 <div className='tw-flex-column tw-w-full tw-relative'>
                   <Controller
@@ -323,8 +336,8 @@ export const ProjectsView = ({ data, setcv }: { data: ProjectFormValues['project
     {
     data.map((project, index) => {
       return (
-        (<Card key={index} className="tw-p-6 tw-mb-10">
-          <CardHeader className=' tw-font-bold tw-p-0'> {project.name}</CardHeader>
+        (<Card key={index} className="tw-p-6 tw-mb-10 tw-bg-white">
+          <CardHeader className=' tw-font-bold tw-p-0 tw-text-slate-800'> {project.name}</CardHeader>
           <div className='tw-my-4'>
             {project.takeaways.map((takeaway, idx) => {
               return (

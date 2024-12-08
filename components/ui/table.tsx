@@ -1,7 +1,34 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-
+import { flexRender, Row } from "@tanstack/react-table"
+export function PinnedRow({ row, table }: { row: Row<any>; table: any }) {
+  return (
+    <tr
+      style={{
+        backgroundColor: 'lightblue',
+        position: 'sticky',
+        top:
+          row.getIsPinned() === 'top'
+            ? `${row.getPinnedIndex() * 26 + 48}px`
+            : undefined,
+        bottom:
+          row.getIsPinned() === 'bottom'
+            ? `${(table.getBottomRows().length - 1 - row.getPinnedIndex()) * 26
+            }px`
+            : undefined,
+      }}
+    >
+      {row.getVisibleCells().map(cell => {
+        return (
+          <td key={cell.id}>
+            {flexRender(cell.column.columnDef.cell, cell.getContext())}
+          </td>
+        )
+      })}
+    </tr>
+  )
+}
 const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
@@ -118,3 +145,4 @@ export {
   TableCell,
   TableCaption,
 }
+

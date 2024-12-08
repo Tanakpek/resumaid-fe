@@ -127,40 +127,40 @@ export function Profile({subStatus, setSubStatus, plan, setPlan}) {
     formData.append('file', file);
     setLoading(() => true)
   }
+  async function fetchData() {
+    const window_loc = window.location.href
+    const uri = new URL(window_loc)
+    const revalidate = uri.searchParams.get('session_id')
+    const response = await getProfile(revalidate ? revalidate : null)
+    const data: User = await response.data
+    setDetails(() => data.details);
+    setLoading(false);
+    let url = ''
+    if (!data.cv_uploaded) {
+      const resp = await cvURL()
+      url = resp.data.upload_location
+      setUrl(() => url)
+    }
+    else {
+      const resp = await getCV()
+      const cv = await resp.data
+      // need to set details and cv separately
+      const transformed_cv = transformCV(cv)
+      setCV(transformCV(transformed_cv))
+    }
+    const u = { name: data.name, email: data.email, plan: data.plan, billing_id: data.billing_id }
+    // TODO separate user app data and auth data in the context
+    /* Profile component should only be concerned with user data
+       and should not be concerned with auth data
+       the auth data gets loaded on the top level component
+     */
+    
+    auth.login({ ...u, subscription_status: data.subscription_status });
+    setSubStatus(() => data.subscription_status || null)
+    setPlan((e) => { data.plan || null })
+  }
 
   useEffect(() => {
-    async function fetchData() {
-      const window_loc = window.location.href
-      const uri = new URL(window_loc)
-      const revalidate = uri.searchParams.get('session_id')
-      const response = await getProfile(revalidate ? revalidate : null)
-      const data:User  = await response.data
-      setDetails(() => data.details);
-      setLoading(false);
-      let url = ''
-      if(!data.cv_uploaded){
-        const resp = await cvURL()
-        url = resp.data.upload_location
-        setUrl( () => url)
-      }
-      else{
-        const resp = await getCV()
-        const cv = await resp.data
-        // need to set details and cv separately
-        const transformed_cv = transformCV(cv)
-        setCV(transformCV(transformed_cv))
-      }
-      const u = { name: data.name, email: data.email, plan: data.plan, billing_id: data.billing_id }
-      // TODO separate user app data and auth data in the context
-      /* Profile component should only be concerned with user data
-         and should not be concerned with auth data
-         the auth data gets loaded on the top level component
-       */
-      
-      auth.login(u);
-      setSubStatus(() => data.subscription_status || null)
-      setPlan((e) => {data.plan || null})
-    }
     fetchData();
   }, [plan, subStatus]); // The empty array ensures this effect only runs once after the initial render
 
@@ -171,12 +171,13 @@ export function Profile({subStatus, setSubStatus, plan, setPlan}) {
       </div>);
   }
   return (
-    
-    <div className="tw-flex tw-min-h-screen tw-w-full tw-flex-col">
-      <main className="tw-flex tw-min-h-[calc(100vh_-_theme(spacing.16))] tw-flex-1 tw-flex-col tw-gap-4 tw-bg-muted/40 tw-p-4 md:tw-gap-8 md:tw-p-10">
+
+    <>
+      
+      <main className="tw-flex tw-min-h-[calc(100vh_-_theme(spacing.16))] tw-flex-1 tw-flex-col tw-gap-4 tw-bg-muted/40 tw-p-4 md:tw-gap-8 md:tw-p-10 main-back">
         
         <TrialOrContinue plan={plan} subscription_status={subStatus}/>
-        {  cv && <CV data={cv} details={details}><div></div></CV>}
+        {  cv && <CV data={cv} details={details} fetchData={fetchData}><div></div></CV>}
         {  !cv && 
           <div className="tw-m-auto">
         <div className="tw-mx-auto tw-grid tw-w-full tw-max-w-6xl tw-gap-2">
@@ -216,6 +217,7 @@ export function Profile({subStatus, setSubStatus, plan, setPlan}) {
           </div>
         }
       </main>
-    </div>
+
+    </>
   )
 }

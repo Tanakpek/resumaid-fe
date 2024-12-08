@@ -23,11 +23,11 @@ export function Applications({ subStatus, setSubStatus, plan, setPlan }) {
     
     useEffect(() => {
         async function fetchData() {
-            if(!auth.user || !auth.user.email ){
+            if(!auth.user || typeof auth.user === 'string' || !auth.user.email ){
                 const resp = await getProfile(null)
                 const data: User = await resp.data
                 const u = { name: data.name, email: data.email, plan: data.plan, billing_id: data.billing_id }
-                auth.login(u);
+                auth.login({...u, subscription_status:  data.subscription_status});
                 setSubStatus(() => data.subscription_status || null)
                 setPlan((e) => { data.plan || null })
             }

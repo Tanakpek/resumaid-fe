@@ -20,7 +20,10 @@ import { SheetContent} from "@/components/ui/sheet";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuLabel } from "@/components/ui/dropdown-menu";
 import { Search } from "lucide-react";
 import { CircleUser } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AlertDialog } from "@radix-ui/react-alert-dialog";
+import { AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { Settings } from "./user/settings/settings";
 
   export const NavBar = () => {
     
@@ -117,11 +120,9 @@ import { useNavigate } from "react-router-dom";
           <DropdownMenuContent align="end">
             { auth.user && <DropdownMenuLabel>My Account</DropdownMenuLabel>}
             { auth.user && <DropdownMenuSeparator />}
-            { auth.user && <a href='/profile'><DropdownMenuItem>Settings</DropdownMenuItem></a>}
+              {auth.user && <DropdownMenuItem> <Link to='/settings'>Settings</Link></DropdownMenuItem> }
             <DropdownMenuItem>Support</DropdownMenuItem>
-            <DropdownMenuSeparator />
-            { auth.user &&<DropdownMenuItem ><Button onClick={handleLogout}>Logout</Button></DropdownMenuItem>  }
-            { !auth.user && <a href='/auth'><DropdownMenuItem >Login </DropdownMenuItem></a>}
+
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

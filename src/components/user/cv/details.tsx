@@ -31,24 +31,41 @@ import { ProfileFormValues, profileFormSchema } from "@/src/utils/applicaid-ts-u
 import { TransformedCV, transformCV } from "@/src/utils/codes"
 import { postDetails } from "@/src/utils/requests"
 import { useEffect, useState } from "react"
+import { useDirtyCV } from "./dirtyTracker"
+import { Dir } from "fs"
 
 // This can come from your database or API.
 const defaultValues: Partial<ProfileFormValues> = {
   bio: "I own a computer.",
 }
 export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDetails, tokens:number, setdetails: (details: any) => void }) {
-
+  const DirtyCv = useDirtyCV()
   const [defaultValues, setDefaultValues] = useState<ProfileFormValues>(data)
 
+  
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues: defaultValues,
     mode: "onChange",
   })
 
+  DirtyCv.current.forms.details = form
   useEffect(() => {
     setDefaultValues(data)
     form.reset(data)
+
+    const sub = form.watch((v) => {
+      if (JSON.stringify(v) !== JSON.stringify(data)) {
+        DirtyCv.current.dirty.details = true
+      }
+      else {
+        DirtyCv.current.dirty.details = false
+      }
+    })
+    return () => {
+      sub.unsubscribe()
+    }
+
   }, [data])
   
   async function onSubmit(data: ProfileFormValues) {
@@ -182,7 +199,7 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
               </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <Input placeholder="your-handle-6a35b21y0" {...field} />
+                  <Input placeholder="https://www.linkedin.com/in/johndoe-za3c9k1a1" {...field} />
                 </FormControl>
               </Select>
               <FormMessage />
@@ -199,7 +216,7 @@ export function PersonalDetailsEdit({ data, tokens, setdetails } : {data: UserDe
               </div>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                <Input placeholder="username" {...field} />
+                  <Input placeholder="https://github.com/JohnDoe" {...field} />
                 </FormControl>
               </Select>
               <FormMessage />

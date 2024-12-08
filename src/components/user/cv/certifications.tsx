@@ -35,6 +35,9 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 import { CertFormValues, certificateFormSchema } from '@/src/utils/applicaid-ts-utils/cv_form_types'
 import { TransformedCV, transformCV } from '@/src/utils/codes'
 import { postCertifications } from '@/src/utils/requests'
+import { XIcon } from 'lucide-react'
+import { useDirtyCV } from './dirtyTracker'
+import { useEffect, useState } from 'react'
 
 // This can come from your database or API.
 // const defaultValues: Partial<CertFormValues> = {
@@ -42,16 +45,39 @@ import { postCertifications } from '@/src/utils/requests'
 // }
 
 export function CertsEdit({ data, tokens, setcv }: { data: CertFormValues['certifications'], tokens: number, setcv: (cv: TransformedCV) => void }) {
+    const DirtyCv = useDirtyCV()
     const form = useForm<CertFormValues>({
         resolver: zodResolver(certificateFormSchema),
         defaultValues: {certifications: data},
         mode: "onChange",
     })
-    const { fields, append } = useFieldArray({
+    DirtyCv.current.forms.professional_certifications = form
+    
+    const { fields, append, remove } = useFieldArray({
         name: "certifications",
         control: form.control,
     })
 
+    const removeCert = (inx) => {
+        const data = form.getValues()
+        const certs = data.certifications.filter((_, takeawayIndex) => takeawayIndex !== inx)
+        form.reset({ certifications: certs });
+    }
+
+    useEffect (() => {
+        const sub = form.watch((v) => {
+            if (JSON.stringify(v.certifications) !== JSON.stringify(data)) {
+                DirtyCv.current.dirty.professional_certifications = true
+            }
+            else {
+                DirtyCv.current.dirty.professional_certifications = false
+            }
+        })
+        
+        return () => {
+            sub.unsubscribe()
+        }
+    },[] )
 
     async function onSubmit(data: CertFormValues) {
         const resp = await postCertifications(data)
@@ -100,25 +126,36 @@ export function CertsEdit({ data, tokens, setcv }: { data: CertFormValues['certi
 
                 <div>
                     {fields.map((field, index) => (
+                        
                         <FormField
                             control={form.control}
                             key={field.id}
                             name={`certifications.${index}.value`}
                             render={({ field }) => (
+                                
                                 <FormItem>
+                                    
                                     <FormLabel className={cn(index !== 0 && "tw-sr-only")}>
                                         Professional Certifications
                                     </FormLabel>
+                                    
+                                        
                                     <FormDescription className={cn(index !== 0 && "tw-sr-only")}>
                                         Add Your Professional Certificates or Licenses.
                                     </FormDescription>
+                                    <div className='tw-flex tw-items-center'>
                                     <FormControl>
                                         <Input {...field} value={field.value || ""} />
+                                        
                                     </FormControl>
+                                    <XIcon onClick={() => { removeCert(index) }} className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+                                
+                        
                     ))}
                     <Button
                         type="button"

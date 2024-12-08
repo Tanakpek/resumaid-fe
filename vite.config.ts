@@ -5,6 +5,9 @@ import basicSsl from '@vitejs/plugin-basic-ssl'
 import svgr from 'vite-plugin-svgr';
 import wasm from "vite-plugin-wasm";
 import topLevelAwait from "vite-plugin-top-level-await";
+import dotenv from 'dotenv'
+dotenv.config()
+console.log(process.env.LOCAL)
 export default defineConfig({
   css: {
     postcss: './postcss.config.js'
@@ -38,11 +41,11 @@ export default defineConfig({
   },
   plugins: [
     react(),
-    basicSsl({
+    process.env.LOCAL ? basicSsl({
       certDir: path.resolve(__dirname, './certs'),
       domains: ['localhost'],
       name: 'E'
-    }),
+    }) : {},
 
     svgr({svgrOptions : {ref: true}}),
     wasm(),

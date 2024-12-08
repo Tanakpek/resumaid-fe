@@ -2,7 +2,7 @@ export const generateRandomId = () => {
     return Math.random().toString(36).substring(2, 15);
 }
 import { TransformedCV } from '@/src/utils/codes';
-import React, { Dispatch, ReactNode, SetStateAction } from 'react';
+import React, { createContext, Dispatch, ReactNode, Ref, SetStateAction } from 'react';
 
 interface MyComponentProps {
     children?: ReactNode;
@@ -12,3 +12,4 @@ interface MyComponentProps {
 }
 
 export type CVPartView<T extends MyComponentProps = MyComponentProps> =  React.FC<T>
+

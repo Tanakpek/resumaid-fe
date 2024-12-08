@@ -106,7 +106,7 @@ export const TrialOrContinue = ({plan, subscription_status}) => {
     }
 
     return (<>
-        {! auth?.user?.plan &&
+        { typeof auth.user === 'string' || ! auth?.user?.plan &&
         <AlertDialog defaultOpen={!(auth?.user?.plan || false) || (subscription_status !== 'trial' && subscription_status !== 'active')}>
             <AlertDialogContent className="tw-max-w-4xl" >
             <AlertDialogTitle className="tw-hidden">Start your free trial</AlertDialogTitle>

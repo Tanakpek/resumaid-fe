@@ -32,7 +32,7 @@ const pricingList: PricingProps[] = [
   {
     title: "Standard",
     popular: 1,
-    price: 12,
+    price: 4,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
     buttonText: "Start Free Trial",
@@ -46,26 +46,27 @@ const pricingList: PricingProps[] = [
   {
     title: "Premium",
     popular: 0,
-    price: 20,
+    price: 8,
     disabled: true,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
     buttonText: "Coming soon",
     benefitList: [
       "More customization options",
-      "Tag takeaways for resume presets",
-      "Freedom to choose from models",
+      "Multiple resume presets",
+      "Qucik Form Fill"
     ],
   },
   {
-    title: "Enterprise",
+    title: "Professional",
     disabled: true,
     popular: 0,
-    price: 40,
+    price: 20,
     description:
       "Lorem ipsum dolor sit, amet ipsum consectetur adipisicing elit.",
     buttonText: "Coming Soon",
     benefitList: [
+      "Freedom to choose from models",
       "Backdoor to employers",
       "RAG augmented screening call suggestions",
       "Daily application kit"
@@ -112,6 +113,7 @@ export const Pricing = () => {
               <div>
                 <span className="tw-text-3xl tw-font-bold">${pricing.price}</span>
                 <span className="tw-text-muted-foreground"> /month</span>
+                <span className="tw-text-muted-foreground tw-font-thin"> + usage</span>
               </div>
 
               <CardDescription>{pricing.description}</CardDescription>

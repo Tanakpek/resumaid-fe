@@ -35,6 +35,9 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 import { LanguageFormValues, languageFormSchema } from '@/src/utils/applicaid-ts-utils/cv_form_types'
 import { postLanguages } from '@/src/utils/requests'
 import { TransformedCV, transformCV } from '@/src/utils/codes'
+import { XIcon } from 'lucide-react'
+import { useEffect } from 'react'
+import { useDirtyCV } from './dirtyTracker'
 
 
 // This can come from your database or API.
@@ -43,17 +46,36 @@ const defaultValues: Partial<LanguageFormValues> = {
 }
 
 export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], tokens: number, setcv: (cv: TransformedCV) => void}) {
+    const DirtyCv = useDirtyCV()
     const form = useForm<LanguageFormValues>({
         resolver: zodResolver(languageFormSchema),
         
         defaultValues: {languages: data},
         mode: "onChange",
     })
-    const { fields, append } = useFieldArray({
+    const { fields, append, remove} = useFieldArray({
         name: "languages",
         control: form.control,
     })
 
+    const removeLanguage = (index: number) => {
+        remove(index)
+        form.reset(form.getValues())
+    }
+
+    useEffect(() => {
+        const sub = form.watch((v) => {
+            if (JSON.stringify(v.languages) !== JSON.stringify(data)) {
+                DirtyCv.current.dirty.languages = true
+            }
+            else {
+                DirtyCv.current.dirty.languages = false
+            }
+        })
+        return () => {
+            sub.unsubscribe()
+        }
+    })
 
     async function onSubmit(data: LanguageFormValues) {
         const resp = await postLanguages(data)
@@ -102,6 +124,7 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
 
                 <div>
                     {fields.map((field, index) => (
+                        <div>
                         <FormField
                             control={form.control}
                             key={field.id}
@@ -121,6 +144,13 @@ export function LanguagesEdit({ data, tokens, setcv }: { data: Takeaway[], token
                                 </FormItem>
                             )}
                         />
+                            <XIcon onClick={() => { () => {
+                                    remove(index)
+                                    form.reset(form.getValues())
+                                }
+                             }}
+                                className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
+                        </div>
                     ))}
                     <Button
                         type="button"

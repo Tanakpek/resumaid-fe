@@ -35,22 +35,46 @@ import { DefaultView } from '@/src/components/ui/defaultView'
 import { AchivevementFormValues, achivementFormSchema } from '@/src/utils/applicaid-ts-utils/cv_form_types'
 import { postAchievements } from '@/src/utils/requests'
 import { TransformedCV, transformCV } from '@/src/utils/codes'
+import { XIcon } from 'lucide-react'
+import { useDirtyCV } from './dirtyTracker'
+import { useEffect } from 'react'
 
 
 
 // This can come from your database or API.
 
 export function AchievementsEdit({ data, tokens, setcv }: { data: AchivevementFormValues['achievements_and_awards'], tokens: number, setcv: (cv: TransformedCV) => void }) {
+    const DirtyCv = useDirtyCV()
     const form = useForm<AchivevementFormValues>({
         resolver: zodResolver(achivementFormSchema),
         defaultValues: {achievements_and_awards: data},
         mode: "onChange",
     })
-    const { fields, append } = useFieldArray({
+    
+    const { fields, append, remove } = useFieldArray({
         name: "achievements_and_awards",
         control: form.control,
     })
 
+    const removeAch = (inx) => {
+        const data = form.getValues()
+        const certs = data.achievements_and_awards.filter((_, takeawayIndex) => takeawayIndex !== inx)
+        form.reset({ achievements_and_awards: certs });
+    }
+
+    useEffect(() => {
+        const sub = form.watch((v) => {
+            if (JSON.stringify(v.achievements_and_awards) !== JSON.stringify(data)) {
+                DirtyCv.current.dirty.achievements_and_awards = true
+            }
+            else {
+                DirtyCv.current.dirty.achievements_and_awards = false
+            }
+        })
+        return () => {
+            sub.unsubscribe()
+        }
+    })
 
     async function onSubmit(data: AchivevementFormValues) {
         
@@ -112,9 +136,12 @@ export function AchievementsEdit({ data, tokens, setcv }: { data: AchivevementFo
                                     <FormDescription className={cn(index !== 0 && "tw-sr-only")}>
                                         Add
                                     </FormDescription>
+                                    <div className='tw-flex tw-items-center'>
                                     <FormControl>
                                         <Input {...field} value={field.value || ""} />
                                     </FormControl>
+                                    <XIcon onClick={() => { removeAch(index) }} className='tw-stroke-slate-500 tw-m-1 tw-stroke-2 sm:tw-w-1 sm:tw-h-1 md:tw-h-3 md:tw-w-3 lg:tw-h-5 lg:tw-w-5 tw-flex hover:tw-stroke-red-400 tw-transition tw-ease-in-out' />
+                                    </div>
                                     <FormMessage />
                                 </FormItem>
                             )}

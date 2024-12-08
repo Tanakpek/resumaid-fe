@@ -307,3 +307,11 @@ export const saveWordDocument = async (appId: string, runId, data) => {
         }
     });
 }
+
+export const setUsedRun = async (appId: string, runId: string) => {
+    return await axiosInstance.put(`/applications/${appId}/runs/${runId}/default`);
+}
+
+export const createCustomerBillingPortal = async () => {
+    return await axiosInstance.get('/billing/create-portal-session');
+}

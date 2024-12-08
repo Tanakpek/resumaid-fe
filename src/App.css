@@ -100,3 +100,13 @@ html {
 }
 
 
+
+/* .main-back {
+  background-image: linear-gradient(45deg, #ffffff 32.26%, #fafafa 32.26%, #fafafa 50%, #ffffff 50%, #ffffff 82.26%, #fafafa 82.26%, #fafafa 100%);
+  background-size: 43.84px 43.84px;
+} */
+
+.main-back {
+  background-image: linear-gradient(45deg, #ffffff 32.26%, #fafafa 32.26%, #fafafa 50%, #ffffff 50%, #ffffff 82.26%, #fafafa 82.26%, #fafafa 100%);
+  background-size: 43.84px 43.84px;
+}

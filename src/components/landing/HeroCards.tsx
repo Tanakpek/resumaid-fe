@@ -16,10 +16,10 @@ import { BackgroundGradient } from "@/components/ui/bg-gradient";
 
 export const HeroCards = () => {
   return (
-    <div className="tw-hidden lg:tw-flex tw-flex-row tw-flex-wrap tw-gap-8 tw-relative tw-w-[700px] tw-h-[500px]">
+    <div className="tw-hidden lg:tw-flex tw-flex-row tw-flex-wrap tw-gap-3 tw-relative tw-w-[700px] tw-h-[500px] tw-ml-0">
       {/* Testimonial */}
-      <Card className="tw-absolute tw-w-[340px] tw--top-[15px] tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
-        <CardHeader className="flex flex-row items-center gap-4 pb-2">
+      <Card className="tw-absolute tw-w--340px] -tw-top-[15px] tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
+        <CardHeader className="tw-flex tw-flex-row tw-items-center tw-gap-4 tw-pb-2">
           <Avatar>
             <AvatarImage
               alt=""
@@ -39,11 +39,11 @@ export const HeroCards = () => {
 
       {/* Team */}
       <Card className="tw-absolute tw-right-[20px] tw-top-4 tw-w-80 tw-flex tw-flex-col tw-justify-center tw-items-center tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
-        <CardHeader className="mt-8 flex justify-center items-center pb-2">
+        <CardHeader className="tw-mt-8 tw-flex tw-justify-center tw-items-center tw-pb-2">
           <img
             src="https://i.pravatar.cc/150?img=58"
             alt="user avatar"
-            className="tw-absolute tw-grayscale-[0%] tw--top-12 tw-rounded-full tw-w-24 tw-h-24 tw-aspect-square tw-object-cover"
+            className="tw-absolute tw-grayscale-[0%] -tw-top-12 tw-rounded-full tw-w-24 tw-h-24 tw-aspect-square tw-object-cover"
           />
           <CardTitle className="tw-text-center">Leo Miranda</CardTitle>
           <CardDescription className="tw-font-normal tw-text-primary">
@@ -69,7 +69,7 @@ export const HeroCards = () => {
                 size: "sm",
               })}
             >
-              <span className="sr-only">Github icon</span>
+              <span className="tw-sr-only">Github icon</span>
               <GitHubLogoIcon className="w-5 h-5" />
             </a>
             <a
@@ -111,7 +111,7 @@ export const HeroCards = () => {
 
       {/* Pricing */}
       
-      <div className="tw-absolute tw-top-[150px] tw-left-[50px] tw-w-72  tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10 tw-z-1">
+      <div className="tw-absolute tw-top-[185px] tw-left-[50px] tw-w-72  tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10 tw-z-1">
         <BackgroundGradient className="tw-z-50 ">
           <div style={{ borderRadius: 21 }} className="tw-z-1 tw-bg-white dark:tw-bg-slate-900">
             <CardHeader className="tw-z-1">
@@ -125,8 +125,9 @@ export const HeroCards = () => {
             </Badge>
           </CardTitle>
           <div>
-                <span className="tw-text-3xl tw-font-bold">$13</span>
+                <span className="tw-text-3xl tw-font-bold">$4</span>
                 <span className="tw-text-muted-foreground"> /month</span>
+                <span className="tw-text-muted-foreground tw-font-thin"> + usage</span>
           </div>
 
           <CardDescription>
@@ -135,7 +136,10 @@ export const HeroCards = () => {
         </CardHeader>
 
         <CardContent>
-              <Button className="tw-w-full">Start Free Trial</Button>
+              <a  href='/auth' className={`tw-w-full ${buttonVariants({
+                variant: "default",
+                size: "default",
+              }) }`}>Start Free Trial</a>
         </CardContent>
 
             <hr className="tw-w-4/5 tw-m-auto tw-mb-4" />
@@ -161,7 +165,7 @@ export const HeroCards = () => {
       </div>
 
       {/* Service */}
-      <Card className="tw-absolute tw-w-[350px] tw--right-[10px] tw-bottom-[35px]  tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
+      <Card className="tw-absolute tw-w-[350px] -tw-right-[10px] tw-bottom-[35px]  tw-drop-shadow-xl tw-shadow-black/10 dark:tw-shadow-white/10">
         <CardHeader className="tw-space-y-1 tw-flex md:tw-flex-row tw-justify-start tw-items-start tw-gap-4">
           <div className="tw-mt-1 tw-bg-primary/20 tw-p-1 tw-rounded-2xl">
             <LightBulbIcon />

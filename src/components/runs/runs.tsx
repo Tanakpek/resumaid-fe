@@ -3,7 +3,7 @@ import { User } from '@/lib/types/user'
 import { Dispatch, use, useEffect, useRef, useState } from "react"
 import { useAuth } from "../auth";
 import { useNavigate } from "react-router-dom";
-import { deleteRun, getApplications, getPdf, getProfile, getWordDocument } from "../../utils/requests"
+import { deleteRun, getApplications, getPdf, getProfile, getWordDocument, setUsedRun } from "../../utils/requests"
 import { TrialOrContinue } from "../trial"
 import { RunsDataTable } from './table/data-table';
 import { columns } from './table/columns';
@@ -22,6 +22,17 @@ export function Runs({ subStatus, setSubStatus, plan, setPlan, appId }) {
     
     const auth = useAuth();
     const [runId, setRunId] = useState(null)
+    const [defaultRuns, setDefaultRuns] = useState<[string|null, string|null]>([null,null])
+    
+    const setDefaultRun = (resume:boolean, id:string) => {
+        if(resume){
+            setDefaultRuns((prev) => [id, prev[1]]) 
+        }
+        else{
+            setDefaultRuns((prev) => [prev[0],id])
+        }
+    }
+
     const SetRunWrapper = (run) => {
         setRuns(run)
     }
@@ -40,7 +51,7 @@ export function Runs({ subStatus, setSubStatus, plan, setPlan, appId }) {
             <div className="tw-container tw-mx-auto tw-py-10">
 
                         {!runId &&
-                            <RunsDataTable columns={columns(setRunId, getPdf, getWordDocument, deleteRun)} data={runs} app_id={appId} setRunId={setRunId}/>
+                    <RunsDataTable columns={columns(setRunId, getPdf, getWordDocument, setUsedRun, deleteRun, defaultRuns, setDefaultRun)} data={runs} app_id={appId} setRunId={setRunId} defaultRuns={defaultRuns}  setDefaultRuns={setDefaultRuns}/>
                         }
                         {runId &&
                                 <ErrorBoundary>

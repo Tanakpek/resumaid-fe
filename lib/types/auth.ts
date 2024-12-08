@@ -1,9 +1,10 @@
 
 export interface ClientUserData {
-    type: string;
+    type?: string;
     email: string;
     picture?: string;
-    token: string;
+    token?: string;
     plan: string | null,
     billing_id: string | null,
+    subscription_status: string | null
 }
