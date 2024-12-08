@@ -18,7 +18,7 @@ import {Settings} from '@/src/components/user/settings/settings'
 import { isDirty, useDirtyCV } from './components/user/cv/dirtyTracker'
 import { dir } from 'console'
 
-registerLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWGBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH9ccHRTQmlZUEN2XUo=")
+// registerLicense("Ngo9BigBOggjHTQxAR8/V1NDaF5cWGBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdnWH9ccHRTQmlZUEN2XUo=")
 
 function App() {
   const DirtyCv = useDirtyCV()
